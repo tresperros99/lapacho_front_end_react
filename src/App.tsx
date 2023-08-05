@@ -4,10 +4,15 @@ import { RootState } from './app/store'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import { increment } from './features/counter/counterSlice'
-
+import {useEffect} from 'react'
+import { getPokemons } from './service/pokeapi'
 function App() {
   const {value} = useSelector((state: RootState) => state.counter);
   const dispatch = useDispatch()
+  useEffect(() => {
+    getPokemons(10000,0)
+  }, [])
+  
   return (
     <>
       <div>

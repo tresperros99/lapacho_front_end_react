@@ -1,6 +1,6 @@
 import axios from 'axios'
 const axiosInstance = axios.create({
-  baseURL: 'http://api.example.com', // Replace with your API base URL
+  baseURL: 'https://pokeapi.co/api/v2/', // Replace with your API base URL
 });
 
 // Request interceptor
