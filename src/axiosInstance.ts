@@ -1,23 +1,19 @@
 import axios from 'axios'
+import { RootState } from './app/store';
 const axiosInstance = axios.create({
-  baseURL: 'https://pokeapi.co/api/v2/', // Replace with your API base URL
+  baseURL: 'https://proyecto-lapacho-backend.onrender.com/',
+   // Replace with your API base URL
 });
-
+const token = (state: RootState) => state.auth.token;
 // Request interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-
-    //Traer del redux el token generado
-        const accessToken = JSON.parse("{}");
-
-    // ** If token is present add it to request's Authorization Header
-    if (accessToken) {
-      if (config.headers) config.headers.token = accessToken;
+    if (token) {
+      if (config.headers) config.headers.token = token;
     }
     return config;
   },
   (error) => {
-    // Handle request errors here
 
     return Promise.reject(error);
   }

@@ -10,8 +10,10 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import lapachoLogo from'../assets/login/lapacho_logo.jpg';
-
+import { useEffect } from 'react';
+import lapachoLogo from '../assets/login/lapacho_logo.jpg';
+import { useAppDispatch } from '../app/store';
+import { fetchLogin } from '../features/auth/authThunk';
 function Copyright(props: any) {
   return (
 	<Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -27,14 +29,20 @@ function Copyright(props: any) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 export const LoginPage = () => {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-	event.preventDefault();
-	const data = new FormData(event.currentTarget);
-	console.log({
-	  email: data.get('email'),
-	  password: data.get('password'),
-	});
-  };
+	const dispatch = useAppDispatch()
+	useEffect(() => {
+		dispatch(fetchLogin({usuario:'ADMINISTRADOR_CLUB',contraseña:'Prueb4_X_4dm1n'}))
+	}, [dispatch])
+	
+
+	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
+		const data = new FormData(event.currentTarget);
+		console.log({
+		email: data.get('email'),
+		password: data.get('password'),
+		});
+	};
 
   return (
 	<Grid container component="main" sx={{ height: '100vh' }}>
