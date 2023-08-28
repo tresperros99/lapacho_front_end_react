@@ -6,7 +6,6 @@ import ReactDOM from 'react-dom/client'
 import { Provider } from 'react-redux/es/exports'
 import App from './App.tsx'
 import { store } from './app/store.ts'
-import './index.css'
 
 const defaultTheme = createTheme();
 ReactDOM.createRoot(document.getElementById('root')!).render(

@@ -15,7 +15,6 @@ import lapachoLogo from '../assets/login/lapacho_logo.jpg';
 import { fetchLogin } from '../features/auth/authThunk';
 
 
-// TODO remove, this demo shouldn't need to reset the theme.
 export const LoginPage = () => {
 	const dispatch = useAppDispatch();
 	
