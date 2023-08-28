@@ -25,7 +25,7 @@ export const LoginPage = () => {
 		const usuario = data.get('email');
 		const pass = data.get('password');
 		if (usuario && pass) {
-			dispatch(fetchLogin({usuario:usuario.toString(),contraseña:pass.toString()}))
+			dispatch(fetchLogin({usuario:usuario.toString().trim(),contraseña:pass.toString().trim()}))
 		}
 
 	};
