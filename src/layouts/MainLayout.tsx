@@ -1,7 +1,7 @@
-import Grid2 from '@mui/material/Unstable_Grid2';
 import SidebarProyect from '../components/Sidebar/SidebarProyect';
 import {ReactNode} from 'react'
 import TopBarProyect from '../components/TopBar/TopBarProyect';
+import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 type MainLayoutProps = {
 	children:ReactNode
 }
