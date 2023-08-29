@@ -1,11 +1,11 @@
+import { useSelector } from "react-redux";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { RootState } from "../app/store";
 import PrivateRoutes from "./PrivateRoutes";
 import PublicRoutes from "./PublicRoutes";
-import { useSelector } from "react-redux/es/exports";
-import { RootState } from "../app/store";
-
 export const AppRouter = () => {
-	const { token} = useSelector((state:RootState)=> state.auth);
+	const token = useSelector((state:RootState)=> state.auth.token);
+	
 	return (
 		<BrowserRouter>
 			<Routes>

@@ -20,11 +20,16 @@ export const authSlice = createSlice({
 	setToken: (state, action: PayloadAction<string>) => {
 	  	state.token = action.payload
 	},
+	clearAuth:()=>{
+		return {
+			...initialState
+		}
+	}
   },
   extraReducers:fetchLoginBuilder
 })
 
 // Action creators are generated for each case reducer function
-export const { setToken } = authSlice.actions
+export const { setToken,clearAuth } = authSlice.actions
 
 export default authSlice.reducer

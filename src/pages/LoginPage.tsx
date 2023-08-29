@@ -3,6 +3,7 @@ import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
+import CircularProgress from '@mui/material/CircularProgress';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Grid from '@mui/material/Grid';
 import Link from '@mui/material/Link';
@@ -10,14 +11,16 @@ import Paper from '@mui/material/Paper';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import * as React from 'react';
-import { useAppDispatch } from '../app/store';
+import { useSelector } from 'react-redux';
+import { RootState, useAppDispatch } from '../app/store';
 import lapachoLogo from '../assets/login/lapacho_logo.jpg';
 import { fetchLogin } from '../features/auth/authThunk';
 
 
 export const LoginPage = () => {
 	const dispatch = useAppDispatch();
-	
+	const {loadingToken} = useSelector((state:RootState)=> state.auth);
+
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		const data = new FormData(event.currentTarget);
@@ -80,13 +83,16 @@ export const LoginPage = () => {
 						control={<Checkbox value="remember" color="primary" />}
 						label="Recordarme"
 					/>
-					<Button
+				<Button
 						type="submit"
 						fullWidth
 						variant="contained"
 						sx={{ mt: 3, mb: 2 }}
 					>
-					Iniciar Sesion
+					{ !loadingToken
+						? <Typography>Iniciar Sesion</Typography>
+						: <CircularProgress sx={{width:"100%",height:5}}/>
+					}
 				</Button>
 				<Grid container>
 					<Grid item xs>
