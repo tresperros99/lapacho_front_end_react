@@ -52,7 +52,7 @@ export const LoginPage = () => {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Iniciar Sesion
+            Iniciar Sesión
           </Typography>
           <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
@@ -85,7 +85,7 @@ export const LoginPage = () => {
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
             >
-              Iniciar Sesion
+              Iniciar Sesión
             </Button>
             <Grid container>
               <Grid item xs>

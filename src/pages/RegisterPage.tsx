@@ -98,7 +98,7 @@ export const RegisterPage = () => {
                   required
                   fullWidth
                   id="direccion"
-                  label="Direccion"
+                  label="Dirección"
                   autoFocus
                 />
               </Grid>
@@ -107,7 +107,7 @@ export const RegisterPage = () => {
                   required
                   fullWidth
                   id="telefono"
-                  label="Telefono"
+                  label="Teléfono"
                   name="telefono"
                   autoComplete="family-name"
                 />
@@ -118,7 +118,7 @@ export const RegisterPage = () => {
                   fullWidth
                   id="email"
                   type='email'
-                  label="Correo Electronico"
+                  label="Correo Electrónico"
                   name="email"
                   autoComplete="email"
                 />
@@ -141,7 +141,7 @@ export const RegisterPage = () => {
                 sx={{textTransform:'capitalize'}}
                 component="label"
                 >
-                Foto de Cedula 
+                Foto de Cédula 
                 <input
                     type="file"
                     hidden
@@ -181,7 +181,7 @@ export const RegisterPage = () => {
               <Grid item>
                 <Box onClick={()=>navigate('/login')}>
                     <Link href="#" variant="body2">
-                        Ya tienes una cuenta? Inicia Sesion
+                        Ya tienes una cuenta? Inicia Sesión
                     </Link>
                 </Box>
               </Grid>
