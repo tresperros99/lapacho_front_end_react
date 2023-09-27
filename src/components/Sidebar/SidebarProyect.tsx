@@ -1,5 +1,8 @@
 import { Menu, MenuItem, Sidebar, menuClasses, sidebarClasses } from 'react-pro-sidebar';
+import { useNavigate } from 'react-router-dom';
 export const SidebarProyect = () => {
+	const navigate = useNavigate(); 
+
 	return (
 		<Sidebar 
 		rootStyles={{
@@ -23,7 +26,7 @@ export const SidebarProyect = () => {
 				}
 			  }}
 				>
-				<MenuItem style={{marginTop:100}}> Registrar Socios</MenuItem>
+				<MenuItem onClick={()=>{navigate('/profesores')}} style={{marginTop:100}}> Registrar Profesores</MenuItem>
 				<MenuItem> Dar de Baja Socio </MenuItem>
 				<MenuItem> Pagar Cuotas</MenuItem>
 				<MenuItem> Estado Cuenta Club</MenuItem>
