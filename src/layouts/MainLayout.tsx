@@ -10,7 +10,7 @@ export const MainLayout = ({children}:MainLayoutProps) => {
 	return (
 		<Grid2 display={'flex'} >
 			<SidebarProyect/>
-			<main style={{flexGrow:1}}>
+			<main style={{flexGrow:1,overflowX:'hidden'}}>
 				<TopBarProyect/>
 				<Container sx={{mt:5, ml:3}}>
 				{children}

@@ -1,29 +1,47 @@
 import { Button, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useFormik } from 'formik';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
+import { crearActualizarEliminarProfesor } from '../../api/ApiProfesores';
+import { NuevoProfesorDto } from '../../models/dtos/profesores/NuevoProfesorDto.models';
+import { ProfesoresFormateado } from '../../models/responses/profesores/NominaProfesores.response';
 
 const validationSchema = yup.object({
-	nombre: yup.string().required('El nombre es requerido'),
-	ci: yup.string().required('La Cedula es requerida'),
-	precio: yup.string().required('El precio por hora es requerido'),
-	telefono: yup.string().required('El telefono es requerido'),
+	nombreProfe: yup.string().required('El nombre es requerido'),
+	numeroCedula: yup.string().required('La Cedula es requerida'),
+	precioXHora: yup.string().required('El precio por hora es requerido'),
+	contactoProfesor: yup.string().required('El telefono es requerido'),
 });
 
 
 const FormProfesores = () => {
+	const location = useLocation();
+	const profesorCargado = location.state as ProfesoresFormateado;
 	const formik = useFormik({
-		initialValues: {
-			nombre: '',
-			ci: '',
-			precio: '',
-			telefono: '',
+		initialValues:
+		{
+			nombreProfe: profesorCargado?.nombreProfesor ?? '',
+			contactoProfesor:profesorCargado?.contactoProfesor ?? '',
+			numeroCedula:profesorCargado?.cedula ?? '',
+			precioXHora:profesorCargado?.costoXHora ?? 0,
 		},
 		validationSchema: validationSchema,
-		onSubmit: (values) => {
-			 alert(JSON.stringify(values, null, 2));
+		onSubmit:async (nuevoProfesor:NuevoProfesorDto) => {
+			if (profesorCargado !== null ) {				
+				await crearActualizarEliminarProfesor('actualizar',nuevoProfesor,profesorCargado.idProfesor);
+				
+			}else{
+				await crearActualizarEliminarProfesor('crear',nuevoProfesor);
+			}
+
 		},
 	  });
+	  useEffect(() => {
+
+	  }, [])
+	  
   return (
 	<div>
 		<form onSubmit={formik.handleSubmit}>
@@ -32,58 +50,58 @@ const FormProfesores = () => {
 			<Grid2 xs={6}>
 				<TextField
 					fullWidth
-					id="nombre"
-					name="nombre"
+					id="nombreProfe"
+					name="nombreProfe"
 					label="Nombre"
-					value={formik.values.nombre}
+					value={formik.values.nombreProfe}
 					onChange={formik.handleChange}
 					onBlur={formik.handleBlur}
-					error={formik.touched.nombre && Boolean(formik.errors.nombre)}
-					helperText={formik.touched.nombre && formik.errors.nombre}
+					error={formik.touched.nombreProfe && Boolean(formik.errors.nombreProfe)}
+					helperText={formik.touched.nombreProfe && formik.errors.nombreProfe}
 				/>
 			</Grid2>
 			<Grid2 xs={6}>
 				<TextField
 					fullWidth
-					id="ci"
-					name="ci"
+					id="numeroCedula"
+					name="numeroCedula"
 					label="Numero de cedula"
-					value={formik.values.ci}
+					value={formik.values.numeroCedula}
 					onChange={formik.handleChange}
 					onBlur={formik.handleBlur}
-					error={formik.touched.ci && Boolean(formik.errors.ci)}
-					helperText={formik.touched.ci && formik.errors.ci}
+					error={formik.touched.numeroCedula && Boolean(formik.errors.numeroCedula)}
+					helperText={formik.touched.numeroCedula && formik.errors.numeroCedula}
 				/>
 			</Grid2>
 			<Grid2 xs={6}>
 				<TextField
 					fullWidth
-					id="precio"
-					name="precio"
+					id="precioXHora"
+					name="precioXHora"
 					label="Precio por Hora"
-					value={formik.values.precio}
+					value={formik.values.precioXHora}
 					onChange={formik.handleChange}
 					onBlur={formik.handleBlur}
-					error={formik.touched.precio && Boolean(formik.errors.precio)}
-					helperText={formik.touched.precio && formik.errors.precio}
+					error={formik.touched.precioXHora && Boolean(formik.errors.precioXHora)}
+					helperText={formik.touched.precioXHora && formik.errors.precioXHora}
 				/>
 			</Grid2>
 			<Grid2 xs={6}>
 				<TextField
 					fullWidth
-					id="telefono"
-					name="telefono"
+					id="contactoProfesor"
+					name="contactoProfesor"
 					label="Telefono"
-					value={formik.values.telefono}
+					value={formik.values.contactoProfesor}
 					onChange={formik.handleChange}
 					onBlur={formik.handleBlur}
-					error={formik.touched.telefono && Boolean(formik.errors.telefono)}
-					helperText={formik.touched.telefono && formik.errors.telefono}
+					error={formik.touched.contactoProfesor && Boolean(formik.errors.contactoProfesor)}
+					helperText={formik.touched.contactoProfesor && formik.errors.contactoProfesor}
 				/>
 			</Grid2>
 			<Grid2 xs={12}>
 				<Button color="primary" variant="contained" fullWidth type="submit">
-					Crear
+					{profesorCargado?'Actualizar':'Crear'}
 				</Button>
 			</Grid2>
 

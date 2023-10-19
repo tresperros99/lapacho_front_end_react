@@ -38,8 +38,8 @@ function TopBarProyect() {
   };
 
   return (
-    <AppBar position="static" sx={{bgcolor:'#EA6E5F'}}>
-      <Container maxWidth="xl">
+    <AppBar position="static" sx={{bgcolor:'#30302e'}}>
+      <Container  maxWidth="lg">
         <Toolbar disableGutters>
           {/* <img src={lapachoLogo} alt="Logo de Lapacho" width={40} height={40} />
           <Typography
@@ -120,7 +120,7 @@ function TopBarProyect() {
               <Button
                 key={page}
                 onClick={handleCloseNavMenu}
-                sx={{ my: 2, color: 'white', display: 'block' }}
+                sx={{ my: 2, color: '#33BEFF', display: 'block' }}
               >
                 {page}
               </Button>
