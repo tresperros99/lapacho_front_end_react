@@ -50,16 +50,16 @@ export const SidebarProyect = () => {
 				{" Menu"}
 				
 				</MenuItem>
-				<SubMenu label="Profesores" icon=<SchoolOutlinedIcon/> style={{marginTop:'30px'}}>
+				<SubMenu label="Profesores" icon={<SchoolOutlinedIcon/>} style={{marginTop:'30px'}}>
 				<MenuItem onClick={()=>{navigate('/formProfesor')}}> Registrar Profesores</MenuItem>
 				<MenuItem onClick={()=>{navigate('/panelProfesor')} }> Panel Profesores </MenuItem>
 				</SubMenu>
-				<SubMenu label="Socios" icon =<PersonOutlinedIcon/> >
+				<SubMenu label="Socios" icon ={<PersonOutlinedIcon/>} >
 				<MenuItem onClick={()=>{navigate('/formSocios')}}>Registrar Socios</MenuItem>
 				<MenuItem onClick={()=>{navigate('/panelSocios')}}>Panel Socios</MenuItem>
 				<MenuItem> Horarios Reservados </MenuItem>
 				</SubMenu>
-				<SubMenu label="Tramites" icon=<StickyNote2OutlinedIcon/>>
+				<SubMenu label="Tramites" icon={<StickyNote2OutlinedIcon/>}>
 				<MenuItem> Pagar Cuotas</MenuItem>
 				<MenuItem> Facturas</MenuItem>
 				<MenuItem> Estado Cuenta Club</MenuItem>

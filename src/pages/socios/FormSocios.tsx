@@ -1,12 +1,11 @@
 import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
+import { actualizarSocio, crearNuevoSocio } from '../../api/ApiSocios';
 import NuevoSocioDto from '../../models/dtos/socios/NuevoSocioDto.model';
 import { SociosFormateado } from '../../models/responses/socios/NominaSocios.response';
-import { actualizarSocio, crearNuevoSocio } from '../../api/ApiSocios';
 
 const validationSchema = yup.object({
 	nombre: yup.string().required('El nombre es requerido'),
