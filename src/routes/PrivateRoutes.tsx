@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router-dom';
 import MainLayout from '../layouts/MainLayout';
 import HomePage from '../pages/HomePage';
+import FormIngresos from '../pages/ingresos/FormIngresos';
 import FormProfesores from '../pages/profesores/FormProfesores';
 import PanelProfesores from '../pages/profesores/PanelProfesores';
 import FormSocios from '../pages/socios/FormSocios';
@@ -13,6 +14,7 @@ export const PrivateRoutes = () => {
             <Route path='panelProfesor' element={<MainLayout><PanelProfesores /></MainLayout>} />
             <Route path='formSocios' element={<MainLayout><FormSocios /></MainLayout>} />
             <Route path='panelSocios' element={<MainLayout><PanelSocios /></MainLayout>} />
+            <Route path='ingresos' element={<MainLayout><FormIngresos /></MainLayout>} />
             <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
     )

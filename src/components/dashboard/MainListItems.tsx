@@ -36,7 +36,14 @@ export const MainListItems = () => {
                 <ListItemIcon>
                     <PersonOutlinedIcon />
                 </ListItemIcon>
-                <ListItemText primary="Panel de Socios" onClick={() => { navigate('/panelSocios') }} />
+                <ListItemText primary="Panel de Socios" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => { navigate('/ingresos') }}>
+                <ListItemIcon>
+                    <PersonOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Formulario de Ingresos" />
             </ListItemButton>
 
             <ListItemButton>

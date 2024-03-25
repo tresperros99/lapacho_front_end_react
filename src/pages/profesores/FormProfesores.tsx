@@ -1,7 +1,6 @@
 import { Button, TextField, Typography } from '@mui/material';
 import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { useFormik } from 'formik';
-import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import * as yup from 'yup';
 import { crearActualizarEliminarProfesor } from '../../api/ApiProfesores';
@@ -39,9 +38,6 @@ const FormProfesores = () => {
 
         },
     });
-    useEffect(() => {
-
-    }, [])
 
     return (
         <ContainerComponent>
