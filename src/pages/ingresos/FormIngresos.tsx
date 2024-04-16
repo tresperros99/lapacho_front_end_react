@@ -1,10 +1,15 @@
-import { Button, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
 import * as yup from 'yup';
+import { postCargarIngreso } from "../../api/ApiIngresos";
+import BuscadorSociosComponent from "../../components/genericos/BuscadorSociosComponent";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
+import CustomModal from "../../components/genericos/CustomModal";
+import SelectTipoIngresoComponent from "../../components/genericos/SeleccionarTipoIngreso";
 import NuevoIngresoDto from "../../models/dtos/ingresos/NuevoIngresoDto.models";
+import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
+import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
 
 const validationSchema = yup.object({
     idTipoIngreso: yup.string().required('El tipo de Ingreso es requerido'),
@@ -14,13 +19,31 @@ const validationSchema = yup.object({
 });
 
 export const FormIngresos = () => {
-    const location = useLocation();
-    const [loading, setLoading] = useState<boolean>(true);
-    const [age, setAge] = useState('');
+    const [socioSeleccionado, setSocioSeleccionado] = useState<Socio | null>(null);
+    const [tipoIngreso, setTipoIngreso] = useState<TiposIngreso | null>(null);
+    const [showModal, setShowModal] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
+    const [isErrorModal, setIsErrorModal] = useState(false);
 
-    const handleChange = (event: SelectChangeEvent) => {
-        setAge(event.target.value as string);
+    const handleCustomModalClose = () => {
+        // Cierra el modal de éxito
+        formik.resetForm();
+        setShowModal(false);
     };
+
+    useEffect(() => {
+        if (socioSeleccionado) {
+            console.log(socioSeleccionado);
+            formik.setFieldValue('idSocio', socioSeleccionado.idSocio)
+        }
+    }, [socioSeleccionado]);
+    useEffect(() => {
+        if (tipoIngreso) {
+            console.log(socioSeleccionado);
+            formik.setFieldValue('idTipoIngreso', tipoIngreso.idTipo)
+        }
+    }, [tipoIngreso]);
+
     const formik = useFormik({
         initialValues:
         {
@@ -31,6 +54,21 @@ export const FormIngresos = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async (nuevoIngreso: NuevoIngresoDto) => {
+            //TODO: llamar a la api para cargar ingreso
+            try {
+                const dtoCast = { ...nuevoIngreso, idSocio: Number(nuevoIngreso.idSocio), montoIngreso: Number(nuevoIngreso.montoIngreso) };
+                const cargarIngreso = await postCargarIngreso(dtoCast);
+                if (cargarIngreso) {
+                    setIsErrorModal(false);
+                    setModalMessage(cargarIngreso.msg);
+                    setShowModal(true);
+
+                }
+            } catch (error) {
+                setIsErrorModal(true);
+                setModalMessage('Error al cargar el ingreso');
+                setShowModal(true);
+            }
 
         },
     });
@@ -38,28 +76,15 @@ export const FormIngresos = () => {
         <ContainerComponent>
             <form onSubmit={formik.handleSubmit}>
                 <Typography textAlign={'center'} variant='h4' marginBottom={2}>Creacion de Ingresos</Typography>
-                <Grid container spacing={2} xs={12}>
+                <Grid container spacing={2}>
                     <Grid item xs={6}>
-                        <FormControl fullWidth>
-                            <InputLabel id="demo-simple-select-label">Age</InputLabel>
-                            <Select
-                                labelId="demo-simple-select-label"
-                                id="demo-simple-select"
-                                value={age}
-                                label="Age"
-                                onChange={handleChange}
-                            >
-                                <MenuItem value={10}>Ten</MenuItem>
-                                <MenuItem value={20}>Twenty</MenuItem>
-                                <MenuItem value={30}>Thirty</MenuItem>
-                            </Select>
-                        </FormControl>
+                        <SelectTipoIngresoComponent fullWidth setTipoIngresoSeleccionado={setTipoIngreso} />
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
                             fullWidth
-                            id="descripcion"
-                            name="descripcion"
+                            id="descripcionIngreso"
+                            name="descripcionIngreso"
                             label="Descripcion"
                             value={formik.values.descripcionIngreso}
                             onChange={formik.handleChange}
@@ -71,8 +96,8 @@ export const FormIngresos = () => {
                     <Grid item xs={6}>
                         <TextField
                             fullWidth
-                            id="monto"
-                            name="monto"
+                            id="montoIngreso"
+                            name="montoIngreso"
                             label="Monto"
                             value={formik.values.montoIngreso}
                             onChange={formik.handleChange}
@@ -82,19 +107,9 @@ export const FormIngresos = () => {
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
-                            fullWidth
-                            id="Socio"
-                            name="Socio"
-                            label="Socio"
-                            value={formik.values.idSocio}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            error={formik.touched.idSocio && Boolean(formik.errors.idSocio)}
-                            helperText={formik.touched.idSocio && formik.errors.idSocio}
-                        />
+                        <BuscadorSociosComponent fullWidth setSocioSeleccionado={setSocioSeleccionado} />
                     </Grid>
-                    <Grid xs={12} justifyContent={'center'} alignItems={'center'} container mt={2}>
+                    <Grid justifyContent={'center'} alignItems={'center'} container mt={2}>
                         <Button color="primary" variant="contained" type="submit" style={{ minWidth: "250px" }} >
                             {false ? 'Actualizar' : 'Crear'}
                         </Button>
@@ -103,7 +118,7 @@ export const FormIngresos = () => {
 
                 </Grid>
             </form>
-
+            <CustomModal open={showModal} onClose={handleCustomModalClose} message={modalMessage} isError={isErrorModal} />
         </ContainerComponent>
     )
 }

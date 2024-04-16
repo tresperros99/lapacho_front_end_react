@@ -7,6 +7,9 @@ let appConfig = {
     },
     socios:{
         socios:'socio'
+    },
+    ingresos: {
+        cargarIngresos:'/ingresos/agregar_ingreso',
     }
 }
 
