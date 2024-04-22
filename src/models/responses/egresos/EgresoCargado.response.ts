@@ -1,10 +1,10 @@
-export interface IngresoCargadoResponse {
+export interface EgresoCargadoResponse {
     status:       boolean;
     msg:          string;
-    nuevoIngreso: NuevoIngreso;
+    nuevoIngreso: NuevoEgreso;
 }
 
-export interface NuevoIngreso {
+export interface NuevoEgreso {
     cargadoEn:   Date;
     idSocio:     number;
     monto:       number;
@@ -12,4 +12,4 @@ export interface NuevoIngreso {
     descripcion: string;
 }
 
-export default IngresoCargadoResponse;
+export default EgresoCargadoResponse;

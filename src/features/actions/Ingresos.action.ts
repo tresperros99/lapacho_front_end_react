@@ -7,7 +7,6 @@ import { setError, setLoadingTipoIngreso } from "../ui/ui.slice";
 export const fetchTiposIngresos = (): AppThunk => async (dispatch, getState) => {
     const { ingresos} = getState();
     const { tiposIngresos } = ingresos;
-    console.log('aqui estoy');
     
     if (!tiposIngresos.length) { 
         dispatch(setLoadingTipoIngreso(true));

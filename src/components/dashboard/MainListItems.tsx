@@ -1,4 +1,8 @@
+import CreditScoreIcon from '@mui/icons-material/CreditScore';
+import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import MoneyOffCsredIcon from '@mui/icons-material/MoneyOffCsred';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import RequestQuoteOutlinedIcon from '@mui/icons-material/RequestQuoteOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
@@ -41,9 +45,31 @@ export const MainListItems = () => {
 
             <ListItemButton onClick={() => { navigate('/ingresos') }}>
                 <ListItemIcon>
-                    <PersonOutlinedIcon />
+                    <MonetizationOnOutlinedIcon />
                 </ListItemIcon>
                 <ListItemText primary="Formulario de Ingresos" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => { navigate('/panelIngresos') }}>
+                <ListItemIcon>
+                    <CreditScoreIcon />
+                </ListItemIcon>
+                <ListItemText primary="Panel de Ingresos" />
+            </ListItemButton>
+
+            <ListItemButton onClick={() => { navigate('/egresos') }}>
+                <ListItemIcon>
+                    <RequestQuoteOutlinedIcon />
+                </ListItemIcon>
+                <ListItemText primary="Formulario de Egresos" />
+            </ListItemButton>
+
+
+            <ListItemButton onClick={() => { navigate('/panelEgresos') }}>
+                <ListItemIcon>
+                    <MoneyOffCsredIcon />
+                </ListItemIcon>
+                <ListItemText primary="Panel de Egresos" />
             </ListItemButton>
 
             <ListItemButton>

@@ -42,7 +42,7 @@ const BuscadorSociosComponent: React.FC<BuscadorSociosComponentProps> = ({ fullW
         <div>
             <TextField
                 fullWidth={fullWidth}
-                label="Buscar"
+                label="Socio"
                 variant="outlined"
                 value={searchTerm}
                 onChange={handleChange}
