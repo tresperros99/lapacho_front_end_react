@@ -34,3 +34,22 @@ export const getListadoIngresosUsuarios = async (fechaDesde: string, fechaHasta:
         return null;
     }
 };
+
+export const getExcelIngresos = async (fechaDesde: string, fechaHasta: string) => {
+    try {
+        const url = appConfig.ingresos.obtenerExcelIngresos.replace('${fechaDesde}', fechaDesde).replace('${fechaHasta}', fechaHasta);
+        const excelIngresosResp = await axiosInstance.get(url, {
+            responseType: "arraybuffer", headers: { "Content-Type": "blob" }
+        });
+        if (excelIngresosResp) {
+            if (excelIngresosResp.status === 200) {
+                return excelIngresosResp.data
+            } else {
+                return excelIngresosResp.data
+            }
+        }
+    } catch (error) {
+        console.error('Error al obtener el excel de Ingresos:', error);
+        return null;
+    }
+};

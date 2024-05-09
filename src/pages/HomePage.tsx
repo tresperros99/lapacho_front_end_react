@@ -1,10 +1,46 @@
 import { Copyright } from "@mui/icons-material";
-import { Box, Container, Grid, Paper, Toolbar } from "@mui/material";
-import Chart from "../components/dashboard/Chart";
-import Deposits from "../components/dashboard/Deposits";
-import Orders from "../components/dashboard/Orders";
+import { Box, Container, Grid, Toolbar, Typography } from "@mui/material";
+import moment from 'moment';
+import { Calendar, momentLocalizer } from 'react-big-calendar';
+import 'react-big-calendar/lib/css/react-big-calendar.css';
+
+interface CalendarEvent {
+    title: string;
+    start: Date;
+    end: Date;
+    allDay?: boolean;
+    resource?: any;
+}
 
 export const HomePage = () => {
+    const localizer = momentLocalizer(moment);
+
+    const myEventsList: CalendarEvent[] = [
+        {
+            title: 'Cancha registrada',
+            start: moment().toDate(), // Hoy
+            end: moment().add(1, 'hours').toDate(), // +1 hora
+            allDay: false
+        },
+        {
+            title: 'Torneo Integracion',
+            start: moment().add(1, 'days').toDate(), // Mañana
+            end: moment().add(2, 'days').toDate(), // Pasado mañana
+            allDay: true
+        },
+        {
+            title: 'Almuerzo General',
+            start: moment().add(2, 'days').toDate(), // Mañana
+            end: moment().add(3, 'days').toDate(), // Pasado mañana
+            allDay: true
+        },
+        {
+            title: 'Mantenimiento de mesas',
+            start: moment().add(4, 'days').toDate(), // Mañana
+            end: moment().add(5, 'days').toDate(), // Pasado mañana
+            allDay: true
+        }
+    ];
     return (
         <Box
             component="main"
@@ -19,40 +55,18 @@ export const HomePage = () => {
             }}
         >
             <Toolbar />
+
             <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-                <Grid container spacing={3}>
-                    {/* Chart */}
-                    <Grid item xs={12} md={8} lg={9}>
-                        <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 240,
-                            }}
-                        >
-                            <Chart />
-                        </Paper>
-                    </Grid>
-                    {/* Recent Deposits */}
-                    <Grid item xs={12} md={4} lg={3}>
-                        <Paper
-                            sx={{
-                                p: 2,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                height: 240,
-                            }}
-                        >
-                            <Deposits />
-                        </Paper>
-                    </Grid>
-                    {/* Recent Orders */}
-                    <Grid item xs={12}>
-                        <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
-                            <Orders />
-                        </Paper>
-                    </Grid>
+                <Typography textAlign={'center'} variant='h4' marginBottom={2}>Calendario</Typography>
+                <Grid container justifyContent={'center'} alignItems={'center'}>
+                    <Calendar
+                        localizer={localizer}
+                        events={myEventsList}
+                        startAccessor="start"
+                        endAccessor="end"
+
+                        style={{ height: 600, width: '100%' }}
+                    />
                 </Grid>
                 <Copyright sx={{ pt: 4 }} />
             </Container>

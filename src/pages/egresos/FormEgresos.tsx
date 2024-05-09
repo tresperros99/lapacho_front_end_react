@@ -8,7 +8,7 @@ import BuscadorSociosComponent from "../../components/genericos/BuscadorSociosCo
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import CustomModal from "../../components/genericos/CustomModal";
 import SelectTipoIngresoComponent from "../../components/genericos/SeleccionarTipoIngreso";
-import { formatearFechaLocal } from "../../helpers/Fechas";
+import { formatearFechaLocal } from "../../helpers/fechas";
 import NuevoEgresoDto from "../../models/dtos/egresos/NuevoEgresoDto.model";
 import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
 import { Socio } from "../../models/responses/socios/SociosPorCedula.response";

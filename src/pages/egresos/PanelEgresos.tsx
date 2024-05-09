@@ -1,4 +1,4 @@
-import { Grid, TableFooter, TablePagination, TextField, Typography } from '@mui/material';
+import { Button, Grid, TableFooter, TablePagination, TextField, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,9 +7,9 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
-import { getListadoEgresosUsuarios } from '../../api/ApiEgresos'; // Importar la función de egresos
+import { getExcelEgresos, getListadoEgresosUsuarios } from '../../api/ApiEgresos'; // Importar la función de egresos
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
-import { formatearFechaTipoDate } from '../../helpers/Fechas';
+import { formatearFechaTipoDate } from '../../helpers/fechas';
 import { EgresosXFecha } from '../../models/responses/egresos/ListadoEgresosUsuario.response';
 
 const PanelEgresos = () => {
@@ -40,6 +40,21 @@ const PanelEgresos = () => {
             console.error('Error al obtener los egresos:', error);
         }
     };
+    const handleDescargarPdf = async () => {
+        if (fechaDesde && fechaHasta) {
+            const fechaDesdeFormateada = formatearFechaTipoDate(fechaDesde);
+            const fechaHastaFormateada = formatearFechaTipoDate(fechaDesde)
+            const getPDF = await getExcelEgresos(fechaDesdeFormateada, fechaHastaFormateada)
+            if (getPDF) {
+                const fileURL = URL.createObjectURL(new Blob([getPDF]));
+                const link = document.createElement("a");
+                link.href = fileURL;
+                link.setAttribute("download", `reporte_${fechaDesdeFormateada}_${fechaHastaFormateada}_.xls`);
+                document.body.appendChild(link);
+                link.click();
+            }
+        }
+    }
 
     const handleChangePage = (event: unknown, newPage: number) => {
         setPage(newPage);
@@ -90,6 +105,16 @@ const PanelEgresos = () => {
                             shrink: true,
                         }}
                     />
+                </Grid>
+                <Grid container item xs={12} justifyContent={`flex-end`}>
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={handleDescargarPdf}
+                        disabled={(!fechaDesde || !fechaHasta)}
+                    >
+                        Descargar PDF
+                    </Button>
                 </Grid>
             </Grid>
 

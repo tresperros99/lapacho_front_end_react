@@ -52,3 +52,22 @@ export const getListadoEgresosUsuarios = async (fechaDesde: string, fechaHasta: 
         return null;
     }
 };
+
+export const getExcelEgresos = async (fechaDesde: string, fechaHasta: string) => {
+    try {
+        const url = appConfig.egresos.obtenerExcelEgresos.replace('${fechaDesde}', fechaDesde).replace('${fechaHasta}', fechaHasta);
+        const excelEgresosResp = await axiosInstance.get(url, {
+            responseType: "arraybuffer", headers: { "Content-Type": "blob" }
+        });
+        if (excelEgresosResp) {
+            if (excelEgresosResp.status === 200) {
+                return excelEgresosResp.data
+            } else {
+                return excelEgresosResp.data
+            }
+        }
+    } catch (error) {
+        console.error('Error al obtener el excel de Egresos:', error);
+        return null;
+    }
+};
