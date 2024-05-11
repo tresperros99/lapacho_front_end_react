@@ -22,7 +22,7 @@ const PanelEgresos = () => {
     useEffect(() => {
         // Verificar si fechaHasta está definida
         if (fechaHasta !== null) {
-            fetchData(); // Llama a la función para obtener los egresos
+            fetchData(); // Llama a la función para obtener los egresos©
         }
     }, [page, fechaHasta]); // Se ejecuta cuando cambia la página o la fecha hasta
 
@@ -57,6 +57,8 @@ const PanelEgresos = () => {
     }
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        console.log(event);
+
         setPage(newPage);
     };
 

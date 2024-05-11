@@ -43,6 +43,7 @@ const PanelIngresos = () => {
 
 
     const handleChangePage = (event: unknown, newPage: number) => {
+        event
         setPage(newPage);
     };
 
