@@ -20,11 +20,10 @@ const PanelIngresos = () => {
     const [fechaHasta, setFechaHasta] = useState<Date | null>(null);
 
     useEffect(() => {
-        // Verificar si fechaHasta está definida
         if (fechaHasta !== null) {
-            fetchData(); // Llama a la función para obtener los ingresos
+            fetchData();
         }
-    }, [page, fechaHasta]); // Se ejecuta cuando cambia la página o la fecha hasta
+    }, [page, fechaHasta]);
 
     const fetchData = async () => {
         try {
@@ -34,7 +33,7 @@ const PanelIngresos = () => {
                 (page + 1).toString()
             );
             if (response) {
-                setListadoIngresos(response.ingresosXFecha); // Actualiza el estado con la lista de ingresos
+                setListadoIngresos(response.ingresosXFecha);
             }
         } catch (error) {
             console.error('Error al obtener los ingresos:', error);
@@ -118,7 +117,7 @@ const PanelIngresos = () => {
                         onClick={handleDescargarPdf}
                         disabled={(!fechaDesde || !fechaHasta)}
                     >
-                        Descargar PDF
+                        Descargar Excel
                     </Button>
                 </Grid>
 
