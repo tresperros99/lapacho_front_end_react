@@ -15,6 +15,7 @@ import { crearActualizarEliminarProfesor } from '../../api/ApiProfesores';
 import { RootState, useAppDispatch } from '../../app/store';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { fetchNominaProfesores } from '../../features/profesores/profesoresThunk';
+import separadorMiles from '../../helpers/fechas';
 import { ProfesoresFormateado } from '../../models/responses/profesores/NominaProfesores.response';
 const PanelProfesores = () => {
     const dispatch = useAppDispatch();
@@ -72,7 +73,7 @@ const PanelProfesores = () => {
                                     <TableCell component="th" scope="row">
                                         {profesor.nombreProfesor}
                                     </TableCell>
-                                    <TableCell align="right">{profesor.costoXHora}</TableCell>
+                                    <TableCell align="right">{separadorMiles(profesor.costoXHora, true)}</TableCell>
                                     <TableCell align="right">{profesor.cedula}</TableCell>
                                     <TableCell align="right">{profesor.contactoProfesor}</TableCell>
                                     <TableCell align="right">{profesor.estadoProfesor}</TableCell>

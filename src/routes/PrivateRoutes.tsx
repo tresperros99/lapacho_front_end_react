@@ -9,11 +9,20 @@ import FormProfesores from '../pages/profesores/FormProfesores';
 import PanelProfesores from '../pages/profesores/PanelProfesores';
 import FormSocios from '../pages/socios/FormSocios';
 import PanelSocios from '../pages/socios/PanelSocios';
+import CuotasPagadas from '../pages/socios/miSocio/CuotasPagadas';
+import CuotasPagadasDelMes from '../pages/socios/miSocio/CuotasPagadasDelMes';
+import CuotasPendientes from '../pages/socios/miSocio/CuotasPendientes';
+import CuotasPendientesMes from '../pages/socios/miSocio/CuotasPendientesMes';
 export const PrivateRoutes = () => {
     return (
         <Routes>
             <Route path='/' element={<MainLayout> <HomePage /> </MainLayout>} />
             <Route path='formProfesor' element={<MainLayout><FormProfesores /></MainLayout>} />
+            <Route path='cuotasPendientes' element={<MainLayout><CuotasPendientes /></MainLayout>} />
+            <Route path='cuotasPagadas' element={<MainLayout><CuotasPagadas /></MainLayout>} />
+            <Route path='cuotasAtrasadas' element={<MainLayout><PanelProfesores /></MainLayout>} />
+            <Route path='cuotasPendientesMes' element={<MainLayout><CuotasPendientesMes /></MainLayout>} />
+            <Route path='cuotasPagadasMes' element={<MainLayout><CuotasPagadasDelMes /></MainLayout>} />
             <Route path='panelProfesor' element={<MainLayout><PanelProfesores /></MainLayout>} />
             <Route path='formSocios' element={<MainLayout><FormSocios /></MainLayout>} />
             <Route path='panelSocios' element={<MainLayout><PanelSocios /></MainLayout>} />

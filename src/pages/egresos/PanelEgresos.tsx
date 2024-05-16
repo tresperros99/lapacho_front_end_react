@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
-import { getExcelEgresos, getListadoEgresosUsuarios } from '../../api/ApiEgresos'; // Importar la función de egresos
+import { getExcelEgresos, getListadoEgresosUsuarios } from '../../api/ApiEgresos';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../helpers/fechas';
 import { EgresosXFecha } from '../../models/responses/egresos/ListadoEgresosUsuario.response';
@@ -15,16 +15,15 @@ import { EgresosXFecha } from '../../models/responses/egresos/ListadoEgresosUsua
 const PanelEgresos = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
-    const [listadoEgresos, setListadoEgresos] = useState<EgresosXFecha[]>([]); // Cambiar el tipo a EgresosXFecha
+    const [listadoEgresos, setListadoEgresos] = useState<EgresosXFecha[]>([]);
     const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
     const [fechaHasta, setFechaHasta] = useState<Date | null>(null);
 
     useEffect(() => {
-        // Verificar si fechaHasta está definida
         if (fechaHasta !== null) {
-            fetchData(); // Llama a la función para obtener los egresos©
+            fetchData();
         }
-    }, [page, fechaHasta]); // Se ejecuta cuando cambia la página o la fecha hasta
+    }, [page, fechaHasta]);
 
     const fetchData = async () => {
         try {
@@ -34,7 +33,7 @@ const PanelEgresos = () => {
                 (page + 1).toString()
             );
             if (response) {
-                setListadoEgresos(response.egresosXFecha); // Actualiza el estado con la lista de egresos
+                setListadoEgresos(response.egresosXFecha);
             }
         } catch (error) {
             console.error('Error al obtener los egresos:', error);
@@ -57,7 +56,7 @@ const PanelEgresos = () => {
     }
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        console.log(event);
+        event
 
         setPage(newPage);
     };
@@ -115,7 +114,7 @@ const PanelEgresos = () => {
                         onClick={handleDescargarPdf}
                         disabled={(!fechaDesde || !fechaHasta)}
                     >
-                        Descargar PDF
+                        Descargar Egresos
                     </Button>
                 </Grid>
             </Grid>

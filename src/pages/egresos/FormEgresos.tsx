@@ -4,14 +4,12 @@ import { useFormik } from "formik";
 import { useEffect, useState } from "react";
 import * as yup from 'yup';
 import { postCargarEgreso } from "../../api/ApiEgresos";
-import BuscadorSociosComponent from "../../components/genericos/BuscadorSociosComponent";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import CustomModal from "../../components/genericos/CustomModal";
 import SelectTipoIngresoComponent from "../../components/genericos/SeleccionarTipoIngreso";
 import { formatearFechaLocal } from "../../helpers/fechas";
 import NuevoEgresoDto from "../../models/dtos/egresos/NuevoEgresoDto.model";
 import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
-import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
 
 // Definición de las propiedades del formulario
 
@@ -19,13 +17,11 @@ const validationSchema = yup.object({
     idTipoEgreso: yup.number().required('El tipo de Egreso es requerido'),
     descripcionEgreso: yup.string().required('La descripción es requerida'),
     montoEngreso: yup.number().required('El monto es requerido'),
-    idSocio: yup.number().required('El socio es requerido'),
     nroFactura: yup.string().required('El número de factura es requerido'),
     fechaPago: yup.string().required('La fecha de pago es requerida'),
 });
 
 export const FormEgresos = () => {
-    const [socioSeleccionado, setSocioSeleccionado] = useState<Socio | null>(null);
     const [tipoIngreso, setTipoIngreso] = useState<TiposIngreso | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -38,11 +34,6 @@ export const FormEgresos = () => {
     };
 
     useEffect(() => {
-        if (socioSeleccionado) {
-            formik.setFieldValue('idSocio', Number(socioSeleccionado.idSocio))
-        }
-    }, [socioSeleccionado]);
-    useEffect(() => {
         if (tipoIngreso) {
             formik.setFieldValue('idTipoEgreso', tipoIngreso.idTipo)
         }
@@ -54,7 +45,6 @@ export const FormEgresos = () => {
             idTipoEgreso: 0,
             descripcionEgreso: '',
             montoEngreso: 0,
-            idSocio: 0,
             nroFactura: '',
             fechaPago: '', // Fecha inicial
         },
@@ -112,9 +102,6 @@ export const FormEgresos = () => {
                             error={formik.touched.montoEngreso && Boolean(formik.errors.montoEngreso)}
                             helperText={formik.touched.montoEngreso && formik.errors.montoEngreso}
                         />
-                    </Grid>
-                    <Grid item xs={6}>
-                        <BuscadorSociosComponent fullWidth setSocioSeleccionado={setSocioSeleccionado} />
                     </Grid>
                     <Grid item xs={6}>
                         <TextField
