@@ -9,7 +9,6 @@ import SelectTipoIngresoComponent from "../../components/genericos/SeleccionarTi
 import { formatearFechaLocal } from "../../helpers/fechas";
 import NuevoIngresoDto from "../../models/dtos/ingresos/NuevoIngresoDto.models";
 import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
-import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
 
 const validationSchema = yup.object({
     idTipoIngreso: yup.string().required('El tipo de Ingreso es requerido'),
@@ -19,7 +18,6 @@ const validationSchema = yup.object({
 });
 
 export const FormIngresos = () => {
-    const [socioSeleccionado, setSocioSeleccionado] = useState<Socio | null>(null);
     const [tipoIngreso, setTipoIngreso] = useState<TiposIngreso | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -32,14 +30,7 @@ export const FormIngresos = () => {
     };
 
     useEffect(() => {
-        if (socioSeleccionado) {
-            console.log(socioSeleccionado);
-            formik.setFieldValue('idSocio', socioSeleccionado.idSocio)
-        }
-    }, [socioSeleccionado]);
-    useEffect(() => {
         if (tipoIngreso) {
-            console.log(socioSeleccionado);
             formik.setFieldValue('idTipoIngreso', tipoIngreso.idTipo)
         }
     }, [tipoIngreso]);

@@ -10,7 +10,6 @@ import SelectTipoIngresoComponent from "../../components/genericos/SeleccionarTi
 import { formatearFechaLocal } from "../../helpers/fechas";
 import NuevoEgresoDto from "../../models/dtos/egresos/NuevoEgresoDto.model";
 import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
-import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
 
 // Definición de las propiedades del formulario
 
@@ -23,7 +22,6 @@ const validationSchema = yup.object({
 });
 
 export const FormEgresos = () => {
-    const [socioSeleccionado, setSocioSeleccionado] = useState<Socio | null>(null);
     const [tipoIngreso, setTipoIngreso] = useState<TiposIngreso | null>(null);
     const [showModal, setShowModal] = useState(false);
     const [modalMessage, setModalMessage] = useState('');
@@ -35,11 +33,6 @@ export const FormEgresos = () => {
         setShowModal(false);
     };
 
-    useEffect(() => {
-        if (socioSeleccionado) {
-            formik.setFieldValue('idSocio', Number(socioSeleccionado.idSocio))
-        }
-    }, [socioSeleccionado]);
     useEffect(() => {
         if (tipoIngreso) {
             formik.setFieldValue('idTipoEgreso', tipoIngreso.idTipo)
