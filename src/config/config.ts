@@ -1,4 +1,4 @@
-let appConfig = {
+const appConfig = {
 	auth: {
 		login: 'auth/login'
 	},
@@ -25,7 +25,14 @@ let appConfig = {
         getListadocuotasPendientesMes: 'cuotas_club/cuotas_pendientes_mes',
         getCuotasPagadasDelMes: '/cuotas_club/cuotas_pagadas_mes',
         getGrillaDeCuotasExcel: '/cuotas_club/cuotas_reporte'
-	}
+    },
+    eventos: {
+        obtenerEventosDelMes: '/calendario_eventos/eventos_mes',
+        obtenerEventosDelAnio: '/calendario_eventos/eventos_annio',
+    },
+    reservas: {
+        getReservasDelClub :'/reserva_en_club/obtener_reservas_club'
+    }
 }
 
 export default appConfig;
