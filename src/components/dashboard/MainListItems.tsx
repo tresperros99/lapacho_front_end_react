@@ -1,21 +1,33 @@
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CurrencyExchangeOutlinedIcon from '@mui/icons-material/CurrencyExchangeOutlined';
+import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
+import MoneyOffIcon from '@mui/icons-material/MoneyOff';
 import MoneyOffCsredIcon from '@mui/icons-material/MoneyOffCsred';
+import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
 import PersonOutlinedIcon from '@mui/icons-material/PersonOutlined';
+import PriceCheckOutlinedIcon from '@mui/icons-material/PriceCheckOutlined';
 import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined';
 import SportsTennisOutlinedIcon from '@mui/icons-material/SportsTennisOutlined';
 import StickyNote2OutlinedIcon from '@mui/icons-material/StickyNote2Outlined';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-
-// Tipo para el estado de apertura de los submenús
 type OpenState = {
     [key: string]: boolean;
 };
 
-export const MainListItems = () => {
+interface MainListItemsProps {
+    openNavBar: boolean;
+}
+
+export const MainListItems = ({ openNavBar }: MainListItemsProps) => {
     const navigate = useNavigate();
     const [open, setOpen] = useState<OpenState>({});
+
+    console.log(openNavBar);
 
     // Función para manejar clics en los ítems del menú principal
     const handleClick = (item: string) => {
@@ -34,14 +46,29 @@ export const MainListItems = () => {
             </ListItemButton>
             <Collapse in={open['MiSocio']} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/cuotasPendientes') }}>
-                        <ListItemText primary="Cuotas Pendientes Socio" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/cuotasPendientes') }}>
+                        <ListItemIcon>
+                            <MoneyOffIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Cuotas Pendientes" />
+
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/cuotasPagadas') }}>
-                        <ListItemText primary="Cuotas Pagadas Socio" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/cuotasPagadas') }}>
+                        <ListItemIcon>
+                            <AttachMoneyIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Cuotas Pagadas " />
+
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/pagoDeCuotas') }}>
-                        <ListItemText primary="Pago de Cuotas" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/pagoDeCuotas') }}>
+                        <ListItemIcon>
+                            <PaidOutlinedIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Pago de Cuotas" />
+
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -55,11 +82,20 @@ export const MainListItems = () => {
             </ListItemButton>
             <Collapse in={open['Profesores']} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/formProfesor') }}>
-                        <ListItemText primary="Registrar Profesor" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/formProfesor') }}>
+                        <ListItemIcon>
+                            <GroupAddOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText secondary="Registrar Profesor" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/panelProfesor') }}>
-                        <ListItemText primary="Panel de Profesores" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/panelProfesor') }}>
+                        <ListItemIcon>
+                            <FormatListBulletedOutlinedIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Panel de Profesores" />
+
+
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -69,15 +105,24 @@ export const MainListItems = () => {
                 <ListItemIcon>
                     <PersonOutlinedIcon />
                 </ListItemIcon>
+
                 <ListItemText primary="Socios" />
+
             </ListItemButton>
             <Collapse in={open['Socios']} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/formSocios') }}>
-                        <ListItemText primary="Registrar Socios" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/formSocios') }}>
+                        <ListItemIcon>
+                            <PersonAddOutlinedIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Registrar Socios" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/panelSocios') }}>
-                        <ListItemText primary="Panel de Socios" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/panelSocios') }}>
+                        <ListItemIcon>
+                            <FormatListBulletedOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText secondary="Panel de Socios" />
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -91,11 +136,18 @@ export const MainListItems = () => {
             </ListItemButton>
             <Collapse in={open['Ingresos']} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/ingresos') }}>
-                        <ListItemText primary="Formulario de Ingresos" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/ingresos') }}>
+                        <ListItemIcon>
+                            <CurrencyExchangeOutlinedIcon />
+                        </ListItemIcon>
+
+                        <ListItemText secondary="Formulario de Ingresos" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/panelIngresos') }}>
-                        <ListItemText primary="Panel de Ingresos" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/panelIngresos') }}>
+                        <ListItemIcon>
+                            <FormatListBulletedOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText secondary="Panel de Ingresos" />
                     </ListItemButton>
                 </List>
             </Collapse>
@@ -109,11 +161,17 @@ export const MainListItems = () => {
             </ListItemButton>
             <Collapse in={open['Egresos']} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/egresos') }}>
-                        <ListItemText primary="Formulario de Egresos" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/egresos') }}>
+                        <ListItemIcon>
+                            <FormatListBulletedOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText secondary="Formulario de Egresos" />
                     </ListItemButton>
-                    <ListItemButton sx={{ pl: 4 }} onClick={() => { navigate('/panelEgresos') }}>
-                        <ListItemText primary="Panel de Egresos" />
+                    <ListItemButton sx={{ pl: 3 }} onClick={() => { navigate('/panelEgresos') }}>
+                        <ListItemIcon>
+                            <PriceCheckOutlinedIcon />
+                        </ListItemIcon>
+                        <ListItemText secondary="Panel de Egresos" />
                     </ListItemButton>
                 </List>
             </Collapse>
