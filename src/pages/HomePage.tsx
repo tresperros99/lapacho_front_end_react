@@ -1,40 +1,45 @@
-import { DateSelectArg, DatesSetArg, EventInput } from '@fullcalendar/core/index.js';
+import { DateSelectArg, EventInput } from '@fullcalendar/core/index.js';
 import esLocale from '@fullcalendar/core/locales/es';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import React, { useCallback, useEffect, useState } from 'react';
+import { Typography } from '@mui/material';
+import React, { useEffect, useRef, useState } from 'react';
+import { getEventosDelMes } from '../api/ApiEventos';
 import { getReservasDelClub } from '../api/ApiReservas';
 import EventFormModal from '../components/calendarEvents/EventFormModal';
 import { ContainerComponent } from '../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../helpers/fechas';
 
-// Define el tipo para los eventos que esperas recibir de la API
-interface Reserva {
-    title: string;
-    start: string;
-    end: string;
-    allDay?: boolean;
-    extendedProps?: {
-        description?: string;
-    };
-}
 
 export const HomePage: React.FC = () => {
     const [events, setEvents] = useState<EventInput[]>([]);
+    const calendarRef = useRef<FullCalendar>(null);
+
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedInfo, setSelectedInfo] = useState<DateSelectArg | null>(null);
-    const [currentDates, setCurrentDates] = useState<{ start: Date; end: Date }>({ start: new Date(), end: new Date() });
+    const [currentDates, setCurrentDates] = useState<{ start: Date; end: Date } | null>(null);
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
         setSelectedInfo(selectInfo);
         setModalIsOpen(true);
     };
 
+
     const handleModalClose = () => {
         setModalIsOpen(false);
         setSelectedInfo(null);
+    };
+    const handleDatesRender = () => {
+        const calendarApi = calendarRef.current?.getApi();
+        if (calendarApi) {
+            const view = calendarApi.view;
+            const start = view.activeStart;
+            const end = view.activeEnd;
+            setCurrentDates({ start: start, end: end });
+
+        }
     };
 
     const handleFormSubmit = (values: any) => {
@@ -53,46 +58,47 @@ export const HomePage: React.FC = () => {
         }
     };
 
-    const handleDatesSet = useCallback((info: DatesSetArg) => {
-        const startDate = info.start;
-        const endDate = info.end;
-        setCurrentDates({ start: startDate, end: endDate });
-    }, []);
 
+    const fetchEventos = async (start: Date, end: Date) => {
+        const reservas = await getReservasDelClub(formatearFechaTipoDate(start), formatearFechaTipoDate(end), 1);
+        const mes = start.getMonth() + 1;
+        const eventos = await getEventosDelMes(mes);
+        //TODO: esto trae todo los eventos del mesel busdc
+        if (reservas) {
+            const events: EventInput[] = reservas.reservasClub.map(eventos => ({
+                title: eventos.nombreCmp,
+                start: eventos.horaDesde,
+                end: eventos.horaHasta,
+                allDay: false,
+                extendedProps: {
+                    description: eventos.nombreCmp
+                }
+            }));
+
+            setEvents(events);
+        }
+    };
     useEffect(() => {
-        const fetchReservas = async () => {
-            const reservas = await getReservasDelClub(formatearFechaTipoDate(currentDates.start), formatearFechaTipoDate(currentDates.end), 1);
 
-            if (reservas) {
-                const events: EventInput[] = reservas.reservasClub.map(eventos => ({
-                    title: eventos.nombreCmp,
-                    start: eventos.horaDesde,
-                    end: eventos.horaHasta,
-                    allDay: false,
-                    extendedProps: {
-                        description: eventos.nombreCmp
-                    }
-                }));
 
-                setEvents(events);
-            }
-        };
-
-        if (currentDates.start && currentDates.end) {
-            fetchReservas();
+        if (currentDates && currentDates.start && currentDates.end) {
+            fetchEventos(currentDates.start, currentDates.end);
         }
     }, [currentDates]);
 
     return (
         <ContainerComponent>
+            <Typography textAlign={'center'} variant='h4' marginBottom={2}>Calendario de Actividades</Typography>
+
             <FullCalendar
                 plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
                 initialView="timeGridWeek"
                 events={events}
+                ref={calendarRef}
                 locale={esLocale}
                 selectable={true}
                 select={handleDateSelect}
-                datesSet={handleDatesSet}
+                datesSet={handleDatesRender}
             />
             <EventFormModal
                 isOpen={modalIsOpen}

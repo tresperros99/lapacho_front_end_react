@@ -1,6 +1,6 @@
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { TableFooter, TablePagination } from '@mui/material';
+import { TableFooter, TablePagination, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,7 +15,7 @@ import { crearActualizarEliminarProfesor } from '../../api/ApiProfesores';
 import { RootState, useAppDispatch } from '../../app/store';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { fetchNominaProfesores } from '../../features/profesores/profesoresThunk';
-import separadorMiles from '../../helpers/fechas';
+import { separadorMiles } from '../../helpers/Numbers';
 import { ProfesoresFormateado } from '../../models/responses/profesores/NominaProfesores.response';
 const PanelProfesores = () => {
     const dispatch = useAppDispatch();
@@ -44,11 +44,12 @@ const PanelProfesores = () => {
         navigate('/formProfesor', { state: profesor });
     }
     const eliminarProfesor = async (idProfesor: number) => {
-        //TODO: aca llamar a la api para eliminar
         await crearActualizarEliminarProfesor('eliminar', undefined, idProfesor)
     }
     return (
         <ContainerComponent>
+
+            <Typography textAlign={'center'} variant='h4' marginBottom={2}>Panel de Profesores</Typography>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">

@@ -1,6 +1,7 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
+import { NumericFormat } from 'react-number-format';
 import * as yup from 'yup';
 import { postCargarIngreso } from "../../api/ApiIngresos";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
@@ -45,27 +46,22 @@ export const FormIngresos = () => {
         },
         validationSchema: validationSchema,
         onSubmit: async (nuevoIngreso: NuevoIngresoDto) => {
-            //TODO: llamar a la api para cargar ingreso
             try {
-
-                console.log(nuevoIngreso);
-
                 const dtoCast: NuevoIngresoDto = { ...nuevoIngreso, fechaIngreso: formatearFechaLocal(nuevoIngreso.fechaIngreso), montoIngreso: Number(nuevoIngreso.montoIngreso) };
                 const cargarIngreso = await postCargarIngreso(dtoCast);
                 if (cargarIngreso) {
                     setIsErrorModal(false);
                     setModalMessage(cargarIngreso.msg);
                     setShowModal(true);
-
                 }
             } catch (error) {
                 setIsErrorModal(true);
                 setModalMessage('Error al cargar el ingreso');
                 setShowModal(true);
             }
-
         },
     });
+
     return (
         <ContainerComponent>
             <form onSubmit={formik.handleSubmit}>
@@ -88,13 +84,17 @@ export const FormIngresos = () => {
                         />
                     </Grid>
                     <Grid item xs={6}>
-                        <TextField
+                        <NumericFormat
                             fullWidth
+                            customInput={TextField}
+                            thousandSeparator={'.'}
+                            decimalSeparator=","
+                            suffix=" Gs."
                             id="montoIngreso"
                             name="montoIngreso"
                             label="Monto"
                             value={formik.values.montoIngreso}
-                            onChange={formik.handleChange}
+                            onValueChange={(values) => formik.setFieldValue('montoIngreso', values.value)}
                             onBlur={formik.handleBlur}
                             error={formik.touched.montoIngreso && Boolean(formik.errors.montoIngreso)}
                             helperText={formik.touched.montoIngreso && formik.errors.montoIngreso}
@@ -116,21 +116,17 @@ export const FormIngresos = () => {
                                 shrink: true,
                             }}
                         />
-
                     </Grid>
                     <Grid justifyContent={'center'} alignItems={'center'} container mt={2}>
                         <Button color="primary" variant="contained" type="submit" style={{ minWidth: "250px" }} >
                             {false ? 'Actualizar' : 'Crear'}
                         </Button>
                     </Grid>
-
-
                 </Grid>
             </form>
             <CustomModal open={showModal} onClose={handleCustomModalClose} message={modalMessage} isError={isErrorModal} />
         </ContainerComponent>
     )
 }
-
 
 export default FormIngresos;

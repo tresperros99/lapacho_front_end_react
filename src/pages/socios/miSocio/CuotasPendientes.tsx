@@ -1,23 +1,23 @@
 import { Button, FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { getCuotasPagadasSocio, getGrillaCuotasExcel, postPagarCuotaPendienteSocio } from '../../../api/ApiCuotas';
+import { getCuotasPendientesSocio, getGrillaCuotasExcel, postPagarCuotaPendienteSocio } from '../../../api/ApiCuotas';
 import { ContainerComponent } from '../../../components/genericos/ContainerComponent';
+import { separadorMiles } from '../../../helpers/Numbers';
 import { capitalizePorPalabra } from '../../../helpers/capitalize';
-import separadorMiles, { formatearFechaTipoDate, getFormattedDate } from '../../../helpers/fechas';
-import PagarCuotaPendienteSocioDto from '../../../models/dtos/egresos/PagarCuotaPendienteSocioDto.model';
-import { CuotasPagada } from '../../../models/responses/cuotas/ListadoCuotasPagadasSocio.response';
+import { formatearFechaTipoDate, getFormattedDate } from '../../../helpers/fechas';
+import { CuotaPagada } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
 
 const CuotasPendientes = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [cuotasPendientes, setCuotasPendientes] = useState<CuotasPagada[]>([]);
+    const [cuotasPendientes, setCuotasPendientes] = useState<CuotaPagada[]>([]);
     const [numeroDocumento, setNumeroDocumento] = useState<string>('');
     const [anio, setAnio] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<string>('asc');
 
     const fetchData = async () => {
         try {
-            const response = await getCuotasPagadasSocio(numeroDocumento, anio);
+            const response = await getCuotasPendientesSocio(numeroDocumento, anio);
             if (response) {
                 if (Boolean(response.status)) {
                     const cuotasPendientes = response.cuotasPagadas.filter(cuota => cuota.fechaPago === null);
@@ -34,7 +34,7 @@ const CuotasPendientes = () => {
         }
     };
 
-    const sortData = (data: CuotasPagada[]) => {
+    const sortData = (data: CuotaPagada[]) => {
         return data.sort((a, b) => {
             const monthA = new Date(a.fechaVencimiento).getMonth();
             const monthB = new Date(b.fechaVencimiento).getMonth();
@@ -51,7 +51,7 @@ const CuotasPendientes = () => {
         setPage(0);
     };
 
-    const handlePagoCuota = async (pagarCuotaPendienteSocioDto: PagarCuotaPendienteSocioDto) => {
+    const handlePagoCuota = async (pagarCuotaPendienteSocioDto: any) => {
         const pagarCuotaPendienteSocio = await postPagarCuotaPendienteSocio(pagarCuotaPendienteSocioDto);
         if (pagarCuotaPendienteSocio) {
             fetchData();

@@ -6,7 +6,8 @@ const appConfig = {
 		profesores: 'profesores'
 	},
 	socios: {
-		socios: 'socio'
+        socios: 'socio',
+        buscadorSocio:'/socio/obtener_socios'
 	},
 	ingresos: {
 		cargarIngresos: '/ingresos/agregar_ingreso',
@@ -20,8 +21,9 @@ const appConfig = {
 		obtenerExcelEgresos: '/egresos/reportes_egresos_excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}'
 	},
 	cuotas: {
-        getListadoCuotasPagadasSocio:'/cuotas_club/cuota_socio',
-        pagarCuotaSocio: '/pagos_socio/socio/pagar_cuota',
+        getListadoCuotasPendientesSocio:'/cuotas_club/cuota_socio',
+        pagarCuotaSocio: '/pagos_socio/socio/pagar_cuota_varias',
+        pagarCuotasSociosVarias: '/pagos_socio/socio/pagar_cuota_varias',
         getListadocuotasPendientesMes: 'cuotas_club/cuotas_pendientes_mes',
         getCuotasPagadasDelMes: '/cuotas_club/cuotas_pagadas_mes',
         getGrillaDeCuotasExcel: '/cuotas_club/cuotas_reporte'

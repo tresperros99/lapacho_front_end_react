@@ -13,6 +13,7 @@ import CuotasPagadas from '../pages/socios/miSocio/CuotasPagadas';
 import CuotasPagadasDelMes from '../pages/socios/miSocio/CuotasPagadasDelMes';
 import CuotasPendientes from '../pages/socios/miSocio/CuotasPendientes';
 import CuotasPendientesMes from '../pages/socios/miSocio/CuotasPendientesMes';
+import PagoDeCuotas from '../pages/socios/miSocio/PagoDeCuotas';
 export const PrivateRoutes = () => {
     return (
         <Routes>
@@ -20,6 +21,7 @@ export const PrivateRoutes = () => {
             <Route path='formProfesor' element={<MainLayout><FormProfesores /></MainLayout>} />
             <Route path='cuotasPendientes' element={<MainLayout><CuotasPendientes /></MainLayout>} />
             <Route path='cuotasPagadas' element={<MainLayout><CuotasPagadas /></MainLayout>} />
+            <Route path='pagoDeCuotas' element={<MainLayout><PagoDeCuotas /></MainLayout>} />
             <Route path='cuotasAtrasadas' element={<MainLayout><PanelProfesores /></MainLayout>} />
             <Route path='cuotasPendientesMes' element={<MainLayout><CuotasPendientesMes /></MainLayout>} />
             <Route path='cuotasPagadasMes' element={<MainLayout><CuotasPagadasDelMes /></MainLayout>} />
