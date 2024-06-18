@@ -1,4 +1,4 @@
-import { Button, Grid, TableFooter, TablePagination, TextField, Typography } from '@mui/material';
+import { Button, Grid, TableFooter, TablePagination, TextField } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -9,6 +9,7 @@ import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
 import { getExcelIngresos, getListadoIngresosUsuarios } from '../../api/ApiIngresos';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
+import { separadorMiles } from '../../helpers/Numbers';
 import { formatearFechaTipoDate } from '../../helpers/fechas';
 import { IngresosXFecha } from '../../models/responses/ingresos/ListadoingresosUsuario.response';
 
@@ -77,7 +78,6 @@ const PanelIngresos = () => {
 
     return (
         <ContainerComponent>
-            <Typography textAlign={'center'} variant='h4' marginBottom={2}>Panel de Ingresos</Typography>
 
             <Grid container spacing={2} mb={2}>
                 <Grid item xs={6}>
@@ -141,7 +141,7 @@ const PanelIngresos = () => {
                                 <TableCell component="th" scope="row">{ingreso.tiposIngreso}</TableCell>
                                 <TableCell align="right">{ingreso.nombreCmp}</TableCell>
                                 <TableCell align="right">{ingreso.comentario}</TableCell>
-                                <TableCell align="right">{ingreso.monto}</TableCell>
+                                <TableCell align="right">{separadorMiles(ingreso.monto, true)}</TableCell>
                                 <TableCell align="right">{formatearFechaTipoDate(ingreso.fechaCarga)}</TableCell>
                                 <TableCell align="right">
                                     {/* Botones de edición y eliminación */}

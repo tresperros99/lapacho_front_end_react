@@ -1,21 +1,21 @@
 import { FormControl, Grid, InputLabel, MenuItem, Paper, Select, Table, TableBody, TableCell, TableContainer, TableFooter, TableHead, TablePagination, TableRow, TextField, Typography } from '@mui/material';
 import React, { useState } from 'react';
-import { getCuotasPagadasSocio } from '../../../api/ApiCuotas';
+import { getCuotasPendientesSocio } from '../../../api/ApiCuotas';
 import { ContainerComponent } from '../../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../../helpers/fechas';
-import { CuotasPagada } from '../../../models/responses/cuotas/ListadoCuotasPagadasSocio.response';
+import { CuotaPagada } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
 
 const CuotasPagadas = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [cuotasPagadas, setCuotasPagadas] = useState<CuotasPagada[]>([]);
+    const [cuotasPagadas, setCuotasPagadas] = useState<CuotaPagada[]>([]);
     const [numeroDocumento, setNumeroDocumento] = useState<string>('');
     const [anio, setAnio] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<string>('asc');
 
     const fetchData = async () => {
         try {
-            const response = await getCuotasPagadasSocio(numeroDocumento, anio);
+            const response = await getCuotasPendientesSocio(numeroDocumento, anio);
             if (response) {
                 if (Boolean(response.status)) {
                     const cuotasPagadas = response.cuotasPagadas.filter(cuota => cuota.fechaPago !== null);
@@ -32,7 +32,7 @@ const CuotasPagadas = () => {
         }
     };
 
-    const sortData = (data: CuotasPagada[]) => {
+    const sortData = (data: CuotaPagada[]) => {
         return data.sort((a, b) => {
             const monthA = new Date(a.fechaVencimiento).getMonth();
             const monthB = new Date(b.fechaVencimiento).getMonth();

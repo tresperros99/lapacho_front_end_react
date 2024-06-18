@@ -1,10 +1,10 @@
-export interface ListadoCuotasPagadasSocio {
+export interface ListadoCuotasPendientesSocio {
     status:        boolean;
     msj:           string;
-    cuotasPagadas: CuotasPagada[];
+    cuotasPagadas: CuotaPagada[];
 }
 
-export interface CuotasPagada {
+export interface CuotaPagada {
     idCuotaSocio:     number;
     nombreSocio:      string;
     idSocio:          number;

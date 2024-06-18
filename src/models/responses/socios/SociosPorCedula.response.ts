@@ -1,15 +1,18 @@
-export interface SocioPorCedulaResponse {
-    status: boolean;
-    msg:    string;
-    socio:  Socio[];
+export interface SociosPorNombreApellido {
+    status:            boolean;
+    msg:               string;
+    sociosFormateados: SociosFormateado[];
 }
 
-export interface Socio {
-    idSocio:        string;
-    tipoSocio:      string;
-    numeroTel:      string;
-    nombreUsuario:  string;
-    contraseña:     string;
-    estadoSocio:    number;
-    direccionSocio: null;
+export interface SociosFormateado {
+    idSocio:         number;
+    contraseña:      string;
+    nombre:          string;
+    apellido:        string;
+    tipoSocio:       number;
+    numeroTel:       null | string;
+    creadoEn:        Date;
+    cedula:          string;
+    fechaNacimiento: Date;
+    direccionSocio:  string;
 }

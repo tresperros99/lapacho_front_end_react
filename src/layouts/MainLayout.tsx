@@ -1,8 +1,7 @@
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import MenuIcon from '@mui/icons-material/Menu';
-import NotificationsIcon from '@mui/icons-material/Notifications';
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
-import Badge from '@mui/material/Badge';
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
@@ -15,9 +14,10 @@ import Grid2 from '@mui/material/Unstable_Grid2/Grid2';
 import { ThemeProvider, createTheme, styled } from '@mui/material/styles';
 import * as React from 'react';
 import { ReactNode } from 'react';
+import { useAppDispatch } from '../app/store.ts';
 import MainListItems from '../components/dashboard/MainListItems.tsx';
 import { secondaryListItems } from '../components/dashboard/listItems.tsx';
-
+import { clearAuth } from '../features/auth/authSlice.tsx';
 type MainLayoutProps = {
     children: ReactNode
 }
@@ -76,6 +76,7 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 const defaultTheme = createTheme();
 export const MainLayout = ({ children }: MainLayoutProps) => {
     const [open, setOpen] = React.useState(true);
+    const dispatch = useAppDispatch();
     const toggleDrawer = () => {
         setOpen(!open);
     };
@@ -112,10 +113,9 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                             >
                                 Club Lapacho Tenis de Mesa
                             </Typography>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
+                            <IconButton color="inherit" onClick={() => dispatch(clearAuth())
+                            }>
+                                <LogoutOutlinedIcon />
                             </IconButton>
                         </Toolbar>
                     </AppBar>
@@ -134,7 +134,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                         </Toolbar>
                         <Divider />
                         <List component="nav">
-                            <MainListItems />
+                            <MainListItems openNavBar={open} />
                             <Divider sx={{ my: 1 }} />
                             {secondaryListItems}
                         </List>
@@ -142,7 +142,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                     {children}
                 </Box>
             </ThemeProvider>
-        </Grid2>
+        </Grid2 >
     )
 }
 

@@ -2,6 +2,7 @@ import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
 import NuevoSocioDto from "../models/dtos/socios/NuevoSocioDto.model";
 import NominaSociosResponse from "../models/responses/socios/NominaSocios.response";
+import { SociosPorNombreApellido } from "../models/responses/socios/SociosPorCedula.response";
 
 export const crearNuevoSocio = async (crearNuevoSocio:NuevoSocioDto) => { 
     const url = appConfig.socios.socios;
@@ -65,3 +66,21 @@ export const getNominaSocios = async () => {
     }
     return respuesta;
 }
+
+export const getBuscadorSocios = async (nombre:string) => { 
+    const url = appConfig.socios.buscadorSocio;
+    const params = {
+        nombre
+    }
+    const getSocioResp = await axiosInstance.get<SociosPorNombreApellido>(url,{params});
+    if (getSocioResp) {
+        if (getSocioResp.status === 200) {
+            return getSocioResp.data
+        }else {
+            return getSocioResp.data
+        }
+    }else{
+        return null
+    }
+}
+ 
