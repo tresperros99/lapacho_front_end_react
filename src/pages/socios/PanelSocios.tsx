@@ -1,6 +1,10 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import DeleteOutlineOutlinedIcon from '@mui/icons-material/DeleteOutlineOutlined';
 import EditOutlinedIcon from '@mui/icons-material/EditOutlined';
-import { TableFooter, TablePagination } from '@mui/material';
+import { TableFooter, TablePagination, Typography } from '@mui/material';
+import Button from '@mui/material/Button';
+import Grid from '@mui/material/Grid'; // Importar el componente Grid
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -16,22 +20,22 @@ import { RootState, useAppDispatch } from '../../app/store';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { fetchNominaSocios } from '../../features/socios/sociosThunk';
 import { SociosFormateado } from '../../models/responses/socios/NominaSocios.response';
+
 const PanelSocios = () => {
     const dispatch = useAppDispatch();
     const { nominaSocios } = useSelector((state: RootState) => state.socios);
     const navigate = useNavigate();
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(6);
+    const [orderBy, setOrderBy] = useState<'asc' | 'desc'>('asc');
 
     useEffect(() => {
         if (nominaSocios.length <= 0) {
-            dispatch((fetchNominaSocios()))
+            dispatch(fetchNominaSocios());
         }
-    }, []);
+    }, [dispatch, nominaSocios.length]);
 
-    const handleChangePage = (event: unknown, newPage: number) => {
-        console.log(event);
-
+    const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
@@ -39,46 +43,71 @@ const PanelSocios = () => {
         setRowsPerPage(parseInt(event.target.value, 10));
         setPage(0);
     };
+
     const editarSocio = (socio: SociosFormateado) => {
         navigate('/formSocios', { state: socio });
-    }
+    };
+
     const eliminarSocioById = async (idSocio: number) => {
-        //TODO: aca llamar a la api para eliminar
-        await eliminarSocio(idSocio)
-    }
+        await eliminarSocio(idSocio);
+    };
+
+    const nuevoSocio = () => {
+        navigate('/formSocios');
+    };
+
+    const handleSort = () => {
+        const isAsc = orderBy === 'asc';
+        setOrderBy(isAsc ? 'desc' : 'asc');
+    };
+
+    const sortedSocios = [...nominaSocios].sort((a, b) => {
+        if (orderBy === 'asc') {
+            return a.nombreSocio.localeCompare(b.nombreSocio);
+        }
+        return b.nombreSocio.localeCompare(a.nombreSocio);
+    });
+
     return (
         <ContainerComponent>
+            <Typography textAlign={'center'} variant='h4' marginBottom={2}>Panel de Socios</Typography>
 
-            <TableContainer component={Paper} >
+            <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
+                <Button variant="contained" color="primary" onClick={nuevoSocio}>
+                    Nuevo Socio
+                </Button>
+            </Grid>
+            <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Nombre</TableCell>
+                            <TableCell onClick={handleSort} style={{ cursor: 'pointer' }}>
+                                Nombre {orderBy === 'asc' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                            </TableCell>
                             <TableCell align="right">Cedula</TableCell>
-                            <TableCell align="right">Descripcion</TableCell>
-                            {/* <TableCell align="right">Estado</TableCell> */}
-                            <TableCell align="right">Numero de Telefono</TableCell>
+                            <TableCell align="right">Estado</TableCell>
                             <TableCell align="right">Editar</TableCell>
                             <TableCell align="right">Eliminar</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {nominaSocios.length > 0 &&
-
-                            nominaSocios.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((socio) => (
+                        {sortedSocios.length > 0 &&
+                            sortedSocios.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((socio) => (
                                 <TableRow
                                     key={socio.idSocio}
                                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                                 >
                                     <TableCell component="th" scope="row">
-                                        {`${socio.nombre} ${socio.apellido}`}
+                                        {socio.nombreSocio}
                                     </TableCell>
                                     <TableCell align="right">{socio.cedula}</TableCell>
-                                    <TableCell align="right">{socio.tipoSocio}</TableCell>
-                                    {/* <TableCell align="right">{socio.cedula}</TableCell> */}
-                                    <TableCell align="right">{socio.numeroTel}</TableCell>
-                                    <TableCell onClick={() => editarSocio(socio)} align="right"><EditOutlinedIcon sx={{ cursor: 'pointer' }} /></TableCell>
-                                    <TableCell onClick={() => eliminarSocioById(socio.idSocio)} align="right"><DeleteOutlineOutlinedIcon sx={{ cursor: 'pointer' }} /></TableCell>
+                                    <TableCell align="right">{socio.estadoSocio === 1 ? 'Activo' : 'Inactivo'}</TableCell>
+                                    <TableCell onClick={() => editarSocio(socio)} align="right">
+                                        <EditOutlinedIcon sx={{ cursor: 'pointer' }} />
+                                    </TableCell>
+                                    <TableCell onClick={() => eliminarSocioById(socio.idSocio)} align="right">
+                                        <DeleteOutlineOutlinedIcon sx={{ cursor: 'pointer' }} />
+                                    </TableCell>
                                 </TableRow>
                             ))}
                     </TableBody>
@@ -97,6 +126,6 @@ const PanelSocios = () => {
             </TableContainer>
         </ContainerComponent>
     );
-}
+};
 
 export default PanelSocios;

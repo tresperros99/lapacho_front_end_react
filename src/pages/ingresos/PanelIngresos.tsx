@@ -1,4 +1,6 @@
-import { Button, Grid, TableFooter, TablePagination, TextField } from '@mui/material';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
+import { Button, Grid, TableFooter, TablePagination, TextField, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getExcelIngresos, getListadoIngresosUsuarios } from '../../api/ApiIngresos';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { separadorMiles } from '../../helpers/Numbers';
@@ -19,12 +22,14 @@ const PanelIngresos = () => {
     const [listadoIngresos, setListadoIngresos] = useState<IngresosXFecha[]>([]);
     const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
     const [fechaHasta, setFechaHasta] = useState<Date | null>(null);
+    const [orderBy, setOrderBy] = useState<{ column: string, direction: 'asc' | 'desc' }>({ column: 'tiposIngreso', direction: 'asc' });
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (fechaHasta !== null) {
             fetchData();
         }
-    }, [page, fechaHasta]);
+    }, [page, fechaHasta, orderBy]);
 
     const fetchData = async () => {
         try {
@@ -34,24 +39,24 @@ const PanelIngresos = () => {
                 (page + 1).toString()
             );
             if (response) {
-                setListadoIngresos(response.ingresosXFecha);
+                const sortedData = [...response.ingresosXFecha].sort((a, b) => {
+                    if (orderBy.column === 'tiposIngreso') {
+                        return orderBy.direction === 'asc' ? a.tiposIngreso.localeCompare(b.tiposIngreso) : b.tiposIngreso.localeCompare(a.tiposIngreso);
+                    }
+                    return 0;
+                });
+                setListadoIngresos(sortedData);
             }
         } catch (error) {
             console.error('Error al obtener los ingresos:', error);
         }
     };
 
-
-    const handleChangePage = (event: unknown, newPage: number) => {
-        event
-        setPage(newPage);
-    };
-
     const handleDescargarPdf = async () => {
         if (fechaDesde && fechaHasta) {
             const fechaDesdeFormateada = formatearFechaTipoDate(fechaDesde);
-            const fechaHastaFormateada = formatearFechaTipoDate(fechaDesde)
-            const getPDF = await getExcelIngresos(fechaDesdeFormateada, fechaHastaFormateada)
+            const fechaHastaFormateada = formatearFechaTipoDate(fechaHasta);
+            const getPDF = await getExcelIngresos(fechaDesdeFormateada, fechaHastaFormateada);
             if (getPDF) {
                 const fileURL = URL.createObjectURL(new Blob([getPDF]));
                 const link = document.createElement("a");
@@ -61,7 +66,11 @@ const PanelIngresos = () => {
                 link.click();
             }
         }
-    }
+    };
+
+    const handleChangePage = (_event: unknown, newPage: number) => {
+        setPage(newPage);
+    };
 
     const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRowsPerPage(parseInt(event.target.value, 10));
@@ -76,8 +85,18 @@ const PanelIngresos = () => {
         setFechaHasta(date);
     };
 
+    const handleSort = (column: string) => {
+        const isAsc = orderBy.column === column && orderBy.direction === 'asc';
+        setOrderBy({ column, direction: isAsc ? 'desc' : 'asc' });
+    };
+
+    const nuevoIngreso = () => {
+        navigate('/ingresos');
+    };
+
     return (
         <ContainerComponent>
+            <Typography textAlign={'center'} variant='h4' marginBottom={2}>Panel de Ingresos</Typography>
 
             <Grid container spacing={2} mb={2}>
                 <Grid item xs={6}>
@@ -95,7 +114,6 @@ const PanelIngresos = () => {
                     />
                 </Grid>
                 <Grid item xs={6}>
-
                     <TextField
                         fullWidth
                         id="fechaHasta"
@@ -109,25 +127,32 @@ const PanelIngresos = () => {
                         }}
                     />
                 </Grid>
-
-                <Grid container item xs={12} justifyContent={`flex-end`}>
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={handleDescargarPdf}
-                        disabled={(!fechaDesde || !fechaHasta)}
-                    >
-                        Descargar Excel
-                    </Button>
+                <Grid container item xs={12} justifyContent={`flex-end`} spacing={2}>
+                    <Grid item>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            onClick={handleDescargarPdf}
+                            disabled={(!fechaDesde || !fechaHasta)}
+                        >
+                            Descargar Excel
+                        </Button>
+                    </Grid>
+                    <Grid item>
+                        <Button variant="contained" color="primary" onClick={nuevoIngreso}>
+                            Agregar Ingreso
+                        </Button>
+                    </Grid>
                 </Grid>
-
             </Grid>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Ingreso</TableCell>
+                            <TableCell onClick={() => handleSort('tiposIngreso')} style={{ cursor: 'pointer' }}>
+                                Ingreso {orderBy.column === 'tiposIngreso' && (orderBy.direction === 'asc' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
+                            </TableCell>
                             <TableCell align="right">Socio</TableCell>
                             <TableCell align="right">Descripcion</TableCell>
                             <TableCell align="right">Monto</TableCell>
@@ -169,4 +194,3 @@ const PanelIngresos = () => {
 };
 
 export default PanelIngresos;
-

@@ -1,7 +1,7 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
 import NuevoSocioDto from "../models/dtos/socios/NuevoSocioDto.model";
-import NominaSociosResponse from "../models/responses/socios/NominaSocios.response";
+import { NominaSociosResponse } from "../models/responses/socios/NominaSocios.response";
 import { SociosPorNombreApellido } from "../models/responses/socios/SociosPorCedula.response";
 
 export const crearNuevoSocio = async (crearNuevoSocio:NuevoSocioDto) => { 

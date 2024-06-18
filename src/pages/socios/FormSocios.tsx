@@ -35,13 +35,13 @@ const FormSocios = () => {
     const formik = useFormik<NuevoSocioDto>({
         initialValues:
         {
-            nombre: socioCargado?.nombre ?? '',
-            apellido: socioCargado?.apellido ?? '',
+            nombre: socioCargado?.nombreSocio ?? '',
+            apellido: '',
             cedula: socioCargado?.cedula ?? '',
-            fechaNacimiento: socioCargado?.fechaNacimiento.toString() ?? '',
+            fechaNacimiento: '',
             correo: socioCargado ? 'mail@mail' : '',
-            numeroTel: socioCargado?.numeroTel ?? '',
-            direccion: socioCargado?.direccionSocio ?? '',
+            numeroTel: '',
+            direccion: '',
             ruc: socioCargado?.cedula ?? '',
             tipoSocio: 1,
             contraseña: '',

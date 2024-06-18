@@ -1,22 +1,13 @@
 export interface NominaSociosResponse {
     status:            boolean;
     msg:               string;
+    cant:              number;
     sociosFormateados: SociosFormateado[];
 }
 
 export interface SociosFormateado {
-
-    idSocio:         number;
-    contraseña:      string;
-    nombre:          string;
-    apellido:        string;
-    tipoSocio:       number;
-    numeroTel:       string;
-    creadoEn:        Date;
-    cedula:          string;
-    fechaNacimiento: Date;
-    direccionSocio:  null;
-    
+    nombreSocio: string;
+    cedula:      string;
+    idSocio:     number;
+    estadoSocio: number;
 }
-
-export default NominaSociosResponse;
