@@ -6,7 +6,7 @@ const appConfig = {
 		profesores: 'profesores'
 	},
 	socios: {
-        socios: 'socio',
+        socios: '/socio/socios_detalle',
         buscadorSocio:'/socio/obtener_socios'
 	},
 	ingresos: {

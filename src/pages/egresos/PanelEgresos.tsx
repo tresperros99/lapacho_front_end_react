@@ -1,3 +1,5 @@
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import ArrowDropUpIcon from '@mui/icons-material/ArrowDropUp';
 import { Button, Grid, TableFooter, TablePagination, TextField, Typography } from '@mui/material';
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
@@ -7,6 +9,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { getExcelEgresos, getListadoEgresosUsuarios } from '../../api/ApiEgresos';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../helpers/fechas';
@@ -18,12 +21,14 @@ const PanelEgresos = () => {
     const [listadoEgresos, setListadoEgresos] = useState<EgresosXFecha[]>([]);
     const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
     const [fechaHasta, setFechaHasta] = useState<Date | null>(null);
+    const [orderBy, setOrderBy] = useState<{ column: string, direction: 'asc' | 'desc' }>({ column: 'tiposIngreso', direction: 'asc' });
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (fechaHasta !== null) {
             fetchData();
         }
-    }, [page, fechaHasta]);
+    }, [page, fechaHasta, orderBy]);
 
     const fetchData = async () => {
         try {
@@ -33,17 +38,24 @@ const PanelEgresos = () => {
                 (page + 1).toString()
             );
             if (response) {
-                setListadoEgresos(response.egresosXFecha);
+                const sortedData = [...response.egresosXFecha].sort((a, b) => {
+                    if (orderBy.column === 'tiposIngreso') {
+                        return orderBy.direction === 'asc' ? a.tiposIngreso.localeCompare(b.tiposIngreso) : b.tiposIngreso.localeCompare(a.tiposIngreso);
+                    }
+                    return 0;
+                });
+                setListadoEgresos(sortedData);
             }
         } catch (error) {
             console.error('Error al obtener los egresos:', error);
         }
     };
+
     const handleDescargarPdf = async () => {
         if (fechaDesde && fechaHasta) {
             const fechaDesdeFormateada = formatearFechaTipoDate(fechaDesde);
-            const fechaHastaFormateada = formatearFechaTipoDate(fechaDesde)
-            const getPDF = await getExcelEgresos(fechaDesdeFormateada, fechaHastaFormateada)
+            const fechaHastaFormateada = formatearFechaTipoDate(fechaHasta);
+            const getPDF = await getExcelEgresos(fechaDesdeFormateada, fechaHastaFormateada);
             if (getPDF) {
                 const fileURL = URL.createObjectURL(new Blob([getPDF]));
                 const link = document.createElement("a");
@@ -53,11 +65,9 @@ const PanelEgresos = () => {
                 link.click();
             }
         }
-    }
+    };
 
     const handleChangePage = (event: unknown, newPage: number) => {
-        event
-
         setPage(newPage);
     };
 
@@ -72,6 +82,15 @@ const PanelEgresos = () => {
 
     const handleFechaHastaChange = (date: Date | null) => {
         setFechaHasta(date);
+    };
+
+    const handleSort = (column: string) => {
+        const isAsc = orderBy.column === column && orderBy.direction === 'asc';
+        setOrderBy({ column, direction: isAsc ? 'desc' : 'asc' });
+    };
+
+    const nuevoEgreso = () => {
+        navigate('/egresos');
     };
 
     return (
@@ -117,13 +136,20 @@ const PanelEgresos = () => {
                         Descargar Egresos
                     </Button>
                 </Grid>
+                <Grid container item xs={12} justifyContent="flex-end">
+                    <Button variant="contained" color="primary" onClick={nuevoEgreso}>
+                        Agregar Egreso
+                    </Button>
+                </Grid>
             </Grid>
 
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Egreso</TableCell>
+                            <TableCell onClick={() => handleSort('tiposIngreso')} style={{ cursor: 'pointer' }}>
+                                Egreso {orderBy.column === 'tiposIngreso' && (orderBy.direction === 'asc' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
+                            </TableCell>
                             <TableCell align="right">Socio</TableCell>
                             <TableCell align="right">Descripción</TableCell>
                             <TableCell align="right">Monto</TableCell>
