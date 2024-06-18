@@ -68,7 +68,7 @@ const PanelIngresos = () => {
         }
     };
 
-    const handleChangePage = (event: unknown, newPage: number) => {
+    const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
     };
 
