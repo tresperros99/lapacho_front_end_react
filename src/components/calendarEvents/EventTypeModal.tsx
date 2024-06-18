@@ -23,7 +23,6 @@ const EventTypeModal: React.FC<EventTypeModalProps> = ({
     eventType,
     onEventTypeChange,
     onEventSubmit,
-    isEditing,
     initialValues,
 }) => {
     const handleEventSubmit = () => {
@@ -31,10 +30,7 @@ const EventTypeModal: React.FC<EventTypeModalProps> = ({
         onClose();
     };
 
-    const handleEventDelete = () => {
-        console.log('Event deleted');
-        onClose();
-    };
+
 
     return (
         <Modal

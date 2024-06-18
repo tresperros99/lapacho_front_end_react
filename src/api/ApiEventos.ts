@@ -29,7 +29,7 @@ export const getEventosDelMes = async (mes: number) => {
     }
 }
 
-export const getEventosDelAnio = async (mes: number) => {
+export const getEventosDelAnio = async () => {
     const url = eventos.obtenerEventosDelAnio
 
     const eventosAnioResp = await axiosInstance.get<EventosDeAnioResponse>(url);

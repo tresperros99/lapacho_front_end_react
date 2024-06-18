@@ -17,14 +17,16 @@ export const HomePage: React.FC = () => {
     const calendarRef = useRef<FullCalendar>(null);
 
     const [modalIsOpen, setModalIsOpen] = useState(false);
-    const [selectedInfo, setSelectedInfo] = useState<DateSelectArg | null>(null);
+    // const [selectedInfo, setSelectedInfo] = useState<DateSelectArg | null>(null);
     const [currentDates, setCurrentDates] = useState<{ start: Date; end: Date } | null>(null);
     const [eventType, setEventType] = useState<string>(''); // Estado para el tipo de evento seleccionado
     const [isEditing, setIsEditing] = useState(false);
     const [initialEventValues, setInitialEventValues] = useState<any>({}); // Utiliza any para manejar múltiples tipos de valores iniciales
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
-        setSelectedInfo(selectInfo);
+        console.log(selectInfo);
+
+        // setSelectedInfo(selectInfo);
         setIsEditing(false);
         setInitialEventValues({}); // Restablece los valores iniciales al crear un nuevo evento
         setModalIsOpen(true);
@@ -32,7 +34,7 @@ export const HomePage: React.FC = () => {
 
     const handleModalClose = () => {
         setModalIsOpen(false);
-        setSelectedInfo(null);
+        // setSelectedInfo(null);
         setEventType(''); // Restablecer el tipo de evento al cerrar el modal
     };
 
@@ -50,7 +52,7 @@ export const HomePage: React.FC = () => {
         }
     };
 
-    const fetchEventos = async (start: Date, end: Date) => {
+    const fetchEventos = async (_start: Date, end: Date) => {
         const fechaDesde = new Date("2024-05-10T04:00:00.000Z");
         const getEventosDelMesDto: TodosEventosClubDto = { fechaDesde: fechaDesde, fechaHasta: end };
         const eventos = await getTodosEventosDelCLub(getEventosDelMesDto);
