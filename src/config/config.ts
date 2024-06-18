@@ -31,9 +31,18 @@ const appConfig = {
     eventos: {
         obtenerEventosDelMes: '/calendario_eventos/eventos_mes',
         obtenerEventosDelAnio: '/calendario_eventos/eventos_annio',
+        obtenerTodosEventosClub: '/calendario_eventos/eventos_mes_todos',
+        obtenerTipoEventos:'/calendario_eventos/obtener_tipos_evento',
+        crearEvento: '/calendario_eventos/crear_nuevo_evento'
     },
     reservas: {
-        getReservasDelClub :'/reserva_en_club/obtener_reservas_club'
+        getReservasDelClub: '/reserva_en_club/obtener_reservas_club',
+        agendarReservasDelClub: '/reserva_en_club/crear_reserva_club'
+    },
+    clases: {
+        agendarClae: '/agendamiento_clases/agendar_clase',
+        getMesasDisponibles:'/reserva_en_club/obtener_mesas_disponibles'
+
     }
 }
 

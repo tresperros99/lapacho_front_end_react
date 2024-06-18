@@ -4,14 +4,13 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import FullCalendar from '@fullcalendar/react';
 import timeGridPlugin from '@fullcalendar/timegrid';
-import { Typography } from '@mui/material';
+import { SelectChangeEvent, Typography } from '@mui/material';
 import React, { useEffect, useRef, useState } from 'react';
-import { getEventosDelMes } from '../api/ApiEventos';
-import { getReservasDelClub } from '../api/ApiReservas';
-import EventFormModal from '../components/calendarEvents/EventFormModal';
+import { getTodosEventosDelCLub } from '../api/ApiEventos';
+import EventTypeModal from '../components/calendarEvents/EventTypeModal';
 import { ContainerComponent } from '../components/genericos/ContainerComponent';
-import { formatearFechaTipoDate } from '../helpers/fechas';
-
+import { eventColors } from '../helpers/constants';
+import TodosEventosClubDto from '../models/dtos/eventos/TodosEventosClubDto.model';
 
 export const HomePage: React.FC = () => {
     const [events, setEvents] = useState<EventInput[]>([]);
@@ -20,17 +19,27 @@ export const HomePage: React.FC = () => {
     const [modalIsOpen, setModalIsOpen] = useState(false);
     const [selectedInfo, setSelectedInfo] = useState<DateSelectArg | null>(null);
     const [currentDates, setCurrentDates] = useState<{ start: Date; end: Date } | null>(null);
+    const [eventType, setEventType] = useState<string>(''); // Estado para el tipo de evento seleccionado
+    const [isEditing, setIsEditing] = useState(false);
+    const [initialEventValues, setInitialEventValues] = useState<any>({}); // Utiliza any para manejar múltiples tipos de valores iniciales
 
     const handleDateSelect = (selectInfo: DateSelectArg) => {
         setSelectedInfo(selectInfo);
+        setIsEditing(false);
+        setInitialEventValues({}); // Restablece los valores iniciales al crear un nuevo evento
         setModalIsOpen(true);
     };
-
 
     const handleModalClose = () => {
         setModalIsOpen(false);
         setSelectedInfo(null);
+        setEventType(''); // Restablecer el tipo de evento al cerrar el modal
     };
+
+    const handleEventTypeChange = (event: SelectChangeEvent<string>) => {
+        setEventType(event.target.value as string);
+    };
+
     const handleDatesRender = () => {
         const calendarApi = calendarRef.current?.getApi();
         if (calendarApi) {
@@ -38,49 +47,57 @@ export const HomePage: React.FC = () => {
             const start = view.activeStart;
             const end = view.activeEnd;
             setCurrentDates({ start: start, end: end });
-
         }
     };
-
-    const handleFormSubmit = (values: any) => {
-        if (selectedInfo) {
-            const newEvent: EventInput = {
-                title: values.title,
-                start: `${selectedInfo.startStr.split('T')[0]}T${values.start}`,
-                end: `${selectedInfo.startStr.split('T')[0]}T${values.end}`,
-                allDay: selectedInfo.allDay,
-                extendedProps: {
-                    description: values.description
-                }
-            };
-            setEvents(prevEvents => [...prevEvents, newEvent]);
-            console.log('Eventos:', [...events, newEvent]);
-        }
-    };
-
 
     const fetchEventos = async (start: Date, end: Date) => {
-        const reservas = await getReservasDelClub(formatearFechaTipoDate(start), formatearFechaTipoDate(end), 1);
-        const mes = start.getMonth() + 1;
-        const eventos = await getEventosDelMes(mes);
-        //TODO: esto trae todo los eventos del mesel busdc
-        if (reservas) {
-            const events: EventInput[] = reservas.reservasClub.map(eventos => ({
-                title: eventos.nombreCmp,
-                start: eventos.horaDesde,
-                end: eventos.horaHasta,
-                allDay: false,
-                extendedProps: {
-                    description: eventos.nombreCmp
-                }
-            }));
+        const fechaDesde = new Date("2024-05-10T04:00:00.000Z");
+        const getEventosDelMesDto: TodosEventosClubDto = { fechaDesde: fechaDesde, fechaHasta: end };
+        const eventos = await getTodosEventosDelCLub(getEventosDelMesDto);
 
-            setEvents(events);
+        const allEvents: EventInput[] = [];
+
+        if (eventos) {
+            eventos.eventosFecha.eventos.forEach(evento => {
+                allEvents.push({
+                    title: evento.nombreCmp,
+                    start: evento.horaDesde,
+                    end: evento.horaHasta,
+                    allDay: evento.todoEldia,
+                    backgroundColor: eventColors[evento.descTipoEvento] || 'gray',
+                    extendedProps: {
+                        description: evento.descripcion
+                    }
+                });
+            });
+            eventos.eventosFecha.reservas.forEach(reserva => {
+                allEvents.push({
+                    title: reserva.nombreCmp,
+                    start: reserva.horaDesde,
+                    end: reserva.horaHasta,
+                    backgroundColor: eventColors['RESERVA'] || 'gray',
+                    extendedProps: {
+                        description: reserva.descMesa
+                    }
+                });
+            });
+            eventos.eventosFecha.clases.forEach(clase => {
+                allEvents.push({
+                    title: clase.nombreProfesor,
+                    start: clase.horarioInicio,
+                    end: clase.horarioHasta,
+                    backgroundColor: eventColors['CLASE'] || 'gray',
+                    extendedProps: {
+                        description: clase.descMesa
+                    }
+                });
+            });
         }
+
+        setEvents(allEvents);
     };
+
     useEffect(() => {
-
-
         if (currentDates && currentDates.start && currentDates.end) {
             fetchEventos(currentDates.start, currentDates.end);
         }
@@ -100,16 +117,19 @@ export const HomePage: React.FC = () => {
                 select={handleDateSelect}
                 datesSet={handleDatesRender}
             />
-            <EventFormModal
+
+            <EventTypeModal
                 isOpen={modalIsOpen}
-                onRequestClose={handleModalClose}
-                onSubmit={handleFormSubmit}
-                initialValues={{
-                    title: '',
-                    description: '',
-                    start: '',
-                    end: ''
+                onClose={handleModalClose}
+                eventType={eventType}
+                onEventTypeChange={handleEventTypeChange}
+                onEventSubmit={() => {
+                    if (currentDates) {
+                        fetchEventos(currentDates.start, currentDates.end);
+                    }
                 }}
+                isEditing={isEditing}
+                initialValues={initialEventValues}
             />
         </ContainerComponent>
     );
