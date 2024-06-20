@@ -9,11 +9,12 @@ export interface EgresosXFecha {
     idSocio:            number;
     nombreUsuario:      string;
     nombreCmp:          string;
-    tiposIngreso:       string;
+    tipoEgreso:       string;
     comentario:         string;
     nroFactura:         string;
-    monto:              number;
-    fechaCarga:         Date;
+    monto: number;
+    fechaPago: Date,
+    fechaCarga: Date;
     fechaActualizacion: Date;
 }
 

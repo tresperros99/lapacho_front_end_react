@@ -21,7 +21,7 @@ const PanelEgresos = () => {
     const [listadoEgresos, setListadoEgresos] = useState<EgresosXFecha[]>([]);
     const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
     const [fechaHasta, setFechaHasta] = useState<Date | null>(null);
-    const [orderBy, setOrderBy] = useState<{ column: string, direction: 'asc' | 'desc' }>({ column: 'tiposIngreso', direction: 'asc' });
+    const [orderBy, setOrderBy] = useState<{ column: string, direction: 'asc' | 'desc' }>({ column: 'tipoEgreso', direction: 'asc' });
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -39,8 +39,8 @@ const PanelEgresos = () => {
             );
             if (response) {
                 const sortedData = [...response.egresosXFecha].sort((a, b) => {
-                    if (orderBy.column === 'tiposIngreso') {
-                        return orderBy.direction === 'asc' ? a.tiposIngreso.localeCompare(b.tiposIngreso) : b.tiposIngreso.localeCompare(a.tiposIngreso);
+                    if (orderBy.column === 'tipoEgreso') {
+                        return orderBy.direction === 'asc' ? a.tipoEgreso.localeCompare(b.tipoEgreso) : b.tipoEgreso.localeCompare(a.tipoEgreso);
                     }
                     return 0;
                 });
@@ -147,8 +147,8 @@ const PanelEgresos = () => {
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell onClick={() => handleSort('tiposIngreso')} style={{ cursor: 'pointer' }}>
-                                Egreso {orderBy.column === 'tiposIngreso' && (orderBy.direction === 'asc' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
+                            <TableCell onClick={() => handleSort('tipoEgreso')} style={{ cursor: 'pointer' }}>
+                                Egreso {orderBy.column === 'tipoEgreso' && (orderBy.direction === 'asc' ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />)}
                             </TableCell>
                             <TableCell align="right">Socio</TableCell>
                             <TableCell align="right">Descripción</TableCell>
@@ -160,7 +160,7 @@ const PanelEgresos = () => {
                     <TableBody>
                         {listadoEgresos.map((egreso) => (
                             <TableRow key={egreso.idOperacionEgreso}>
-                                <TableCell component="th" scope="row">{egreso.tiposIngreso}</TableCell>
+                                <TableCell component="th" scope="row">{egreso.tipoEgreso}</TableCell>
                                 <TableCell align="right">{egreso.nombreCmp}</TableCell>
                                 <TableCell align="right">{egreso.comentario}</TableCell>
                                 <TableCell align="right">{egreso.monto}</TableCell>
