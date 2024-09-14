@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js';
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
-import { LoginResponse } from "../models/responses/Login.response";
+import LoginResponse from '../models/responses/Auth/Login.response';
 
 export const login = async (user:string, password:string) => { 
     const url = appConfig.auth.login;

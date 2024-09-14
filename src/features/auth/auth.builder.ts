@@ -8,7 +8,7 @@ export const fetchLoginBuilder = (builder:ActionReducerMapBuilder<AuthState>) =>
 	})
 	builder.addCase(fetchLogin.fulfilled, (state, action) => {
 			state.loadingToken = false
-			state.token =  action.payload ? action.payload.token : null
+			state.loginResponse =  action.payload ? action.payload : null
 	})
 	builder.addCase(fetchLogin.rejected, (state) => {
 			state.loadingToken = false

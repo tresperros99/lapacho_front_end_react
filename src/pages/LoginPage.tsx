@@ -94,18 +94,6 @@ export const LoginPage = () => {
                                 : <CircularProgress disableShrink size={24} sx={{ color: 'white' }} />
                             }
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link href="#" variant="body2">
-                                    Olvidaste la Contraseña
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link href="#" variant="body2">
-                                    {"Crear una cuenta"}
-                                </Link>
-                            </Grid>
-                        </Grid>
                         <Copyright sx={{ mt: 5 }} />
                     </Box>
                 </Box>

@@ -4,6 +4,7 @@ import { getCuotasPendientesSocio } from '../../../api/ApiCuotas';
 import { ContainerComponent } from '../../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../../helpers/fechas';
 import { CuotaPagada } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
+import { separadorMiles } from '../../../helpers/Numbers';
 
 const CuotasPagadas = () => {
     const [page, setPage] = useState(0);
@@ -70,7 +71,7 @@ const CuotasPagadas = () => {
                         }}
                     />
                 </Grid>
-                <Grid item xs={5}>
+                <Grid item xs={6}>
                     <FormControl fullWidth>
                         <InputLabel shrink={true} id="anio-label">Año</InputLabel>
                         <Select
@@ -89,7 +90,7 @@ const CuotasPagadas = () => {
                         </Select>
                     </FormControl>
                 </Grid>
-                <Grid item xs={1}>
+                {/* <Grid item xs={1}>
                     <FormControl variant='standard'>
                         <Select
                             value={sortOrder}
@@ -100,7 +101,7 @@ const CuotasPagadas = () => {
                             <MenuItem value="desc">↓</MenuItem>
                         </Select>
                     </FormControl>
-                </Grid>
+                </Grid> */}
             </Grid>
 
             <TableContainer component={Paper}>
@@ -118,7 +119,7 @@ const CuotasPagadas = () => {
                         {cuotasPagadas.map((cuota) => (
                             <TableRow key={cuota.idCuotaSocio}>
                                 <TableCell component="th" scope="row">{cuota.nombreSocio}</TableCell>
-                                <TableCell align="right">{cuota.cedula}</TableCell>
+                                <TableCell align="right">{separadorMiles(cuota.cedula, true)}</TableCell>
                                 <TableCell align="right">{cuota.tipoCuota}</TableCell>
                                 <TableCell align="right">{cuota.cuotaMes}</TableCell>
                                 <TableCell align="right">{cuota.fechaPago !== null ? formatearFechaTipoDate(cuota.fechaPago) : ''}</TableCell>
