@@ -20,6 +20,7 @@ import { RootState, useAppDispatch } from '../../app/store';
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { fetchNominaSocios } from '../../features/socios/sociosThunk';
 import { SociosFormateado } from '../../models/responses/socios/NominaSocios.response';
+import { separadorMiles } from '../../helpers/Numbers';
 
 const PanelSocios = () => {
     const dispatch = useAppDispatch();
@@ -100,7 +101,7 @@ const PanelSocios = () => {
                                     <TableCell component="th" scope="row">
                                         {socio.nombreSocio}
                                     </TableCell>
-                                    <TableCell align="right">{socio.cedula}</TableCell>
+                                    <TableCell align="right">{ separadorMiles(socio.cedula,true)}</TableCell>
                                     <TableCell align="right">{socio.estadoSocio === 1 ? 'Activo' : 'Inactivo'}</TableCell>
                                     <TableCell onClick={() => editarSocio(socio)} align="right">
                                         <EditOutlinedIcon sx={{ cursor: 'pointer' }} />

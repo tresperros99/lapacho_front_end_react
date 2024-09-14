@@ -1,14 +1,15 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchLoginBuilder } from './auth.builder';
+import LoginResponse from '../../models/responses/Auth/Login.response';
 
 export interface AuthState {
-	token: string | null;
+	loginResponse: LoginResponse | null;
 	loadingToken: boolean;
 }
 
 const initialState: AuthState = {
-	token: null,
+	loginResponse: null,
 	loadingToken: false,
 }
 
@@ -17,8 +18,8 @@ export const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-	setToken: (state, action: PayloadAction<string>) => {
-	  	state.token = action.payload
+	setToken: (state, action: PayloadAction<LoginResponse>) => {
+	  	state.loginResponse = action.payload
 	},
 	clearAuth:()=>{
 		return {

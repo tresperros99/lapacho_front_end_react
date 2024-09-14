@@ -14,6 +14,7 @@ import { getExcelEgresos, getListadoEgresosUsuarios } from '../../api/ApiEgresos
 import { ContainerComponent } from '../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../helpers/fechas';
 import { EgresosXFecha } from '../../models/responses/egresos/ListadoEgresosUsuario.response';
+import { separadorMiles } from '../../helpers/Numbers';
 
 const PanelEgresos = () => {
     const [page, setPage] = useState(0);
@@ -163,7 +164,7 @@ const PanelEgresos = () => {
                                 <TableCell component="th" scope="row">{egreso.tipoEgreso}</TableCell>
                                 <TableCell align="right">{egreso.nombreCmp}</TableCell>
                                 <TableCell align="right">{egreso.comentario}</TableCell>
-                                <TableCell align="right">{egreso.monto}</TableCell>
+                                <TableCell align="right">{separadorMiles(egreso.monto,true)}</TableCell>
                                 <TableCell align="right">{formatearFechaTipoDate(egreso.fechaCarga)}</TableCell>
                                 <TableCell align="right">
                                     {/* Botones de edición y eliminación */}

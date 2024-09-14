@@ -134,7 +134,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                         </Toolbar>
                         <Divider />
                         <List component="nav">
-                            <MainListItems openNavBar={open} />
+                            <MainListItems/>
                             <Divider sx={{ my: 1 }} />
                             {secondaryListItems}
                         </List>

@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   (config) => {
     const storeRedux = store.getState()
-    const token = storeRedux.auth.token
+    const token = storeRedux.auth.loginResponse?.token
     // Request interceptor
     if (token) {      
       if (config.headers) config.headers.x_token = token;

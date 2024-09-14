@@ -107,7 +107,7 @@ const PanelProfesores = () => {
                                         {profesor.nombreProfesor}
                                     </TableCell>
                                     <TableCell align="right">{separadorMiles(profesor.costoXHora, true)}</TableCell>
-                                    <TableCell align="right">{profesor.cedula}</TableCell>
+                                    <TableCell align="right">{separadorMiles(profesor.cedula,true)}</TableCell>
                                     <TableCell align="right">{profesor.contactoProfesor}</TableCell>
                                     <TableCell align="right">{profesor.estadoProfesor}</TableCell>
                                     <TableCell onClick={() => editarProfesor(profesor)} align="right">
