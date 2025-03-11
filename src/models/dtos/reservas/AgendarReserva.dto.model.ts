@@ -1,8 +1,9 @@
 export interface AgendarReservaClubDto {
-    fechaAgendamiento: string;
     horaDesde:         Date;
     horaHasta:         Date;
     idMesa:            number;
+    idCliente:         number;
+
 }
 
 export default AgendarReservaClubDto;

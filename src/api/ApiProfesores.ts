@@ -1,48 +1,62 @@
-import { AxiosResponse } from "axios";
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
 import { NuevoProfesorDto } from "../models/dtos/profesores/NuevoProfesorDto.models";
 import NominaProfesoresResponse from "../models/responses/profesores/NominaProfesores.response";
-import { NuevoProfesorResponse } from "../models/responses/profesores/NuevoProfesor.response";
+import SuccessResponse from "../models/responses/shared/Success.response";
 
-export const crearActualizarEliminarProfesor = async (marca:'crear'|'actualizar'|'eliminar',nuevoProfesorDto?:NuevoProfesorDto, idProfesor?:number,) => { 
-    const url = appConfig.profesores.profesores;
-    let profesorRes = {} as AxiosResponse<NuevoProfesorResponse, any>
-    let respuesta:NuevoProfesorResponse | null = null;
-    if (idProfesor) {
-        if (marca === 'actualizar') {
-            profesorRes = await axiosInstance.put<NuevoProfesorResponse>(`${url}/${idProfesor}`,nuevoProfesorDto);
-        }else if (marca ==='eliminar') {
-            profesorRes = await axiosInstance.delete<NuevoProfesorResponse>(`${url}/${idProfesor}`); 
-        }
-    }else{
-        profesorRes = await axiosInstance.post<NuevoProfesorResponse>(url,nuevoProfesorDto);
+const { profesores } = appConfig;
+
+export const crearNuevoProfesor = async (
+  crearNuevoProfesor: NuevoProfesorDto
+) => {
+  const url = profesores.crearProfesor;
+  const crearNuevoProfesorResp = await axiosInstance.post<SuccessResponse>(
+    url,
+    crearNuevoProfesor
+  );
+  if (crearNuevoProfesorResp) {
+    if (crearNuevoProfesorResp.status === 200) {
+      return crearNuevoProfesorResp.data;
+    } else {
+      return crearNuevoProfesorResp.data;
     }
-    if (profesorRes) {
-        if (profesorRes.status === 200) {
-            respuesta = profesorRes.data
-            return respuesta
-        }else {
-            respuesta = null
-        }
-    }else{
-        respuesta = null
+  } else {
+    return null;
+  }
+};
+
+export const getProfesoresClub = async (cantidad: number, omitir: number) => {
+  const url = profesores.obtenerProfesores;
+  const params = {
+    cantidad,
+    omitir,
+  };
+  const getNominaProfesoresResp =
+    await axiosInstance.get<NominaProfesoresResponse>(url, { params });
+  if (getNominaProfesoresResp) {
+    if (getNominaProfesoresResp.status === 200) {
+      return getNominaProfesoresResp.data;
+    } else {
+      return getNominaProfesoresResp.data;
     }
-    return respuesta;
-}
-export const getNominaProfesores = async () => { 
-    const url = appConfig.profesores.profesores;
-    let respuesta:NominaProfesoresResponse| null = {} as NominaProfesoresResponse
-    const getProfesresResp = await axiosInstance.get<NominaProfesoresResponse>(url);
-    if (getProfesresResp) {
-        if (getProfesresResp.status === 200) {
-            respuesta = getProfesresResp.data
-            return respuesta
-        }else {
-            respuesta = null
-        }
-    }else{
-        respuesta = null
+  } else {
+    return null;
+  }
+};
+
+export const eliminarProfesorClub = async (idProfesor: number) => {
+  const url = profesores.eliminarProfesor;
+  const params = {
+    idProfesor,
+  };
+  const deleteProfesorResp = await axiosInstance.delete(url, { params });
+  if (deleteProfesorResp) {
+    if (deleteProfesorResp.status === 200) {
+      return deleteProfesorResp.data;
+    } else {
+      return deleteProfesorResp.data;
     }
-    return respuesta;
-}
+  } else {
+    return null;
+  }
+};

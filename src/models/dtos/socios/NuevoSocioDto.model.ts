@@ -3,15 +3,16 @@ export interface NuevoSocioDto {
     idAcceso:        number;
     nombre:          string;
     apellido:        string;
-    estadoSocio:     number;
+    estadoSocio?:    string;
     fechaNacimiento: string;
     cedula:          string;
     correo:          string;
     numeroTel:       string;
     direccion:       string;
-    ruc:             string;
     contraseña:      string;
     nombreUsuario:   string;
+    dependientes?:   NuevoSocioDto[];
+    ruc?:            string;
 }
 
 export default NuevoSocioDto;
