@@ -2,16 +2,16 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import React, { useRef, useState } from 'react';
 import axiosInstance from '../../axiosInstance';
-import { SociosFormateado, SociosPorNombreApellido } from '../../models/responses/socios/SociosPorCedula.response';
+import { Socio } from '../../models/responses/socios/SociosPorCedula.response';
 
 interface BuscadorSociosComponentProps {
     fullWidth: boolean;
-    setSocioSeleccionado: React.Dispatch<React.SetStateAction<SociosFormateado | null>>;
+    setSocioSeleccionado: React.Dispatch<React.SetStateAction<Socio | null>>;
 }
 
 const BuscadorSociosComponent: React.FC<BuscadorSociosComponentProps> = ({ fullWidth, setSocioSeleccionado }) => {
     const [searchTerm, setSearchTerm] = useState<string>('');
-    const [searchResults, setSearchResults] = useState<SociosFormateado[]>([]);
+    const [searchResults, setSearchResults] = useState<Socio[]>([]);
     const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -20,18 +20,18 @@ const BuscadorSociosComponent: React.FC<BuscadorSociosComponentProps> = ({ fullW
 
     const handleSearch = async () => {
         try {
-            const response = await axiosInstance.get<SociosPorNombreApellido>(`/socio/obtener_socios?apellido=${searchTerm}`);
+            const response = await axiosInstance.get<Socio[]>(`/socio/obtener_socios?apellido=${searchTerm}`);
             if (response) {
-                setSearchResults(response.data.sociosFormateados);
+                setSearchResults(response.data);
             }
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    const handleMenuItemClick = (socio: SociosFormateado) => {
+    const handleMenuItemClick = (socio: Socio) => {
         setSocioSeleccionado(socio);
-        setSearchTerm(socio.nombre);
+        setSearchTerm(socio.nombreSocio);
         setSearchResults([]);
         if (inputRef.current) {
             inputRef.current.focus();
@@ -51,7 +51,7 @@ const BuscadorSociosComponent: React.FC<BuscadorSociosComponentProps> = ({ fullW
             />
             {searchResults && searchResults.length > 0 &&
                 searchResults.map((socio) => (
-                    <MenuItem key={socio.idSocio} onClick={() => handleMenuItemClick(socio)}>{socio.nombre}</MenuItem>
+                    <MenuItem key={socio.idCliente} onClick={() => handleMenuItemClick(socio)}>{socio.nombreSocio}</MenuItem>
                 ))}
         </div>
     );

@@ -5,12 +5,12 @@ import { ContainerComponent } from '../../../components/genericos/ContainerCompo
 import { separadorMiles } from '../../../helpers/Numbers';
 import { capitalizePorPalabra } from '../../../helpers/capitalize';
 import { formatearFechaTipoDate, getFormattedDate } from '../../../helpers/fechas';
-import { CuotaPagada } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
+import { Cuota } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
 
 const CuotasPendientes = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [cuotasPendientes, setCuotasPendientes] = useState<CuotaPagada[]>([]);
+    const [cuotasPendientes, setCuotasPendientes] = useState<Cuota[]>([]);
     const [numeroDocumento, setNumeroDocumento] = useState<string>('');
     const [anio, setAnio] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<string>('asc');
@@ -19,8 +19,8 @@ const CuotasPendientes = () => {
         try {
             const response = await getCuotasPendientesSocio(numeroDocumento, anio);
             if (response) {
-                if (Boolean(response.status)) {
-                    const cuotasPendientes = response.cuotasPagadas.filter(cuota => cuota.fechaPago === null);
+                if (response.status) {
+                    const cuotasPendientes = response.cuotas.filter(cuota => cuota.fechaPago === null);
                     const sortedData = sortData(cuotasPendientes);
                     setCuotasPendientes(sortedData);
                 } else {
@@ -34,7 +34,7 @@ const CuotasPendientes = () => {
         }
     };
 
-    const sortData = (data: CuotaPagada[]) => {
+    const sortData = (data: Cuota[]) => {
         return data.sort((a, b) => {
             const monthA = new Date(a.fechaVencimiento).getMonth();
             const monthB = new Date(b.fechaVencimiento).getMonth();
@@ -150,14 +150,14 @@ const CuotasPendientes = () => {
                     <TableBody>
                         {cuotasPendientes.map((cuota) => (
                             <TableRow key={cuota.idCuotaSocio}>
-                                <TableCell component="th" scope="row">{cuota.nombreSocio}</TableCell>
+                                <TableCell component="th" scope="row">{cuota.nombresocio}</TableCell>
                                 <TableCell align="right">{cuota.cedula}</TableCell>
                                 <TableCell align="right">{capitalizePorPalabra(cuota.cuotaMes)}</TableCell>
-                                <TableCell align="right">{cuota.tipoCuota}</TableCell>
-                                <TableCell align="right">{separadorMiles(cuota.monto, true)} Gs.</TableCell>
+                                <TableCell align="right">{cuota.fechaVencimiento.toLocaleDateString()}</TableCell>
+                                <TableCell align="right">{separadorMiles(cuota.montoCuota, true)} Gs.</TableCell>
                                 <TableCell align="right">{formatearFechaTipoDate(cuota.fechaVencimiento)}</TableCell>
                                 <TableCell align="right">
-                                    <Button color="primary" variant="contained" onClick={() => handlePagoCuota({ idCuotaSocio: Number(cuota.idCuotaSocio), idSocio: cuota.idSocio, descripcionPago: `cuota pagada ${cuota.cuotaMes}`, montoAbonado: cuota.monto, numeroCedula: cuota.cedula, nroFactura: 'XXXXX' })}>
+                                    <Button color="primary" variant="contained" onClick={() => handlePagoCuota({ idCuotaSocio: Number(cuota.idCuotaSocio), idSocio: cuota.idsocio, descripcionPago: `cuota pagada ${cuota.cuotaMes}`, montoAbonado: cuota.montoCuota, numeroCedula: cuota.cedula, nroFactura: 'XXXXX' })}>
                                         Pagar
                                     </Button>
                                 </TableCell>

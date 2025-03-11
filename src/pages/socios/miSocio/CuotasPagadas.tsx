@@ -3,13 +3,13 @@ import React, { useState } from 'react';
 import { getCuotasPendientesSocio } from '../../../api/ApiCuotas';
 import { ContainerComponent } from '../../../components/genericos/ContainerComponent';
 import { formatearFechaTipoDate } from '../../../helpers/fechas';
-import { CuotaPagada } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
+import { Cuota } from '../../../models/responses/cuotas/ListadoCuotasPendientesSocio.response';
 import { separadorMiles } from '../../../helpers/Numbers';
 
 const CuotasPagadas = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
-    const [cuotasPagadas, setCuotasPagadas] = useState<CuotaPagada[]>([]);
+    const [cuotasPagadas, setCuotasPagadas] = useState<Cuota[]>([]);
     const [numeroDocumento, setNumeroDocumento] = useState<string>('');
     const [anio, setAnio] = useState<string>('');
     const [sortOrder, setSortOrder] = useState<string>('asc');
@@ -18,8 +18,8 @@ const CuotasPagadas = () => {
         try {
             const response = await getCuotasPendientesSocio(numeroDocumento, anio);
             if (response) {
-                if (Boolean(response.status)) {
-                    const cuotasPagadas = response.cuotasPagadas.filter(cuota => cuota.fechaPago !== null);
+                if (response.status) {
+                    const cuotasPagadas = response.cuotas.filter(cuota => cuota.fechaPago !== null);
                     const sortedData = sortData(cuotasPagadas);
                     setCuotasPagadas(sortedData);
                 } else {
@@ -33,7 +33,7 @@ const CuotasPagadas = () => {
         }
     };
 
-    const sortData = (data: CuotaPagada[]) => {
+    const sortData = (data: Cuota[]) => {
         return data.sort((a, b) => {
             const monthA = new Date(a.fechaVencimiento).getMonth();
             const monthB = new Date(b.fechaVencimiento).getMonth();
@@ -90,7 +90,7 @@ const CuotasPagadas = () => {
                         </Select>
                     </FormControl>
                 </Grid>
-                {/* <Grid item xs={1}>
+                <Grid item xs={1}>
                     <FormControl variant='standard'>
                         <Select
                             value={sortOrder}
@@ -101,7 +101,7 @@ const CuotasPagadas = () => {
                             <MenuItem value="desc">↓</MenuItem>
                         </Select>
                     </FormControl>
-                </Grid> */}
+                </Grid>
             </Grid>
 
             <TableContainer component={Paper}>
@@ -118,9 +118,9 @@ const CuotasPagadas = () => {
                     <TableBody>
                         {cuotasPagadas.map((cuota) => (
                             <TableRow key={cuota.idCuotaSocio}>
-                                <TableCell component="th" scope="row">{cuota.nombreSocio}</TableCell>
+                                <TableCell component="th" scope="row">{cuota.nombresocio}</TableCell>
                                 <TableCell align="right">{separadorMiles(cuota.cedula, true)}</TableCell>
-                                <TableCell align="right">{cuota.tipoCuota}</TableCell>
+                                <TableCell align="right">{cuota.fechaVencimiento.toLocaleDateString()}</TableCell>
                                 <TableCell align="right">{cuota.cuotaMes}</TableCell>
                                 <TableCell align="right">{cuota.fechaPago !== null ? formatearFechaTipoDate(cuota.fechaPago) : ''}</TableCell>
                             </TableRow>

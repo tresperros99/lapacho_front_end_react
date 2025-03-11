@@ -1,18 +1,19 @@
 export interface ListadoCuotasPendientesSocio {
-    status:        boolean;
-    msj:           string;
-    cuotasPagadas: CuotaPagada[];
+    status: boolean;
+    msj:    string;
+    cuotas: Cuota[];
 }
 
-export interface CuotaPagada {
+export interface Cuota {
     idCuotaSocio:     number;
-    nombreSocio:      string;
-    idSocio:          number;
-    fechaVencimiento: Date;
-    cuotaMes:         string;
-    numeroMes:        string;
+    nombresocio:      string;
+    idsocio:          number;
     cedula:           string;
-    fechaPago:        Date | null;
-    tipoCuota:        string;
-    monto:            number;
+    cuotaMes:         string;
+    numeroMEs:        string;
+    fechaVencimiento: Date;
+    fechaPago:        null;
+    montoCuota:       number;
 }
+
+

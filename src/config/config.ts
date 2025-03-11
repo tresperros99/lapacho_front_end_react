@@ -1,49 +1,73 @@
 const appConfig = {
-	auth: {
-		login: 'auth/login'
-	},
-	profesores: {
-		profesores: 'profesores'
-	},
-	socios: {
-        socios: '/socio/socios_detalle',
-        buscadorSocio:'/socio/obtener_socios'
-	},
-	ingresos: {
-		cargarIngresos: '/ingresos/agregar_ingreso',
-		obtenerIngresos: '/ingresos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&pagina=${pagina}',
-		obtenerExcelIngresos: '/ingresos/reportes_ingresos_excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}'
-	},
-	egresos: {
-		listarTipoEgresos: '/egresos/tipos_egreso',
-		cargarEgresos: '/egresos/agregar_gasto',
-		obtenerEgresos: '/egresos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&pagina=${pagina}',
-		obtenerExcelEgresos: '/egresos/reportes_egresos_excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}'
-	},
-	cuotas: {
-        getListadoCuotasPendientesSocio:'/cuotas_club/cuota_socio',
-        pagarCuotaSocio: '/pagos_socio/socio/pagar_cuota_varias',
-        pagarCuotasSociosVarias: '/pagos_socio/socio/pagar_cuota_varias',
-        getListadocuotasPendientesMes: 'cuotas_club/cuotas_pendientes_mes',
-        getCuotasPagadasDelMes: '/cuotas_club/cuotas_pagadas_mes',
-        getGrillaDeCuotasExcel: '/cuotas_club/cuotas_reporte'
-    },
-    eventos: {
-        obtenerEventosDelMes: '/calendario_eventos/eventos_mes',
-        obtenerEventosDelAnio: '/calendario_eventos/eventos_annio',
-        obtenerTodosEventosClub: '/calendario_eventos/eventos_mes_todos',
-        obtenerTipoEventos:'/calendario_eventos/obtener_tipos_evento',
-        crearEvento: '/calendario_eventos/crear_nuevo_evento'
-    },
-    reservas: {
-        getReservasDelClub: '/reserva_en_club/obtener_reservas_club',
-        agendarReservasDelClub: '/reserva_en_club/crear_reserva_club'
-    },
-    clases: {
-        agendarClae: '/agendamiento_clases/agendar_clase',
-        getMesasDisponibles:'/reserva_en_club/obtener_mesas_disponibles'
-
-    }
-}
+  auth: {
+    login: "auth/login",
+    obtenerAccesos: "/accesos/obtener_accesos",
+  },
+  profesores: {
+    crearProfesor: "profesores",
+    obtenerProfesores: "/profesores",
+    eliminarProfesor: "/profesores",
+  },
+  socios: {
+    crearSocios: "/socio/crear_socio",
+    buscadorSocio: "/socio/obtener_socios",
+    tipoSocios: "/socio/obtener_tipo_socios",
+    obtenerSocios: "/socio/obtener_socios",
+  },
+  ventas: {
+    generVentaCuotas: "/ventas/socio/generar_venta_cuota_varias",
+    obtenerVentasClientes: "/ventas/cliente/obtener_venta_clientes",
+  },
+  ingresos: {
+    cargarIngresos: "/ingresos/agregar_ingreso",
+    obtenerIngresos:
+      "/ingresos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&pagina=${pagina}",
+    obtenerExcelIngresos:
+      "/ingresos/reportes_ingresos_excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}",
+  },
+  egresos: {
+    listarTipoEgresos: "/egresos/tipos_egreso",
+    cargarEgresos: "/egresos/agregar_gasto",
+    obtenerEgresos:
+      "/egresos?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}&pagina=${pagina}",
+    obtenerExcelEgresos:
+      "/egresos/reportes_egresos_excel?fechaDesde=${fechaDesde}&fechaHasta=${fechaHasta}",
+  },
+  cuotas: {
+    getListadoCuotasPendientesSocio: "/cuotas_club/cuota_socio",
+    pagarCuotaSocio: "/pagos_socio/socio/pagar_cuota_varias",
+    pagarCuotasSociosVarias: "/pagos_socio/socio/pagar_cuota_varias",
+    getListadocuotasPendientesMes: "cuotas_club/cuotas_pendientes_mes",
+    getCuotasPagadasDelMes: "/cuotas_club/cuotas_pagadas_mes",
+    getGrillaDeCuotasExcel: "/cuotas_club/cuotas_reporte",
+  },
+  eventos: {
+    obtenerEventosDelMes: "/calendario_eventos/eventos_mes",
+    obtenerEventosDelAnio: "/calendario_eventos/eventos_annio",
+    obtenerTodosEventosClub: "/calendario_eventos/eventos_mes_todos",
+    obtenerTipoEventos: "/calendario_eventos/obtener_tipos_evento",
+    crearEvento: "/calendario_eventos/crear_nuevo_evento",
+  },
+  reservas: {
+    getReservasDelClub:
+      "/reserva_en_club/obtener_reservas_club?fecha_desde=${fechaDesde}&fecha_hasta=${fechaHasta}&pagina=${pagina}",
+    agendarReservasDelClub: "/reserva_en_club/crear_reserva_club",
+    eliminarReservasDelClub: "/reserva_en_club/borrar_reserva_club",
+    postAgregarReservaVenta: "/reserva_en_club/agregar_reserva_a_venta",
+  },
+  clases: {
+    agendarClae: "/agendamiento_clases/agendar_clase",
+    getMesasDisponibles: "/reserva_en_club/obtener_mesas_disponibles",
+  },
+  caja: {
+    crearCaja: "/caja/crear_caja",
+    generarMovimientoCajaVenta: "/caja/generar_movimientos_de_caja/ventas",
+    obtenerTipoPago: "/caja/obtener_tipos_pago",
+  },
+  facturacion: {
+    crearTalonario: "/facturacion/generar_documentos_factura",
+    obtenerUltimoNumeroFactura: "/facturacion/obtener_ultimo_nro_factura",
+  },
+};
 
 export default appConfig;
