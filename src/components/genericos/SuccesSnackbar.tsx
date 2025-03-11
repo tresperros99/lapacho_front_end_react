@@ -8,9 +8,6 @@ const SuccesSnackbar = () => {
   const { successMessage } = useSelector((state: RootState) => state.ui);
 
   const handleClose = () => {
-    console.log("aqui");
-    console.log(successMessage);
-
     dispatch(clearSuccess());
   };
 

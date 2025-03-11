@@ -45,11 +45,7 @@ const PanelReservas = () => {
     const fetchReservasClub = async () => {
       try {
         setLoadingReservas(true);
-        console.log(fechaDesde, fechaHasta, page);
-
         if (fechaDesde && fechaHasta) {
-          console.log("entre aqui");
-
           const responseData = await getReservasDelClub(
             fechaDesde,
             fechaHasta,
@@ -93,7 +89,6 @@ const PanelReservas = () => {
   const agregarReservaAVenta = async (reserva: ReservasClub) => {
     const reservaGenerada = await postAgregarReservaAVenta(reserva);
     if (reservaGenerada) {
-      console.log(reservaGenerada);
       dispatch(setSuccess(reservaGenerada.descripcion));
     }
   };

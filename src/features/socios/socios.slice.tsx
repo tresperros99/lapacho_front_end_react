@@ -1,11 +1,10 @@
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
-import { SociosFormateado } from '../../models/responses/socios/NominaSocios.response';
-import { fetchNominaSociosBuilder } from './socios.builder';
 import { TipoSocio } from '../../models/responses/socios/TipoSocio.response';
+import { Socio } from '../../models/responses/socios/SociosPorCedula.response';
 
 export interface SociosState {
-    nominaSocios: SociosFormateado[],
+    nominaSocios: Socio[],
     tipoSocios: TipoSocio[]
 }
 
@@ -24,7 +23,7 @@ export const sociosSlice = createSlice({
               ...initialState
           }
     },
-    setNominaSocios: (state, action: PayloadAction<SociosFormateado[]>) => {
+    setNominaSocios: (state, action: PayloadAction<Socio[]>) => {
         state.nominaSocios = action.payload
     },
     
@@ -33,7 +32,6 @@ export const sociosSlice = createSlice({
     },
 
   },
-  extraReducers:fetchNominaSociosBuilder
 })
 
 // Action creators are generated for each case reducer function

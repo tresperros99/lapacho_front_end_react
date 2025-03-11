@@ -2,7 +2,7 @@ import type { PayloadAction } from '@reduxjs/toolkit';
 import { createSlice } from '@reduxjs/toolkit';
 import { fetchLoginBuilder } from './auth.builder';
 import LoginResponse from '../../models/responses/Auth/Login.response';
-import { AccesosDisponible } from '../../models/responses/Auth/obtenerAccesos.response';
+import { AccesosDisponible } from '../../models/responses/Auth/ObtenerAccesos.response';
 
 export interface AuthState {
 	loginResponse: LoginResponse | null;
@@ -21,7 +21,7 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
 	setToken: (state, action: PayloadAction<LoginResponse>) => {
-	  	state.loginResponse = action.payload
+		state.loginResponse = action.payload
 	},
 	setAccesoUsuarios: (state, action: PayloadAction<AccesosDisponible[]>) => {
 		state.accesosUsuario = action.payload

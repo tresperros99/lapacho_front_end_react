@@ -3,6 +3,7 @@ import appConfig from "../config/config";
 import NuevoSocioDto from "../models/dtos/socios/NuevoSocioDto.model";
 import NomiSociosResponse from "../models/responses/socios/NominaSocios.response";
 import { SociosPorNombreApellido } from "../models/responses/socios/SociosPorCedula.response";
+import TipoSocioResponse from "../models/responses/socios/TipoSocio.response";
 
 const { socios } = appConfig;
 export const crearNuevoSocio = async (crearNuevoSocio:NuevoSocioDto) => { 

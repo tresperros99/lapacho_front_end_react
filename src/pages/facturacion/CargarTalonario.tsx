@@ -43,8 +43,6 @@ const CargarTalonario = () => {
       setLoadingCrearTalonario(true);
 
       try {
-        console.log(cargarTalonario);
-
         const crearTalonario = await postCargarTalonario(cargarTalonario);
         if (crearTalonario) {
           dispatch(setSuccess(crearTalonario.msg));

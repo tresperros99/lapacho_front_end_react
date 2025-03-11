@@ -6,9 +6,9 @@ export const fetchNominaProfesoresBuilder = (builder:ActionReducerMapBuilder<Pro
 	builder.addCase(fetchNominaProfesores.pending, (state) => {
 		state.loadingNominaProfesores = true
 	})
-	builder.addCase(fetchNominaProfesores.fulfilled, (state, action) => {
+	builder.addCase(fetchNominaProfesores.fulfilled, (state) => {
 			state.loadingNominaProfesores = false
-			state.nominaProfesores =  action.payload ? action.payload.profesoresFormateado:[]
+			state.nominaProfesores =  []
 	})
 	builder.addCase(fetchNominaProfesores.rejected, (state) => {
 			state.loadingNominaProfesores = false

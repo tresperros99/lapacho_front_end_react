@@ -53,7 +53,6 @@ const FormSocios = () => {
     },
     validationSchema: validationSchema,
     onSubmit: async (nuevoSocio: NuevoSocioDto) => {
-      console.log(nuevoSocio);
       await crearNuevoSocio({
         ...nuevoSocio,
         fechaNacimiento: formatDate(nuevoSocio.fechaNacimiento),
