@@ -1,7 +1,7 @@
 import { CheckCircleOutline, ErrorOutline } from '@mui/icons-material';
 import { Button, Modal, Typography } from '@mui/material';
 import React from 'react';
-
+import es from '../../locales/es';
 interface CustomModalProps {
     open: boolean;
     onClose: () => void;
@@ -26,14 +26,14 @@ const CustomModal: React.FC<CustomModalProps> = ({ open, onClose, message, isErr
                 <div style={{ display: 'flex', alignItems: 'center', marginBottom: 10 }}>
                     {isError ? <ErrorOutline style={{ color: 'red', marginRight: 10 }} /> : <CheckCircleOutline style={{ color: 'green', marginRight: 10 }} />}
                     <Typography variant="h5" id="modal-title" gutterBottom>
-                        {isError ? '¡Error!' : '¡Éxito!'}
+                        {isError ? es.components.customModal.errorTitle : es.components.customModal.successTitle}
                     </Typography>
                 </div>
                 <Typography variant="body1" id="modal-description">
                     {message}
                 </Typography>
                 <div style={{ marginTop: 20, textAlign: 'center' }}>
-                    <Button variant="contained" onClick={onClose}>Cerrar</Button>
+                    <Button variant="contained" onClick={onClose}>{es.components.customModal.closeButton}</Button>
                 </div>
             </div>
         </Modal>

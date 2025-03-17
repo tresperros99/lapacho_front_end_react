@@ -7,38 +7,38 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import * as React from 'react';
-
+import es from '../../locales/es';
 export const mainListItems = (
     <React.Fragment>
         <ListItemButton>
             <ListItemIcon>
                 <SchoolOutlinedIcon />
             </ListItemIcon>
-            <ListItemText primary="Profesores" />
+            <ListItemText primary={es.components.dashboard.listItems.professors} />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <ShoppingCartIcon />
             </ListItemIcon>
-            <ListItemText primary="Orders" />
+            <ListItemText primary={es.components.dashboard.listItems.orders} />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <PeopleIcon />
             </ListItemIcon>
-            <ListItemText primary="Customers" />
+            <ListItemText primary={es.components.dashboard.listItems.customers} />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <BarChartIcon />
             </ListItemIcon>
-            <ListItemText primary="Reports" />
+            <ListItemText primary={es.components.dashboard.listItems.reports} />
         </ListItemButton>
         <ListItemButton>
             <ListItemIcon>
                 <LayersIcon />
             </ListItemIcon>
-            <ListItemText primary="Integrations" />
+            <ListItemText primary={es.components.dashboard.listItems.integrations} />
         </ListItemButton>
     </React.Fragment>
 );

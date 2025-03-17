@@ -21,13 +21,14 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import { mainListItems, secondaryListItems } from './listItems';
+import es from '../../locales/es';
 
-function Copyright(props: any) {
+function Copyright() {
     return (
-        <Typography variant="body2" color="text.secondary" align="center" {...props}>
-            {'Copyright © '}
+        <Typography variant="body2" color="text.secondary" align="center">
+            {es.components.dashboard.copyright.text + ' '}
             <Link color="inherit" href="https://mui.com/">
-                Your Website
+                {es.components.dashboard.copyright.website}
             </Link>{' '}
             {new Date().getFullYear()}
             {'.'}
@@ -123,8 +124,9 @@ export default function Dashboard() {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Dashboard
+                            {es.components.dashboard.title}                        
                         </Typography>
+
                         <IconButton color="inherit">
                             <Badge badgeContent={4} color="secondary">
                                 <NotificationsIcon />
@@ -200,7 +202,7 @@ export default function Dashboard() {
                                 </Paper>
                             </Grid>
                         </Grid>
-                        <Copyright sx={{ pt: 4 }} />
+                        <Copyright />
                     </Container>
                 </Box>
             </Box>

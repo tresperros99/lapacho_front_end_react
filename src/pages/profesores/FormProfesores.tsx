@@ -11,15 +11,16 @@ import { NumericFormat } from "react-number-format";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { setSuccess } from "../../features/ui/ui.slice";
+import es from "../../locales/es";
 
 const validationSchema = yup.object({
-  nombreProfe: yup.string().required("El nombre es requerido"),
-  numeroCedula: yup.string().required("La Cedula es requerida"),
-  precioXHora: yup.string().required("El precio por hora es requerido"),
-  contactoProfesor: yup.string().required("El telefono es requerido"),
-  crearUsuario: yup.string().required("El usuario es requerido"),
-  nombreUsuario: yup.string().required("El nombre de usuario es requerido"),
-  password: yup.string().required("La contraseña es requerida"),
+  nombreProfe: yup.string().required(es.pages.profesores.form.validation.nameRequired),
+  numeroCedula: yup.string().required(es.pages.profesores.form.validation.documentRequired),
+  precioXHora: yup.string().required(es.pages.profesores.form.validation.hourlyRateRequired),
+  contactoProfesor: yup.string().required(es.pages.profesores.form.validation.phoneRequired),
+  crearUsuario: yup.string().required(es.pages.profesores.form.validation.usernameRequired),
+  nombreUsuario: yup.string().required(es.pages.profesores.form.validation.userDisplayNameRequired),
+  password: yup.string().required(es.pages.profesores.form.validation.passwordRequired),
 });
 
 const FormProfesores = () => {
@@ -69,7 +70,7 @@ const FormProfesores = () => {
     <ContainerComponent>
       <form onSubmit={formik.handleSubmit}>
         <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-          Creacion de Profesores
+          {es.pages.profesores.form.title}
         </Typography>
         <Grid container spacing={2}>
           <Grid item xs={6}>
@@ -77,7 +78,7 @@ const FormProfesores = () => {
               fullWidth
               id="nombreProfe"
               name="nombreProfe"
-              label="Nombre"
+              label={es.pages.profesores.form.fields.name}
               value={formik.values.nombreProfe}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -94,7 +95,7 @@ const FormProfesores = () => {
               fullWidth
               id="numeroCedula"
               name="numeroCedula"
-              label="Numero de cedula"
+              label={es.pages.profesores.form.fields.documentId}
               value={formik.values.numeroCedula}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -116,7 +117,7 @@ const FormProfesores = () => {
               customInput={TextField}
               id="precioXHora"
               name="precioXHora"
-              label="Precio por Hora"
+              label={es.pages.profesores.form.fields.hourlyRate}
               value={formik.values.precioXHora}
               onValueChange={(values) => {
                 const { floatValue } = values; // Aquí obtenemos el valor sin formato
@@ -136,7 +137,7 @@ const FormProfesores = () => {
               fullWidth
               id="password"
               name="password"
-              label="Contraseña"
+              label={es.pages.profesores.form.fields.password}
               value={formik.values.password}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -149,7 +150,7 @@ const FormProfesores = () => {
               fullWidth
               id="nombreUsuario"
               name="nombreUsuario"
-              label="Nombre de Usuario"
+              label={es.pages.profesores.form.fields.username}
               value={formik.values.nombreUsuario}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -167,7 +168,7 @@ const FormProfesores = () => {
               fullWidth
               id="contactoProfesor"
               name="contactoProfesor"
-              label="Numero de telefono"
+              label={es.pages.profesores.form.fields.phone}
               value={formik.values.contactoProfesor}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
@@ -189,7 +190,7 @@ const FormProfesores = () => {
           >
             <CustomButton
               loading={loadingCrearProfesor}
-              text={profesorCargado ? "Actualizar" : "Crear"}
+              text={profesorCargado ? es.pages.profesores.form.buttons.update : es.pages.profesores.form.buttons.create}
               variant="contained"
               type="submit"
             />
