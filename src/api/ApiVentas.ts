@@ -7,13 +7,13 @@ import VentasClientesResponse from "../models/responses/ventas/VentasClientes.re
 const { ventas } = appConfig;
 
 export const postGenerarVentaCuotasVarias = async (
-  generarVentaCuotasVariasDto: GenerarVentaCuotasVariasDto
+  generarVentaCuotasVariasDto: GenerarVentaCuotasVariasDto,
 ) => {
   const url = ventas.generVentaCuotas;
   const generarVentaCuotaResp =
     await axiosInstance.post<ReservasDelClubResponse>(
       url,
-      generarVentaCuotasVariasDto
+      generarVentaCuotasVariasDto,
     );
   if (generarVentaCuotaResp) {
     if (generarVentaCuotaResp.status === 200) {
@@ -29,7 +29,7 @@ export const postGenerarVentaCuotasVarias = async (
 export const getVentasClientes = async (
   pagina: number,
   cantidad: number,
-  cedula: string
+  cedula: string,
 ) => {
   const url = ventas.obtenerVentasClientes;
   const params = {

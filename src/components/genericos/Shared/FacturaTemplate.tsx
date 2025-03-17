@@ -46,7 +46,9 @@ const FacturaTemplate = ({
       <View style={styles.header}>
         <Text style={styles.title}>Factura Electrónica</Text>
         <Text>Timbrado N°: {timbrado.nroTimbrado}</Text>
-        <Text>Fecha de Vencimiento: {timbrado.fechaVencimiento.toLocaleDateString()}</Text>
+        <Text>
+          Fecha de Vencimiento: {timbrado.fechaVencimiento.toLocaleDateString()}
+        </Text>
       </View>
 
       {/* Company Information */}

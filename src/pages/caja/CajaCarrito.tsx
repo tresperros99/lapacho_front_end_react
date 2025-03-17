@@ -58,12 +58,12 @@ export const CajaCarrito = () => {
   const getVentas = async (
     page: number,
     cantidad: number,
-    numeroCedula: string
+    numeroCedula: string,
   ) => {
     const ventasClientesResp = await getVentasClientes(
       page,
       cantidad,
-      numeroCedula
+      numeroCedula,
     );
 
     if (ventasClientesResp) {
@@ -76,7 +76,7 @@ export const CajaCarrito = () => {
             return 1;
           }
           return Number(a.monto) - Number(b.monto);
-        }
+        },
       );
       setVentasClientes(sortedVentasClientes);
     }
@@ -84,14 +84,14 @@ export const CajaCarrito = () => {
 
   const handleCheckboxChange = (ventaServicio: VentaServicio) => {
     const isSelected = movimientoCajaVenta.ventas.some(
-      (venta) => venta.idVenta === ventaServicio.idVenta
+      (venta) => venta.idVenta === ventaServicio.idVenta,
     );
 
     if (isSelected) {
       setMovimientoCajaVenta({
         ...movimientoCajaVenta,
         ventas: movimientoCajaVenta.ventas.filter(
-          (venta) => venta.idVenta !== ventaServicio.idVenta
+          (venta) => venta.idVenta !== ventaServicio.idVenta,
         ),
       });
     } else {
@@ -105,9 +105,8 @@ export const CajaCarrito = () => {
   const generarVenta = async () => {
     try {
       setLoadingGenerarVenta(true);
-      const generarMovimiento = await postGenerarMovimientoDeVenta(
-        movimientoCajaVenta
-      );
+      const generarMovimiento =
+        await postGenerarMovimientoDeVenta(movimientoCajaVenta);
       if (generarMovimiento && selectdSocio) {
         setFacturaData({
           timbrado: generarMovimiento.factura.timbrado,
@@ -206,7 +205,7 @@ export const CajaCarrito = () => {
                       <TableCell align="right">
                         <Checkbox
                           checked={movimientoCajaVenta.ventas.some(
-                            (v) => v.idVenta === venta.idVenta
+                            (v) => v.idVenta === venta.idVenta,
                           )}
                           onChange={() => handleCheckboxChange(venta)}
                           // disabled={!!socio.fechaPago} // Disable checkbox if cuota is already paid

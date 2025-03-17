@@ -59,7 +59,7 @@ const PanelSocios = () => {
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -117,13 +117,25 @@ const PanelSocios = () => {
                     <ArrowDropDownIcon />
                   )}
                 </TableCell>
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.id}</TableCell>
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.status}</TableCell>
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.phone}</TableCell>
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.description}</TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.id}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.status}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.phone}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.description}
+                </TableCell>
 
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.edit}</TableCell>
-                <TableCell align="right">{es.pages.socios.panel.tableHeaders.delete}</TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.edit}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.delete}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

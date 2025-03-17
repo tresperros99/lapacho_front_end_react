@@ -4,6 +4,7 @@ export const es = {
       close: "Cerrar",
       create: "Crear",
       update: "Actualizar",
+      new: "Nuevo",
     },
     alerts: {
       success: "¡Éxito!",
@@ -13,7 +14,13 @@ export const es = {
       required: "Este campo es requerido",
     },
     labels: {
-      copyright: "Copyright ©",
+      login: {
+        login: "Iniciar Sesión",
+        email: "Correo",
+
+        password: "Contraseña",
+        copyright: "Copyright ©",
+      },
     },
     pagination: {
       rowsPerPage: "Filas por página",
@@ -49,8 +56,8 @@ export const es = {
           savedReports: "Informes guardados",
           currentMonth: "Mes actual",
           lastQuarter: "Último trimestre",
-          yearEndSale: "Venta de fin de año"
-        }
+          yearEndSale: "Venta de fin de año",
+        },
       },
     },
     table: {
@@ -64,8 +71,8 @@ export const es = {
         contact: "Contacto",
         phone: "Teléfono",
         email: "Correo",
-        description: "Descripción"
-      }
+        description: "Descripción",
+      },
     },
   },
   pages: {
@@ -100,6 +107,7 @@ export const es = {
           new: "Nuevo Profesor",
         },
         tableHeaders: {
+          id: "ID",
           name: "Nombre",
           documentId: "Número de Cédula",
           contact: "Contacto",
@@ -126,6 +134,7 @@ export const es = {
           new: "Nuevo Socio",
         },
         tableHeaders: {
+          id: "ID",
           name: "Nombre",
           documentId: "Cédula",
           status: "Estado",

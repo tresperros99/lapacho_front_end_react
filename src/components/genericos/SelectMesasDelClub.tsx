@@ -30,7 +30,7 @@ const SelectMesasDelClub: React.FC<SelectMesasDelClubProps> = ({
   const handleMesaDisponibleChange = (event: SelectChangeEvent<number>) => {
     const mesaId = event.target.value;
     const mesaSeleccionada = mesasDisponibles.find(
-      (mesa) => mesa.idMesa === mesaId
+      (mesa) => mesa.idMesa === mesaId,
     );
     if (mesaSeleccionada) {
       setMesaSeleccionada(mesaSeleccionada);

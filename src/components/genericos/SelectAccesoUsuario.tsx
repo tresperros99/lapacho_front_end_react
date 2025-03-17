@@ -1,44 +1,49 @@
-import { CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React, { ReactNode, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../app/store'; // Ajustar el path según tu estructura
-import { fetchAccesosUsuario } from '../../features/actions/auth.action';
+import {
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import React, { ReactNode, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../app/store"; // Ajustar el path según tu estructura
+import { fetchAccesosUsuario } from "../../features/actions/auth.action";
 
 interface SelectAccesoUsuarioProps {
   name: string;
-  value: any;
-  onChange: (event: SelectChangeEvent<any>, child: ReactNode) => void
+  value: number;
+  onChange: (event: SelectChangeEvent<any>, child: ReactNode) => void;
   onBlur: (e: React.FocusEvent<any>) => void;
   error?: boolean;
   helperText?: string;
 }
 
-export const SelectAccesoUsuario: React.FC<SelectAccesoUsuarioProps> = ({ 
-  name, 
-  value, 
-  onChange, 
-  onBlur, 
-  error, 
-  helperText 
+export const SelectAccesoUsuario: React.FC<SelectAccesoUsuarioProps> = ({
+  name,
+  value,
+  onChange,
+  onBlur,
+  error,
+  helperText,
 }) => {
   const dispatch = useAppDispatch();
-  const { accesosUsuario} = useSelector((state: RootState) => state.auth);
-  const { loadingAccesosUsuario} = useSelector((state: RootState) => state.ui);
-
-  
+  const { accesosUsuario } = useSelector((state: RootState) => state.auth);
+  const { loadingAccesosUsuario } = useSelector((state: RootState) => state.ui);
 
   useEffect(() => {
     if (!accesosUsuario.length) {
-        dispatch(fetchAccesosUsuario());
+      dispatch(fetchAccesosUsuario());
     }
-    }, [dispatch, accesosUsuario.length, loadingAccesosUsuario]);
-
+  }, [dispatch, accesosUsuario.length, loadingAccesosUsuario]);
 
   return (
     <FormControl fullWidth error={error}>
       <InputLabel id="acceso-label">Tipo de Acceso</InputLabel>
       {loadingAccesosUsuario ? (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={"center"}>
           <CircularProgress />
         </Grid>
       ) : (
@@ -58,7 +63,7 @@ export const SelectAccesoUsuario: React.FC<SelectAccesoUsuarioProps> = ({
           ))}
         </Select>
       )}
-      {helperText && <div style={{ color: 'red' }}>{helperText}</div>}
+      {helperText && <div style={{ color: "red" }}>{helperText}</div>}
     </FormControl>
   );
 };

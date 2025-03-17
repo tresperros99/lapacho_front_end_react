@@ -39,7 +39,7 @@ export const MainListItems = () => {
   const navigate = useNavigate();
   const [open, setOpen] = useState<OpenState>({});
   const loginResponse = useSelector(
-    (state: RootState) => state.auth.loginResponse
+    (state: RootState) => state.auth.loginResponse,
   );
 
   // Función para manejar clics en los ítems del menú principal

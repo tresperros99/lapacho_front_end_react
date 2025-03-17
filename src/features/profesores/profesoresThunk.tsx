@@ -5,5 +5,5 @@ export const fetchNominaProfesores = createAsyncThunk(
     // TODO: axios llamada a funcion
     const res = true;
     return res;
-  }
+  },
 );

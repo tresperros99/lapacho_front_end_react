@@ -49,7 +49,7 @@ const PanelReservas = () => {
           const responseData = await getReservasDelClub(
             fechaDesde,
             fechaHasta,
-            page
+            page,
           );
           if (responseData) {
             setReservas(responseData.reservasClub);

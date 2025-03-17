@@ -4,19 +4,19 @@ import { setTiposEgresos } from "../egresos/egresos.slice";
 import { setError, setLoadingTipoEgreso } from "../ui/ui.slice";
 
 export const fetchTiposEgresos = (): AppThunk => async (dispatch, getState) => {
-    const { egresos} = getState();
-    const { tiposEgresos } = egresos;
-    
-    if (!tiposEgresos.length) { 
-        dispatch(setLoadingTipoEgreso(true));
-        try {
-            const tipoEgresoResp = await getListarTipoDeEgreso();
-            if (tipoEgresoResp && tipoEgresoResp.length>0) {
-                dispatch(setTiposEgresos(tipoEgresoResp[0].tiposEgreso));
-            }
-        } catch (error) {
-            dispatch(setError('Error al cargar los tipos de egresos.'));
-        }
+  const { egresos } = getState();
+  const { tiposEgresos } = egresos;
+
+  if (!tiposEgresos.length) {
+    dispatch(setLoadingTipoEgreso(true));
+    try {
+      const tipoEgresoResp = await getListarTipoDeEgreso();
+      if (tipoEgresoResp && tipoEgresoResp.length > 0) {
+        dispatch(setTiposEgresos(tipoEgresoResp[0].tiposEgreso));
+      }
+    } catch (error) {
+      dispatch(setError("Error al cargar los tipos de egresos."));
     }
-    dispatch(setLoadingTipoEgreso(false));
+  }
+  dispatch(setLoadingTipoEgreso(false));
 };

@@ -19,7 +19,7 @@ export const profesoresSlice = createSlice({
   reducers: {
     setNominaProfesores: (
       state,
-      action: PayloadAction<ProfesoresFormateado[]>
+      action: PayloadAction<ProfesoresFormateado[]>,
     ) => {
       state.nominaProfesores = action.payload;
     },

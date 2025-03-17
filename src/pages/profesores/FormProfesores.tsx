@@ -14,13 +14,27 @@ import { setSuccess } from "../../features/ui/ui.slice";
 import es from "../../locales/es";
 
 const validationSchema = yup.object({
-  nombreProfe: yup.string().required(es.pages.profesores.form.validation.nameRequired),
-  numeroCedula: yup.string().required(es.pages.profesores.form.validation.documentRequired),
-  precioXHora: yup.string().required(es.pages.profesores.form.validation.hourlyRateRequired),
-  contactoProfesor: yup.string().required(es.pages.profesores.form.validation.phoneRequired),
-  crearUsuario: yup.string().required(es.pages.profesores.form.validation.usernameRequired),
-  nombreUsuario: yup.string().required(es.pages.profesores.form.validation.userDisplayNameRequired),
-  password: yup.string().required(es.pages.profesores.form.validation.passwordRequired),
+  nombreProfe: yup
+    .string()
+    .required(es.pages.profesores.form.validation.nameRequired),
+  numeroCedula: yup
+    .string()
+    .required(es.pages.profesores.form.validation.documentRequired),
+  precioXHora: yup
+    .string()
+    .required(es.pages.profesores.form.validation.hourlyRateRequired),
+  contactoProfesor: yup
+    .string()
+    .required(es.pages.profesores.form.validation.phoneRequired),
+  crearUsuario: yup
+    .string()
+    .required(es.pages.profesores.form.validation.usernameRequired),
+  nombreUsuario: yup
+    .string()
+    .required(es.pages.profesores.form.validation.userDisplayNameRequired),
+  password: yup
+    .string()
+    .required(es.pages.profesores.form.validation.passwordRequired),
 });
 
 const FormProfesores = () => {
@@ -190,7 +204,11 @@ const FormProfesores = () => {
           >
             <CustomButton
               loading={loadingCrearProfesor}
-              text={profesorCargado ? es.pages.profesores.form.buttons.update : es.pages.profesores.form.buttons.create}
+              text={
+                profesorCargado
+                  ? es.pages.profesores.form.buttons.update
+                  : es.pages.profesores.form.buttons.create
+              }
               variant="contained"
               type="submit"
             />

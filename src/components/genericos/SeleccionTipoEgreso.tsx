@@ -32,7 +32,7 @@ const SelectTipoEgresoComponent: React.FC<SelectTipoEgresoComponentProps> = ({
   const handleTipoIngresoChange = (event: SelectChangeEvent<number>) => {
     const tipoEgresoId = event.target.value;
     const tipoEgresoSeleccionado = tiposEgresos.find(
-      (tipo) => tipo.idTipo === tipoEgresoId
+      (tipo) => tipo.idTipo === tipoEgresoId,
     );
     if (tipoEgresoSeleccionado) {
       setTipoEgresoSeleccionado(tipoEgresoSeleccionado);

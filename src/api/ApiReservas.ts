@@ -14,7 +14,7 @@ const { reservas } = appConfig;
 export const getReservasDelClub = async (
   fechaDesde: Date,
   fechaHasta: Date,
-  pagina: number
+  pagina: number,
 ) => {
   const url = reservas.getReservasDelClub;
   const fechaDesdeFormateada = formatearFechaTipoDate(fechaDesde);
@@ -26,9 +26,8 @@ export const getReservasDelClub = async (
     .replace("${fechaHasta}", fechaHastaFormateada)
     .replace("${pagina}", paginaStr);
 
-  const reservasDelClubResp = await axiosInstance.get<ReservasDelClubResponse>(
-    urlConParametros
-  );
+  const reservasDelClubResp =
+    await axiosInstance.get<ReservasDelClubResponse>(urlConParametros);
   if (reservasDelClubResp) {
     if (reservasDelClubResp.status === 200) {
       return reservasDelClubResp.data;
@@ -41,14 +40,14 @@ export const getReservasDelClub = async (
 };
 
 export const postAgendarReservaDelClub = async (
-  agendarReservaDto: AgendarReservaClubDto
+  agendarReservaDto: AgendarReservaClubDto,
 ) => {
   const url = reservas.agendarReservasDelClub;
 
   const agendarReservasResp =
     await axiosInstance.post<AgendarReservaClubResponse>(
       url,
-      agendarReservaDto
+      agendarReservaDto,
     );
   if (agendarReservasResp) {
     if (agendarReservasResp.status === 200) {
@@ -69,7 +68,7 @@ export const eliminarReservaDelClub = async (idReserva: number) => {
 
   const deleteReservaResp = await axiosInstance.delete<ReservasDelClubResponse>(
     url,
-    { params }
+    { params },
   );
   if (deleteReservaResp) {
     if (deleteReservaResp.status === 200) {
@@ -98,7 +97,7 @@ export const postAgregarReservaAVenta = async (reserva: ReservasClub) => {
   };
   const agendarReservasResp = await axiosInstance.post<SuccessResponse>(
     url,
-    reservaParse
+    reservaParse,
   );
   if (agendarReservasResp) {
     if (agendarReservasResp.status === 200) {

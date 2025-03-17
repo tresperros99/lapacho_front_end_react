@@ -57,13 +57,13 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
     }
 
     const selected = selectedCuotas.some(
-      (cuota) => cuota.idSocioCuota === socio.idCuotaSocio
+      (cuota) => cuota.idSocioCuota === socio.idCuotaSocio,
     );
     if (selected) {
       setSelectedCuotas(
         selectedCuotas.filter(
-          (cuota) => cuota.idSocioCuota !== socio.idCuotaSocio
-        )
+          (cuota) => cuota.idSocioCuota !== socio.idCuotaSocio,
+        ),
       );
     } else {
       if (
@@ -153,7 +153,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
                     <TableCell align="right">
                       <Checkbox
                         checked={selectedCuotas.some(
-                          (cuota) => cuota.idSocioCuota === socio.idCuotaSocio
+                          (cuota) => cuota.idSocioCuota === socio.idCuotaSocio,
                         )}
                         onChange={() => handleCheckboxChange(socio)}
                         disabled={!!socio.fechaPago} // Disable checkbox if cuota is already paid

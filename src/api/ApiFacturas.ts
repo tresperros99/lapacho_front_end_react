@@ -7,12 +7,12 @@ import SuccessResponse from "../models/responses/shared/Success.response";
 const { facturacion } = appConfig;
 
 export const postCargarTalonario = async (
-  cargarTalonarioDto: CargarTalonarioDto
+  cargarTalonarioDto: CargarTalonarioDto,
 ) => {
   const url = facturacion.crearTalonario;
   const crearTalonarioResp = await axiosInstance.post<SuccessResponse>(
     url,
-    cargarTalonarioDto
+    cargarTalonarioDto,
   );
   if (crearTalonarioResp) {
     if (crearTalonarioResp.status === 200) {
@@ -27,9 +27,8 @@ export const postCargarTalonario = async (
 
 export const getUltimoNumeroDeFactura = async () => {
   const url = facturacion.obtenerUltimoNumeroFactura;
-  const ultimoNumeroResp = await axiosInstance.get<UltimoNumeroFacturaResponse>(
-    url
-  );
+  const ultimoNumeroResp =
+    await axiosInstance.get<UltimoNumeroFacturaResponse>(url);
   if (ultimoNumeroResp) {
     if (ultimoNumeroResp.status === 200) {
       return ultimoNumeroResp.data;

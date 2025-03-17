@@ -4,23 +4,22 @@ import { setTipoSocios } from "../socios/socios.slice";
 import { setError, setLoadingTipoSocios } from "../ui/ui.slice";
 
 export const fetchTipoSocio = (): AppThunk => async (dispatch, getState) => {
-    const { socios, ui } = getState();
-    const { tipoSocios } = socios;
-    const { loadingTipoSocios } = ui;
+  const { socios, ui } = getState();
+  const { tipoSocios } = socios;
+  const { loadingTipoSocios } = ui;
 
-    if (loadingTipoSocios || tipoSocios.length > 0) return;
+  if (loadingTipoSocios || tipoSocios.length > 0) return;
 
-    dispatch(setLoadingTipoSocios(true)); 
+  dispatch(setLoadingTipoSocios(true));
 
-    try {
-        const tipoSocioResp = await getTipoSocios();
-        if (tipoSocioResp && tipoSocioResp.tipoSocio.length > 0) {
-            dispatch(setTipoSocios(tipoSocioResp.tipoSocio));
-        }
-    } catch (error) {
-        dispatch(setError('Error al cargar los tipos de socios'));
-    } finally {
-        dispatch(setLoadingTipoSocios(false));
+  try {
+    const tipoSocioResp = await getTipoSocios();
+    if (tipoSocioResp && tipoSocioResp.tipoSocio.length > 0) {
+      dispatch(setTipoSocios(tipoSocioResp.tipoSocio));
     }
-    
+  } catch (error) {
+    dispatch(setError("Error al cargar los tipos de socios"));
+  } finally {
+    dispatch(setLoadingTipoSocios(false));
+  }
 };

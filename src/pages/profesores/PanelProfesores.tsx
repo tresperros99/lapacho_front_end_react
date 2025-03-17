@@ -103,13 +103,25 @@ const PanelProfesores = () => {
                     <ArrowDropDownIcon />
                   )}
                 </TableCell>
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.documentId}</TableCell>
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.contact}</TableCell>
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.hourlyRate}</TableCell>
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.status}</TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.documentId}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.contact}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.hourlyRate}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.status}
+                </TableCell>
 
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.edit}</TableCell>
-                <TableCell align="right">{es.pages.profesores.panel.tableHeaders.delete}</TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.edit}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.delete}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
