@@ -1,10 +1,16 @@
-import { CircularProgress, FormControl, Grid, InputLabel, MenuItem, Select, SelectChangeEvent } from '@mui/material';
-import React, { ReactNode, useEffect } from 'react';
-import { useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../../app/store'; // Ajustar el path según tu estructura
-import { fetchTipoSocio } from '../../features/actions/socios.action';
-
-
+import {
+  CircularProgress,
+  FormControl,
+  Grid,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
+import React, { ReactNode, useEffect } from "react";
+import { useSelector } from "react-redux";
+import { RootState, useAppDispatch } from "../../app/store"; // Ajustar el path según tu estructura
+import { fetchTipoSocio } from "../../features/actions/socios.action";
 
 interface SelectTipoSocioProps {
   name: string;
@@ -15,13 +21,13 @@ interface SelectTipoSocioProps {
   helperText?: string;
 }
 
-export const SelectTipoSocio: React.FC<SelectTipoSocioProps> = ({ 
-  name, 
-  value, 
-  onChange, 
-  onBlur, 
-  error, 
-  helperText 
+export const SelectTipoSocio: React.FC<SelectTipoSocioProps> = ({
+  name,
+  value,
+  onChange,
+  onBlur,
+  error,
+  helperText,
 }) => {
   const dispatch = useAppDispatch();
   const { tipoSocios } = useSelector((state: RootState) => state.socios); // Cambiar según el slice de estado correspondiente
@@ -37,7 +43,7 @@ export const SelectTipoSocio: React.FC<SelectTipoSocioProps> = ({
     <FormControl fullWidth error={error}>
       <InputLabel id="tipo-socio-label">Tipo de Socio</InputLabel>
       {loadingTipoSocios ? (
-        <Grid container justifyContent={'center'}>
+        <Grid container justifyContent={"center"}>
           <CircularProgress />
         </Grid>
       ) : (
@@ -57,7 +63,7 @@ export const SelectTipoSocio: React.FC<SelectTipoSocioProps> = ({
           ))}
         </Select>
       )}
-      {helperText && <div style={{ color: 'red' }}>{helperText}</div>}
+      {helperText && <div style={{ color: "red" }}>{helperText}</div>}
     </FormControl>
   );
 };

@@ -12,6 +12,7 @@ import FormProfesores from "../pages/profesores/FormProfesores";
 import PanelProfesores from "../pages/profesores/PanelProfesores";
 import FormReservas from "../pages/reservas/FormReservas";
 import PanelReservas from "../pages/reservas/PanelReservas";
+import { FormSocioDependiente } from "../pages/socios";
 import FormSocios from "../pages/socios/FormSocios";
 import CuotasPagadas from "../pages/socios/miSocio/CuotasPagadas";
 import CuotasPagadasDelMes from "../pages/socios/miSocio/CuotasPagadasDelMes";
@@ -36,6 +37,8 @@ export const adminRoutes = [
   // { path: "formClases", Component: ClasesForm },
   { path: "panelClases", Component: PanelProfesores },
   { path: "formSocios", Component: FormSocios },
+  { path: "formSocioDependiente", Component: FormSocioDependiente },
+
   { path: "panelSocios", Component: PanelSocios },
   { path: "ingresos", Component: FormIngresos },
   { path: "panelIngresos", Component: PanelIngresos },

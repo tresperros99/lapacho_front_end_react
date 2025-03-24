@@ -7,12 +7,12 @@ import SuccessResponse from "../models/responses/shared/Success.response";
 const { profesores } = appConfig;
 
 export const crearNuevoProfesor = async (
-  crearNuevoProfesor: NuevoProfesorDto
+  crearNuevoProfesor: NuevoProfesorDto,
 ) => {
   const url = profesores.crearProfesor;
   const crearNuevoProfesorResp = await axiosInstance.post<SuccessResponse>(
     url,
-    crearNuevoProfesor
+    crearNuevoProfesor,
   );
   if (crearNuevoProfesorResp) {
     if (crearNuevoProfesorResp.status === 200) {

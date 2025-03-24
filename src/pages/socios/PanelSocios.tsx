@@ -2,6 +2,7 @@ import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+
 import {
   CircularProgress,
   TableFooter,
@@ -23,6 +24,7 @@ import { eliminarSocio, getNominaSocios } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { separadorMiles } from "../../helpers/Numbers";
 import { Socio } from "../../models/responses/socios/NominaSocios.response";
+import es from "../../locales/es";
 
 const PanelSocios = () => {
   const navigate = useNavigate();
@@ -57,7 +59,7 @@ const PanelSocios = () => {
   };
 
   const handleChangeRowsPerPage = (
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
@@ -90,12 +92,12 @@ const PanelSocios = () => {
   return (
     <ContainerComponent>
       <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-        Panel de Socios
+        {es.pages.socios.panel.title}
       </Typography>
 
       <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
         <Button variant="contained" color="primary" onClick={nuevoSocio}>
-          Nuevo Socio
+          {es.common.buttons.new}
         </Button>
       </Grid>
       {sortedSocios.length === 0 && loadingSocios ? (
@@ -108,20 +110,32 @@ const PanelSocios = () => {
             <TableHead>
               <TableRow>
                 <TableCell onClick={handleSort} style={{ cursor: "pointer" }}>
-                  Nombre{" "}
+                  {es.pages.socios.panel.tableHeaders.name}{" "}
                   {orderBy === "asc" ? (
                     <ArrowDropUpIcon />
                   ) : (
                     <ArrowDropDownIcon />
                   )}
                 </TableCell>
-                <TableCell align="right">Cedula</TableCell>
-                <TableCell align="right">Estado</TableCell>
-                <TableCell align="right">Numero de Telefono</TableCell>
-                <TableCell align="right">Descripcion</TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.id}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.status}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.phone}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.description}
+                </TableCell>
 
-                <TableCell align="right">Editar</TableCell>
-                <TableCell align="right">Eliminar</TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.edit}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.socios.panel.tableHeaders.delete}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -163,6 +177,10 @@ const PanelSocios = () => {
                 page={page}
                 onPageChange={handleChangePage}
                 onRowsPerPageChange={handleChangeRowsPerPage}
+                labelRowsPerPage={es.common.pagination.rowsPerPage}
+                labelDisplayedRows={({ from, to, count }) =>
+                  `${from}-${to} ${es.common.pagination.of} ${count}`
+                }
               />
             </TableFooter>
           </Table>

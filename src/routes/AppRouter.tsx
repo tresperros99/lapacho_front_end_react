@@ -7,7 +7,7 @@ import ErrorSnackbar from "../components/genericos/ErrorSnackbar";
 import SuccesSnackbar from "../components/genericos/SuccesSnackbar";
 export const AppRouter = () => {
   const loginResponse = useSelector(
-    (state: RootState) => state.auth.loginResponse
+    (state: RootState) => state.auth.loginResponse,
   );
 
   return (

@@ -5,7 +5,6 @@ import { useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { crearNuevoSocio } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import { SelectAccesoUsuario } from "../../components/genericos/SelectAccesoUsuario";
 import { SelectTipoSocio } from "../../components/genericos/SelectTipoSocio";
 import NuevoSocioDto from "../../models/dtos/socios/NuevoSocioDto.model";
 import { Socio } from "../../models/responses/socios/NominaSocios.response";
@@ -19,9 +18,7 @@ const validationSchema = yup.object({
   numeroTel: yup.string().required("El numero de telefono es requerido"),
   direccion: yup.string().required("La direccion es requerida"),
   tipoSocio: yup.string().required("El tipo de usuario es requerido"),
-  idAcceso: yup.string().required("Debe seleccionar un tipo de acceso"),
-  contraseña: yup.string().required("La contraseña es requerida"),
-});
+  estadoSocio: yup.string().required("El estado del socio es requerido"),});
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
@@ -45,12 +42,7 @@ const FormSocios = () => {
       numeroTel: socioCargado?.numeroTelefono ?? "",
       direccion: socioCargado?.direccion ?? "",
       tipoSocio: socioCargado?.idTipoSocio ?? 1,
-      contraseña: "",
-      estadoSocio: socioCargado?.estadoSocio ?? "",
-      idAcceso: socioCargado?.idTipoSocio ?? 1,
-      nombreUsuario: socioCargado?.nombreUsuario ?? "test",
-      dependientes: [],
-    },
+      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,},
     validationSchema: validationSchema,
     onSubmit: async (nuevoSocio: NuevoSocioDto) => {
       await crearNuevoSocio({
@@ -98,34 +90,6 @@ const FormSocios = () => {
               onBlur={formik.handleBlur}
               error={formik.touched.apellido && Boolean(formik.errors.apellido)}
               helperText={formik.touched.apellido && formik.errors.apellido}
-            />
-          </Grid2>
-          <Grid2 xs={6}>
-            <TextField
-              fullWidth
-              id="nombreUsuario"
-              name="nombreUsuario"
-              label="Nombre de usuario"
-              value={formik.values.nombreUsuario}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.nombreUsuario &&
-                Boolean(formik.errors.nombreUsuario)
-              }
-              helperText={
-                formik.touched.nombreUsuario && formik.errors.nombreUsuario
-              }
-            />
-          </Grid2>
-          <Grid2 xs={6}>
-            <SelectAccesoUsuario
-              name="idAcceso"
-              value={formik.values.idAcceso}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={formik.touched.idAcceso && Boolean(formik.errors.idAcceso)}
-              helperText={formik.touched.idAcceso ? formik.errors.idAcceso : ""}
             />
           </Grid2>
           <Grid2 xs={6}>
@@ -216,22 +180,6 @@ const FormSocios = () => {
                 formik.touched.direccion && Boolean(formik.errors.direccion)
               }
               helperText={formik.touched.direccion && formik.errors.direccion}
-            />
-          </Grid2>
-          <Grid2 xs={6}>
-            <TextField
-              fullWidth
-              id="contraseña"
-              name="contraseña"
-              type="password"
-              label="password"
-              value={formik.values.contraseña}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              error={
-                formik.touched.contraseña && Boolean(formik.errors.contraseña)
-              }
-              helperText={formik.touched.contraseña && formik.errors.contraseña}
             />
           </Grid2>
           <Grid2 xs={12}>

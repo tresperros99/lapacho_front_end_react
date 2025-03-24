@@ -6,93 +6,106 @@ import { SociosPorNombreApellido } from "../models/responses/socios/SociosPorCed
 import TipoSocioResponse from "../models/responses/socios/TipoSocio.response";
 
 const { socios } = appConfig;
-export const crearNuevoSocio = async (crearNuevoSocio:NuevoSocioDto) => { 
-    const url = appConfig.socios.crearSocios;
-    const crearNuevoSocioRes = await axiosInstance.post<any>(url,crearNuevoSocio);
-    let respuesta:any = {}
-    if (crearNuevoSocioRes) {
-        if (crearNuevoSocioRes.status === 200) {
-            respuesta = crearNuevoSocioRes.data
-        }else {
-            respuesta = null
-        }
-    }else{
-        respuesta = null
+export const crearNuevoSocio = async (crearNuevoSocio: NuevoSocioDto) => {
+  const url = appConfig.socios.crearSocios;
+  const crearNuevoSocioRes = await axiosInstance.post<any>(
+    url,
+    crearNuevoSocio,
+  );
+  let respuesta: any = {};
+  if (crearNuevoSocioRes) {
+    if (crearNuevoSocioRes.status === 200) {
+      respuesta = crearNuevoSocioRes.data;
+    } else {
+      respuesta = null;
     }
-    return respuesta;
-}
-export const actualizarSocio = async (idSocio:number,socio:NuevoSocioDto) => { 
-    const url = appConfig.socios.crearSocios;
-    const actualizareNuevoSocioRes = await axiosInstance.put<any>(`${url}/${idSocio}`,socio);
-    let respuesta:any = {}
-    if (actualizareNuevoSocioRes) {
-        if (actualizareNuevoSocioRes.status === 200) {
-            respuesta = actualizareNuevoSocioRes.data
-        }else {
-            respuesta = null
-        }
-    }else{
-        respuesta = null
+  } else {
+    respuesta = null;
+  }
+  return respuesta;
+};
+export const actualizarSocio = async (
+  idSocio: number,
+  socio: NuevoSocioDto,
+) => {
+  const url = appConfig.socios.crearSocios;
+  const actualizareNuevoSocioRes = await axiosInstance.put<any>(
+    `${url}/${idSocio}`,
+    socio,
+  );
+  let respuesta: any = {};
+  if (actualizareNuevoSocioRes) {
+    if (actualizareNuevoSocioRes.status === 200) {
+      respuesta = actualizareNuevoSocioRes.data;
+    } else {
+      respuesta = null;
     }
-    return respuesta;
-}
-export const eliminarSocio = async (idSocio:number) => { 
-    const url = appConfig.socios.crearSocios;
-    const eliminarSocioResponse = await axiosInstance.delete<any>(`${url}/${idSocio}`);
-    let respuesta:any = {}
-    if (eliminarSocioResponse) {
-        if (eliminarSocioResponse.status === 200) {
-            respuesta = eliminarSocioResponse.data
-        }else {
-            respuesta = null
-        }
-    }else{
-        respuesta = null
+  } else {
+    respuesta = null;
+  }
+  return respuesta;
+};
+export const eliminarSocio = async (idSocio: number) => {
+  const url = appConfig.socios.crearSocios;
+  const eliminarSocioResponse = await axiosInstance.delete<any>(
+    `${url}/${idSocio}`,
+  );
+  let respuesta: any = {};
+  if (eliminarSocioResponse) {
+    if (eliminarSocioResponse.status === 200) {
+      respuesta = eliminarSocioResponse.data;
+    } else {
+      respuesta = null;
     }
-    return respuesta;
-}
+  } else {
+    respuesta = null;
+  }
+  return respuesta;
+};
 
-export const getNominaSocios = async () => { 
-    const url = socios.obtenerSocios;
-    const getNominaSociosResp = await axiosInstance.get<NomiSociosResponse>(url);
-    if (getNominaSociosResp) {
-        if (getNominaSociosResp.status === 200) {
-            return getNominaSociosResp.data
-        }else {
-            return getNominaSociosResp.data
-        }
-    }else{
-        return null
-    }}
+export const getNominaSocios = async () => {
+  const url = socios.obtenerSocios;
+  const getNominaSociosResp = await axiosInstance.get<NomiSociosResponse>(url);
+  if (getNominaSociosResp) {
+    if (getNominaSociosResp.status === 200) {
+      return getNominaSociosResp.data;
+    } else {
+      return getNominaSociosResp.data;
+    }
+  } else {
+    return null;
+  }
+};
 
-export const getBuscadorSocios = async (nombre:string) => { 
-    const url = appConfig.socios.buscadorSocio;
-    const params = {
-        nombre
+export const getBuscadorSocios = async (nombre: string) => {
+  const url = appConfig.socios.buscadorSocio;
+  const params = {
+    nombre,
+  };
+  const getSocioResp = await axiosInstance.get<SociosPorNombreApellido>(url, {
+    params,
+  });
+  if (getSocioResp) {
+    if (getSocioResp.status === 200) {
+      return getSocioResp.data;
+    } else {
+      return getSocioResp.data;
     }
-    const getSocioResp = await axiosInstance.get<SociosPorNombreApellido>(url,{params});
-    if (getSocioResp) {
-        if (getSocioResp.status === 200) {
-            return getSocioResp.data
-        }else {
-            return getSocioResp.data
-        }
-    }else{
-        return null
-    }
-}
+  } else {
+    return null;
+  }
+};
 
-export const getTipoSocios = async () => { 
-    const url = appConfig.socios.tipoSocios;
-    const getTipoSocioResp = await axiosInstance.get<TipoSocioResponse>(url);
-    if (getTipoSocioResp) {
-        if (getTipoSocioResp.status === 200) {
-            return getTipoSocioResp.data
-        }else {
-            return getTipoSocioResp.data
-        }
-    }else{
-        return null
+export const getTipoSocios = async () => {
+  const url = appConfig.socios.tipoSocios;
+  const getTipoSocioResp = await axiosInstance.get<TipoSocioResponse>(url);
+  if (getTipoSocioResp) {
+    if (getTipoSocioResp.status === 200) {
+      return getTipoSocioResp.data;
+    } else {
+      return getTipoSocioResp.data;
     }
-}
- 
+  } else {
+    return null;
+  }
+};

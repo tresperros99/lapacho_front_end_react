@@ -1,10 +1,10 @@
-import axios from 'axios';
-import { store } from './app/store';
-import { setError } from './features/ui/ui.slice';
-import ErrorResponse from './models/responses/shared/Error.response';
+import axios from "axios";
+import { store } from "./app/store";
+import { setError } from "./features/ui/ui.slice";
+import ErrorResponse from "./models/responses/shared/Error.response";
 
 const axiosInstance = axios.create({
-  baseURL: 'https://proyecto-lapacho-backend.onrender.com/',
+  baseURL: "https://proyecto-lapacho-backend.onrender.com/",
 });
 
 axiosInstance.interceptors.request.use(
@@ -19,7 +19,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -27,13 +27,12 @@ axiosInstance.interceptors.response.use(
     return response;
   },
   (error) => {
-    const errorTipado = error.response.data as ErrorResponse
+    const errorTipado = error.response.data as ErrorResponse;
     console.log(error);
-    
-    
-    store.dispatch(setError(errorTipado?.msg || 'Error desconocido'));
+
+    store.dispatch(setError(errorTipado?.msg || "Error desconocido"));
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

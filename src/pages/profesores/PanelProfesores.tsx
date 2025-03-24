@@ -19,8 +19,8 @@ import {
   getProfesoresClub,
 } from "../../api/ApiProfesores";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
+import { es } from "../../locales/es";
 import { ProfesoresFormateado } from "../../models/responses/profesores/NominaProfesores.response";
-
 const PanelProfesores = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
@@ -77,12 +77,12 @@ const PanelProfesores = () => {
   return (
     <ContainerComponent>
       <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-        Panel de Profesores
+        {es.pages.profesores.panel.title}
       </Typography>
 
       <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
         <Button variant="contained" color="primary" onClick={nuevoProfesor}>
-          Nuevo Profesor
+          {es.pages.profesores.panel.buttons.new}
         </Button>
       </Grid>
 
@@ -96,20 +96,32 @@ const PanelProfesores = () => {
             <TableHead>
               <TableRow>
                 <TableCell onClick={handleSort} style={{ cursor: "pointer" }}>
-                  Nombre{" "}
+                  {es.pages.profesores.panel.tableHeaders.name}{" "}
                   {orderBy === "asc" ? (
                     <ArrowDropUpIcon />
                   ) : (
                     <ArrowDropDownIcon />
                   )}
                 </TableCell>
-                <TableCell align="right">Numero de Cedula</TableCell>
-                <TableCell align="right">Contacto</TableCell>
-                <TableCell align="right">Costo por Hora</TableCell>
-                <TableCell align="right">Estado</TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.documentId}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.contact}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.hourlyRate}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.status}
+                </TableCell>
 
-                <TableCell align="right">Editar</TableCell>
-                <TableCell align="right">Eliminar</TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.edit}
+                </TableCell>
+                <TableCell align="right">
+                  {es.pages.profesores.panel.tableHeaders.delete}
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

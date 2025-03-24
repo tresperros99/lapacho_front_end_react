@@ -24,13 +24,13 @@ export const postCrearCaja = async (montoInicial: number) => {
 };
 
 export const postGenerarMovimientoDeVenta = async (
-  generarMovimientoDeCajaVentaDto: GenerarMovimientoDeCajaVentaDto
+  generarMovimientoDeCajaVentaDto: GenerarMovimientoDeCajaVentaDto,
 ) => {
   const url = caja.generarMovimientoCajaVenta;
   const generarMovimientoResp =
     await axiosInstance.post<MovimientoDeVentaResponse>(
       url,
-      generarMovimientoDeCajaVentaDto
+      generarMovimientoDeCajaVentaDto,
     );
   if (generarMovimientoResp) {
     if (generarMovimientoResp.status === 200) {
