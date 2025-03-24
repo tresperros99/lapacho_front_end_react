@@ -8,8 +8,11 @@ import { ContainerComponent } from "../../components/genericos/ContainerComponen
 import { SelectTipoSocio } from "../../components/genericos/SelectTipoSocio";
 import NuevoSocioDto from "../../models/dtos/socios/NuevoSocioDto.model";
 import { Socio } from "../../models/responses/socios/NominaSocios.response";
+import { NuevoSocioDependienteDto } from "../../models/dtos/socios/NuevoSocioDependienteDto.model";
+import BuscadorSocios from "../../components/genericos/BuscadorSocios";
 
 const validationSchema = yup.object({
+  idSocio: yup.number().required("El id del socio es requerido"),
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
   cedula: yup.string().required("La cedula es requerida"),
@@ -18,7 +21,8 @@ const validationSchema = yup.object({
   numeroTel: yup.string().required("El numero de telefono es requerido"),
   direccion: yup.string().required("La direccion es requerida"),
   tipoSocio: yup.string().required("El tipo de usuario es requerido"),
-  estadoSocio: yup.string().required("El estado del socio es requerido"),});
+  estadoSocio: yup.string().required("El estado del socio es requerido"),
+});
 const formatDate = (dateString: string): string => {
   const options: Intl.DateTimeFormatOptions = {
     day: "2-digit",
@@ -28,12 +32,13 @@ const formatDate = (dateString: string): string => {
   return new Date(dateString).toLocaleDateString("es-ES", options);
 };
 
-const FormSocios = () => {
+const FormSocioDependiente = () => {
   const location = useLocation();
   const socioCargado = location.state as Socio;
 
-  const formik = useFormik<NuevoSocioDto>({
+  const formik = useFormik<NuevoSocioDependienteDto>({
     initialValues: {
+      idSocio: 0,
       nombre: socioCargado?.nombreSocio.split(" ")[0] ?? "",
       apellido: socioCargado?.nombreSocio.split(" ").slice(1).join(" ") ?? "",
       cedula: socioCargado?.cedula ?? "",
@@ -42,7 +47,8 @@ const FormSocios = () => {
       numeroTel: socioCargado?.numeroTelefono ?? "",
       direccion: socioCargado?.direccion ?? "",
       tipoSocio: socioCargado?.idTipoSocio ?? 1,
-      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,},
+      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,
+    },
     validationSchema: validationSchema,
     onSubmit: async (nuevoSocio: NuevoSocioDto) => {
       await crearNuevoSocio({
@@ -63,9 +69,12 @@ const FormSocios = () => {
     <ContainerComponent>
       <form onSubmit={formik.handleSubmit}>
         <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-          Creacion de Socios
+          Creacion de Socio Dependientes
         </Typography>
         <Grid2 container spacing={2} xs={12}>
+          <Grid2 xs={6}>
+            <BuscadorSocios onSelect={()=>{}} />
+          </Grid2>
           <Grid2 xs={6}>
             <TextField
               fullWidth
@@ -193,4 +202,4 @@ const FormSocios = () => {
   );
 };
 
-export default FormSocios;
+export default FormSocioDependiente;

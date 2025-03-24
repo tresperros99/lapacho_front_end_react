@@ -60,6 +60,11 @@ export const MainListItems = () => {
             icon: <PersonAddOutlinedIcon />,
           },
           {
+            path: "/FormSocioDependiente",
+            title: "Registrar Socio Dependiente",
+            icon: <AttachMoneyIcon />,
+          },
+          {
             path: "/panelSocios",
             title: "Panel de Socios",
             icon: <FormatListBulletedOutlinedIcon />,
