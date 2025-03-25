@@ -1,4 +1,3 @@
-import React from "react";
 import { Grid, Paper, Typography } from "@mui/material";
 import { BarChart, Bar, PieChart, Pie, LineChart, Line, RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Tooltip, XAxis, YAxis, CartesianGrid, Legend, ResponsiveContainer, Cell } from "recharts";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
