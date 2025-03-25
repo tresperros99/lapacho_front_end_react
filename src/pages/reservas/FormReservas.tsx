@@ -10,6 +10,8 @@ import { CustomButton } from "../../components/genericos/Shared/CustomButton";
 import AgendarReservaClubDto from "../../models/dtos/reservas/AgendarReserva.dto.model";
 import { MesasDisponible } from "../../models/responses/clases/MesasDisponibles.response";
 import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
+import { setSuccess } from "../../features/ui/ui.slice";
+import { useDispatch } from "react-redux";
 
 const validationSchema = yup.object({
   horaDesde: yup.string().required("La fecha desde es requerida"),
@@ -22,6 +24,8 @@ const FormReservas = () => {
     useState<MesasDisponible | null>(null);
   const [selectedSocio, setSelectedSocio] = useState<Socio | null>(null);
   const [loadingAgendarReserva, setLoadingAgendarReserva] = useState(false);
+  const dispatch = useDispatch();
+  
   const now = new Date();
   const handleSelectSocio = (socio: Socio | null) => {
     setSelectedSocio(socio);
@@ -46,11 +50,14 @@ const FormReservas = () => {
             ? selectedSocio.idCliente
             : nuevaReserva.idCliente,
         });
-
-        if (agendarReserva?.status) {
+        
+        if (agendarReserva) {
+          dispatch(setSuccess(agendarReserva.msg));
+          
           resetForm();
         }
-      } finally {
+      }
+       finally {
         setLoadingAgendarReserva(false);
       }
     },

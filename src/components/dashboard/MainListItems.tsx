@@ -18,6 +18,8 @@ import SportsTennisOutlinedIcon from "@mui/icons-material/SportsTennisOutlined";
 import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
 import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
 import InsertInvitationOutlinedIcon from "@mui/icons-material/InsertInvitationOutlined";
+import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
+import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import {
   Collapse,
   List,
@@ -188,6 +190,22 @@ export const MainListItems = () => {
             path: "/panelEgresos",
             title: "Panel de Egresos",
             icon: <PriceCheckOutlinedIcon />,
+          },
+        ],
+      },
+      {
+        title: "Dashboards",
+        icon: <EqualizerOutlinedIcon />,
+        subItems: [
+          {
+            path: "/dashboardSocios",
+            title: "Socios",
+            icon: <PersonOutlineOutlinedIcon />,
+          },
+          {
+            path: "/dashboardProfesores",
+            title: "Profesores",
+            icon: <SchoolOutlinedIcon />,
           },
         ],
       },

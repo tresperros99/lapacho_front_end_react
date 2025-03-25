@@ -1,6 +1,8 @@
 // routes.ts
 
 import CajaCarrito from "../pages/caja/CajaCarrito";
+import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
+import DashboardSocios from "../pages/dashboards/DashboardSocios";
 import FormEgresos from "../pages/egresos/FormEgresos";
 import PanelEgresos from "../pages/egresos/PanelEgresos";
 import CargarEventos from "../pages/eventos/CargarEventos";
@@ -48,6 +50,9 @@ export const adminRoutes = [
   { path: "panelReservas", Component: PanelReservas },
   { path: "cargarTalonario", Component: CargarTalonario },
   { path: "cargarEventos", Component: CargarEventos },
+  { path: "dashboardSocios", Component: DashboardSocios },
+  { path: "dashboardProfesores", Component: DashboardProfesores },
+
 ];
 
 export const socioRoutes = [
