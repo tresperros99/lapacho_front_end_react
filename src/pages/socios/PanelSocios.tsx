@@ -1,7 +1,3 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 
 import {
   CircularProgress,
@@ -25,6 +21,7 @@ import { ContainerComponent } from "../../components/genericos/ContainerComponen
 import { separadorMiles } from "../../helpers/Numbers";
 import { Socio } from "../../models/responses/socios/NominaSocios.response";
 import es from "../../locales/es";
+import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon } from "../../components/icons";
 
 const PanelSocios = () => {
   const navigate = useNavigate();

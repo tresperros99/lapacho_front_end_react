@@ -1,13 +1,9 @@
-import BarChartIcon from "@mui/icons-material/BarChart";
-import LayersIcon from "@mui/icons-material/Layers";
-import PeopleIcon from "@mui/icons-material/People";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import * as React from "react";
 import es from "../../locales/es";
+import { BarChartIcon, LayersIcon, PeopleIcon, SchoolOutlinedIcon, ShoppingCartIcon } from "../icons";
 export const mainListItems = (
   <React.Fragment>
     <ListItemButton>

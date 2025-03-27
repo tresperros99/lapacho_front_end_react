@@ -1,4 +1,3 @@
-import CloseIcon from "@mui/icons-material/Close";
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import * as Yup from "yup";
+import { CloseIcon } from "../icons";
 
 const validationSchema = Yup.object({
   title: Yup.string().required("El título es obligatorio"),

@@ -1,8 +1,3 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
-import SellOutlinedIcon from "@mui/icons-material/SellOutlined";
 import {
   CircularProgress,
   Pagination,
@@ -30,6 +25,7 @@ import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { ReservasClub } from "../../models/responses/reservas/ReservasDelClub.response";
 import { useDispatch } from "react-redux";
 import { setSuccess } from "../../features/ui/ui.slice";
+import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon, SellOutlinedIcon } from "../../components/icons";
 
 const PanelReservas = () => {
   const navigate = useNavigate();

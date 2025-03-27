@@ -1,4 +1,3 @@
-import SearchIcon from "@mui/icons-material/Search";
 import {
   Autocomplete,
   IconButton,
@@ -9,6 +8,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import { getBuscadorSocios } from "../../api/ApiSocios";
 import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
+import { SearchIcon } from "../icons";
 
 interface BuscadorSociosProps {
   onSelect: (socio: Socio | null) => void;

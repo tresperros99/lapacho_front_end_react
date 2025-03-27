@@ -1,4 +1,3 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import {
   Accordion,
   AccordionDetails,
@@ -31,6 +30,7 @@ import FacturaTemplate, {
   FacturaPDFProps,
 } from "../../components/genericos/Shared/FacturaTemplate";
 import { pdf } from "@react-pdf/renderer";
+import { ExpandMoreIcon } from "../../components/icons";
 
 export const CajaCarrito = () => {
   const [page, setPage] = useState(1);
