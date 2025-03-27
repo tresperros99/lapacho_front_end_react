@@ -8,10 +8,7 @@ import {
   sidebarClasses,
 } from "react-pro-sidebar";
 import { useNavigate } from "react-router-dom";
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import PersonOutlinedIcon from "@mui/icons-material/PersonOutlined";
-import StickyNote2OutlinedIcon from "@mui/icons-material/StickyNote2Outlined";
+import { MenuOutlinedIcon, SchoolOutlinedIcon, PersonOutlinedIcon, StickyNote2OutlinedIcon } from "../icons";
 export const SidebarProyect = () => {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true);

@@ -1,4 +1,3 @@
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -16,6 +15,7 @@ import lapachoLogo from "../assets/login/lapacho_logo.jpg";
 import { fetchLogin } from "../features/auth/authThunk";
 import Copyright from "../components/genericos/Shared/Copyright";
 import es from "../locales/es";
+import { LockOutlinedIcon } from "../components/icons";
 
 export const LoginPage = () => {
   const dispatch = useAppDispatch();

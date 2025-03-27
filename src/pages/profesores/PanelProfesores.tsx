@@ -1,7 +1,4 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+
 import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid"; // Importar el componente Grid
@@ -21,6 +18,7 @@ import {
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { es } from "../../locales/es";
 import { ProfesoresFormateado } from "../../models/responses/profesores/NominaProfesores.response";
+import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon } from "../../components/icons";
 const PanelProfesores = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);

@@ -1,7 +1,8 @@
-import { CheckCircleOutline, ErrorOutline } from "@mui/icons-material";
+
 import { Button, Modal, Typography } from "@mui/material";
 import React from "react";
 import es from "../../locales/es";
+import { CheckCircleOutline, ErrorOutline } from "../icons";
 interface CustomModalProps {
   open: boolean;
   onClose: () => void;

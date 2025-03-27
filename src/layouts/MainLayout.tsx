@@ -1,6 +1,4 @@
-import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -18,8 +16,8 @@ import { useAppDispatch } from "../app/store.ts";
 import MainListItems from "../components/dashboard/MainListItems.tsx";
 import { secondaryListItems } from "../components/dashboard/listItems.tsx";
 import { clearAuth } from "../features/auth/authSlice.tsx";
-import LocalGroceryStoreOutlinedIcon from "@mui/icons-material/LocalGroceryStoreOutlined";
 import { useNavigate } from "react-router-dom";
+import { MenuIcon, LogoutOutlinedIcon, ChevronLeftIcon, LocalGroceryStoreOutlinedIcon } from "../components/icons/index.ts";
 type MainLayoutProps = {
   children: ReactNode;
 };

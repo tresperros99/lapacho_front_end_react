@@ -1,5 +1,4 @@
-import AdbIcon from "@mui/icons-material/Adb";
-import MenuIcon from "@mui/icons-material/Menu";
+
 import AppBar from "@mui/material/AppBar";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -14,6 +13,7 @@ import Typography from "@mui/material/Typography";
 import * as React from "react";
 import { useAppDispatch } from "../../app/store";
 import { clearAuth } from "../../features/auth/authSlice";
+import { MenuIcon, AdbIcon } from "../icons";
 
 const pages = ["Personal"];
 const settings = ["Perfil", "Cuenta", "Graficos", "Cerrar Sesion"];

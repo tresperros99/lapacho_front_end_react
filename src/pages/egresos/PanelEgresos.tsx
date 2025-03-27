@@ -1,5 +1,3 @@
-import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
-import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import {
   Button,
   Grid,
@@ -25,6 +23,7 @@ import { ContainerComponent } from "../../components/genericos/ContainerComponen
 import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { EgresosXFecha } from "../../models/responses/egresos/ListadoEgresosUsuario.response";
 import { separadorMiles } from "../../helpers/Numbers";
+import { ArrowDropUpIcon, ArrowDropDownIcon } from "../../components/icons";
 
 const PanelEgresos = () => {
   const [page, setPage] = useState(0);

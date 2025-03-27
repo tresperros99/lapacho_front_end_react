@@ -1,25 +1,27 @@
-// MainListItems.tsx
-import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
-import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import CheckBoxOutlinedIcon from "@mui/icons-material/CheckBoxOutlined";
-import ClassOutlinedIcon from "@mui/icons-material/ClassOutlined";
-import CurrencyExchangeOutlinedIcon from "@mui/icons-material/CurrencyExchangeOutlined";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
-import FormatListBulletedOutlinedIcon from "@mui/icons-material/FormatListBulletedOutlined";
-import FormatListNumberedOutlinedIcon from "@mui/icons-material/FormatListNumberedOutlined";
-import GroupAddOutlinedIcon from "@mui/icons-material/GroupAddOutlined";
-import MonetizationOnOutlinedIcon from "@mui/icons-material/MonetizationOnOutlined";
-import MoneyOffIcon from "@mui/icons-material/MoneyOff";
-import MoneyOffCsredIcon from "@mui/icons-material/MoneyOffCsred";
-import PersonAddOutlinedIcon from "@mui/icons-material/PersonAddOutlined";
-import PriceCheckOutlinedIcon from "@mui/icons-material/PriceCheckOutlined";
-import SchoolOutlinedIcon from "@mui/icons-material/SchoolOutlined";
-import SportsTennisOutlinedIcon from "@mui/icons-material/SportsTennisOutlined";
-import InsertDriveFileOutlinedIcon from "@mui/icons-material/InsertDriveFileOutlined";
-import EmojiEventsOutlinedIcon from "@mui/icons-material/EmojiEventsOutlined";
-import InsertInvitationOutlinedIcon from "@mui/icons-material/InsertInvitationOutlined";
-import EqualizerOutlinedIcon from '@mui/icons-material/EqualizerOutlined';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+import {
+  AddOutlinedIcon,
+  AttachMoneyIcon,
+  CheckBoxOutlinedIcon,
+  ClassOutlinedIcon,
+  CurrencyExchangeOutlinedIcon,
+  DescriptionOutlinedIcon,
+  FormatListBulletedOutlinedIcon,
+  FormatListNumberedOutlinedIcon,
+  GroupAddOutlinedIcon,
+  MonetizationOnOutlinedIcon,
+  MoneyOffIcon,
+  MoneyOffCsredIcon,
+  PersonAddOutlinedIcon,
+  PriceCheckOutlinedIcon,
+  SchoolOutlinedIcon,
+  SportsTennisOutlinedIcon,
+  InsertDriveFileOutlinedIcon,
+  EmojiEventsOutlinedIcon,
+  InsertInvitationOutlinedIcon,
+  EqualizerOutlinedIcon,
+  PersonOutlineOutlinedIcon,
+} from "../../components/icons";
+
 import {
   Collapse,
   List,
@@ -43,13 +45,9 @@ export const MainListItems = () => {
   const loginResponse = useSelector(
     (state: RootState) => state.auth.loginResponse,
   );
-
-  // Función para manejar clics en los ítems del menú principal
   const handleClick = (item: string) => {
     setOpen((prev) => ({ ...prev, [item]: !prev[item] }));
   };
-
-  // Determinar qué ítems de menú mostrar según el rol
   const menuItems: MenuItems = {
     common: [
       {
