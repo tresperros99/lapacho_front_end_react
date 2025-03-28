@@ -32,23 +32,26 @@ import FacturaTemplate, {
 import { pdf } from "@react-pdf/renderer";
 import { ExpandMoreIcon } from "../../components/icons";
 
+const movimientoCajaVentaInititialState: GenerarMovimientoDeCajaVentaDto =
+{ 
+    cedula: "",
+    idCliente: 0,
+    nroComprobante: "",
+    nroFactura: "",
+    nroTimbrado: 0,
+    tipoPago: 0,
+    ventas: [],
+}
 export const CajaCarrito = () => {
   const [page, setPage] = useState(1);
   const totalPaginas = 10;
   const cantidad = 10;
   const [selectdSocio, setSelectedSocio] = useState<Socio | null>(null);
   const [facturaData, setFacturaData] = useState<null | FacturaPDFProps>(null);
-
+  const [reloadData, setReloadData] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const [movimientoCajaVenta, setMovimientoCajaVenta] =
-    useState<GenerarMovimientoDeCajaVentaDto>({
-      cedula: "",
-      idCliente: 0,
-      nroComprobante: "",
-      nroFactura: "",
-      nroTimbrado: 0,
-      tipoPago: 0,
-      ventas: [],
-    });
+    useState<GenerarMovimientoDeCajaVentaDto>(movimientoCajaVentaInititialState);
   const [ventasClientes, setVentasClientes] = useState<VentaServicio[]>([]);
   const [modalFactura, setModalFactura] = useState(false);
   const [loadingGenerarVenta, setLoadingGenerarVenta] = useState(false);
@@ -118,14 +121,15 @@ export const CajaCarrito = () => {
       console.log("error al generar el movimiento de venta");
     } finally {
       setLoadingGenerarVenta(false);
+      setMovimientoCajaVenta(movimientoCajaVentaInititialState);
     }
   };
 
-  useEffect(() => {
-    if (selectdSocio) {
+  useEffect(() => {    
+    if (selectdSocio || (selectdSocio && reloadData)) {
       getVentas(page, cantidad, selectdSocio.cedula);
     }
-  }, [selectdSocio, page]);
+  }, [selectdSocio,reloadData, page]);
 
   useEffect(() => {
     if (
@@ -149,7 +153,7 @@ export const CajaCarrito = () => {
         link.click();
 
         URL.revokeObjectURL(link.href);
-        getVentas(page, cantidad, selectdSocio.cedula);
+        setVentasClientes([]);
       }
     };
 
@@ -208,7 +212,6 @@ export const CajaCarrito = () => {
                             (v) => v.idVenta === venta.idVenta,
                           )}
                           onChange={() => handleCheckboxChange(venta)}
-                          // disabled={!!socio.fechaPago} // Disable checkbox if cuota is already paid
                         />
                       </TableCell>
                     </TableRow>
@@ -230,7 +233,7 @@ export const CajaCarrito = () => {
                   color="primary"
                 />
               </Grid>
-              <Accordion>
+              <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} >
                 <AccordionSummary
                   expandIcon={<ExpandMoreIcon />}
                   aria-controls="panel1a-content"
@@ -239,7 +242,7 @@ export const CajaCarrito = () => {
                   <Typography>Seleccionar Cuotas Extras a Pagar</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                  <PagoDeCuotas numeroCedula={selectdSocio?.cedula ?? ""} />
+                  <PagoDeCuotas numeroCedula={selectdSocio?.cedula ?? ""} setReloadData={setReloadData} setExpanded={setExpanded}  />
                 </AccordionDetails>
               </Accordion>
 
@@ -255,7 +258,7 @@ export const CajaCarrito = () => {
           ) : (
             <Grid item xs={12} justifyContent={"center"} mt={8}>
               <Typography textAlign={"center"} color={"gray"}>
-                Busque el Socio para ver sus cuotas Pendientes
+                Busque el Socio para ver sus movimientos Pendientes
               </Typography>
             </Grid>
           )}

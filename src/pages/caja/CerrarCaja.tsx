@@ -1,13 +1,12 @@
-import { CircularProgress, Grid, TextField, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { NumericFormat } from "react-number-format";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import * as yup from "yup";
 import { postCrearCaja } from "../../api/ApiCaja";
-import { useDispatch } from "react-redux";
-import { setSuccess } from "../../features/ui/ui.slice";
-import { useState } from "react";
-import { CustomButton } from "../../components/genericos/Shared/CustomButton";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
+import { CustomButton } from "../../components/genericos/Shared/CustomButton";
+import { setSuccess } from "../../features/ui/ui.slice";
 
 const validationSchema = yup.object({
   montoInicial: yup.string().required("El monto inicial es requerido"),
@@ -44,7 +43,7 @@ export const CerrarCaja = () => {
         ) : (
           <form onSubmit={formik.handleSubmit}>
             <Grid container item xs={12} spacing={2}>
-              <Grid item xs={6}>
+              {/* <Grid item xs={6}>
                 <NumericFormat
                   fullWidth
                   customInput={TextField}
@@ -67,10 +66,10 @@ export const CerrarCaja = () => {
                     formik.touched.montoInicial && formik.errors.montoInicial
                   }
                 />
-              </Grid>
+              </Grid> */}
               <Grid container item xs={12} mb={2}>
                 <Grid item>
-                  <CustomButton text="aceptar" type="submit" />
+                  <CustomButton text="Cerrar Caja Activa" type="submit" />
                 </Grid>
               </Grid>
             </Grid>
