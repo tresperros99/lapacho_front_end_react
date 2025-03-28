@@ -27,7 +27,10 @@ export { default as LocalGroceryStoreOutlinedIcon } from "@mui/icons-material/Lo
 export { default as LockOutlinedIcon } from "@mui/icons-material/LockOutlined";
 export { default as LogoutOutlinedIcon } from "@mui/icons-material/LogoutOutlined";
 export { default as MenuIcon } from "@mui/icons-material/Menu";
-export { default as MenuOutlinedIcon, default as PersonOutlinedIcon } from "@mui/icons-material/MenuOutlined";
+export {
+  default as MenuOutlinedIcon,
+  default as PersonOutlinedIcon,
+} from "@mui/icons-material/MenuOutlined";
 export { default as MonetizationOnOutlinedIcon } from "@mui/icons-material/MonetizationOnOutlined";
 export { default as MoneyOffIcon } from "@mui/icons-material/MoneyOff";
 export { default as MoneyOffCsredIcon } from "@mui/icons-material/MoneyOffCsred";
@@ -42,3 +45,5 @@ export { default as SellOutlinedIcon } from "@mui/icons-material/SellOutlined";
 export { default as ShoppingCartIcon } from "@mui/icons-material/ShoppingCart";
 export { default as SportsTennisOutlinedIcon } from "@mui/icons-material/SportsTennisOutlined";
 export { default as StickyNote2OutlinedIcon } from "@mui/icons-material/StickyNote2Outlined";
+export { default as LocalAtmOutlinedIcon } from "@mui/icons-material/LocalAtmOutlined";
+export { default as LockOpenOutlinedIcon } from "@mui/icons-material/LockOpenOutlined";

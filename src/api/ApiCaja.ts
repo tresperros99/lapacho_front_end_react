@@ -22,6 +22,21 @@ export const postCrearCaja = async (montoInicial: number) => {
     return null;
   }
 };
+export const postCerrarCaja = async (idCaja: number) => {
+  const url = caja.cerrarCaja;
+  const cerrarCajaResp = await axiosInstance.post<SuccessResponse>(url, {
+    idCaja,
+  });
+  if (cerrarCajaResp) {
+    if (cerrarCajaResp.status === 200) {
+      return cerrarCajaResp.data;
+    } else {
+      return cerrarCajaResp.data;
+    }
+  } else {
+    return null;
+  }
+};
 
 export const postGenerarMovimientoDeVenta = async (
   generarMovimientoDeCajaVentaDto: GenerarMovimientoDeCajaVentaDto,
