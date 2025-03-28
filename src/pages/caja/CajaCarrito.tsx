@@ -14,7 +14,7 @@ import {
   TableRow,
   Typography,
 } from "@mui/material";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { postGenerarMovimientoDeVenta } from "../../api/ApiCaja";
 import { getVentasClientes } from "../../api/ApiVentas";
 import BuscadorSocios from "../../components/genericos/BuscadorSocios";
@@ -38,7 +38,7 @@ export const CajaCarrito = () => {
   const cantidad = 10;
   const [selectdSocio, setSelectedSocio] = useState<Socio | null>(null);
   const [facturaData, setFacturaData] = useState<null | FacturaPDFProps>(null);
-
+  const [mostrarCuotero, setMostrarCuotero] = useState(false);
   const [movimientoCajaVenta, setMovimientoCajaVenta] =
     useState<GenerarMovimientoDeCajaVentaDto>({
       cedula: "",
@@ -60,25 +60,29 @@ export const CajaCarrito = () => {
     cantidad: number,
     numeroCedula: string,
   ) => {
-    const ventasClientesResp = await getVentasClientes(
-      page,
-      cantidad,
-      numeroCedula,
-    );
-
-    if (ventasClientesResp) {
-      const sortedVentasClientes = ventasClientesResp.ventaServicios.sort(
-        (a, b) => {
-          if (a.monto < b.monto) {
-            return -1;
-          }
-          if (a.monto > b.monto) {
-            return 1;
-          }
-          return Number(a.monto) - Number(b.monto);
-        },
+    try {
+      const ventasClientesResp = await getVentasClientes(
+        page,
+        cantidad,
+        numeroCedula,
       );
-      setVentasClientes(sortedVentasClientes);
+
+      if (ventasClientesResp) {
+        const sortedVentasClientes = ventasClientesResp.ventaServicios.sort(
+          (a, b) => {
+            if (a.monto < b.monto) {
+              return -1;
+            }
+            if (a.monto > b.monto) {
+              return 1;
+            }
+            return Number(a.monto) - Number(b.monto);
+          },
+        );
+        setVentasClientes(sortedVentasClientes);
+      }
+    } catch {
+      setMostrarCuotero(true);
     }
   };
 
@@ -102,7 +106,7 @@ export const CajaCarrito = () => {
       });
     }
   };
-  const generarVenta = async () => {
+  const generarVenta = useCallback(async () => {
     try {
       setLoadingGenerarVenta(true);
       const generarMovimiento =
@@ -119,7 +123,7 @@ export const CajaCarrito = () => {
     } finally {
       setLoadingGenerarVenta(false);
     }
-  };
+  }, [movimientoCajaVenta, selectdSocio]);
 
   useEffect(() => {
     if (selectdSocio) {
@@ -135,7 +139,7 @@ export const CajaCarrito = () => {
     ) {
       generarVenta();
     }
-  }, [movimientoCajaVenta]);
+  }, [generarVenta, movimientoCajaVenta]);
 
   useEffect(() => {
     const descargarPDF = async () => {
@@ -154,7 +158,7 @@ export const CajaCarrito = () => {
     };
 
     descargarPDF();
-  }, [facturaData, selectdSocio]);
+  }, [facturaData, page, selectdSocio]);
 
   return (
     <ContainerComponent>
@@ -236,7 +240,7 @@ export const CajaCarrito = () => {
                   aria-controls="panel1a-content"
                   id="panel1a-header"
                 >
-                  <Typography>Seleccionar Cuotas Extras a Pagar</Typography>
+                  <Typography>Seleccionar Cuotas a Pagar</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                   <PagoDeCuotas numeroCedula={selectdSocio?.cedula ?? ""} />
@@ -252,10 +256,23 @@ export const CajaCarrito = () => {
                 </Button>
               </Grid>
             </Grid>
+          ) : mostrarCuotero ? (
+            <Accordion sx={{ mt: 2 }}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Seleccionar Cuotas a Pagar</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <PagoDeCuotas numeroCedula={selectdSocio?.cedula ?? ""} />
+              </AccordionDetails>
+            </Accordion>
           ) : (
             <Grid item xs={12} justifyContent={"center"} mt={8}>
               <Typography textAlign={"center"} color={"gray"}>
-                Busque el Socio para ver sus cuotas Pendientes
+                Busque el Socio para ver sus movimientos pendientes
               </Typography>
             </Grid>
           )}

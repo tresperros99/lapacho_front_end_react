@@ -55,6 +55,8 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
     if (socio.fechaPago) {
       return; // Do not allow selection of paid cuotas
     }
+    console.log(socio);
+    console.log(selectedCuotas);
 
     const selected = selectedCuotas.some(
       (cuota) => cuota.idSocioCuota === socio.idCuotaSocio,
@@ -70,6 +72,9 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
         selectedCuotas.length > 0 &&
         selectedCuotas[0].idSocioCuota !== socio.idsocio
       ) {
+        console.log(selectedCuotas[0].idSocioCuota);
+        console.log(socio.idsocio);
+
         setAlertOpen(true);
         return;
       }
@@ -77,7 +82,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
         ...selectedCuotas,
         {
           idInscripcion: null,
-          idSocioCuota: socio.idsocio,
+          idSocioCuota: socio.idCuotaSocio,
           estado: false,
           idReserva: null,
           monto: socio.montoCuota,

@@ -25,7 +25,13 @@ import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { ReservasClub } from "../../models/responses/reservas/ReservasDelClub.response";
 import { useDispatch } from "react-redux";
 import { setSuccess } from "../../features/ui/ui.slice";
-import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon, SellOutlinedIcon } from "../../components/icons";
+import {
+  ArrowDropUpIcon,
+  ArrowDropDownIcon,
+  EditOutlinedIcon,
+  DeleteOutlineOutlinedIcon,
+  SellOutlinedIcon,
+} from "../../components/icons";
 
 const PanelReservas = () => {
   const navigate = useNavigate();
