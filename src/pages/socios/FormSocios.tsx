@@ -1,11 +1,16 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { crearNuevoSocio } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { SelectTipoSocio } from "../../components/genericos/SelectTipoSocio";
+import { CustomButton } from "../../components/genericos/Shared/CustomButton";
+import { setSuccess } from "../../features/ui/ui.slice";
+import { formatDateEs } from "../../helpers/fechas";
 import NuevoSocioDto from "../../models/dtos/socios/NuevoSocioDto.model";
 import { Socio } from "../../models/responses/socios/NominaSocios.response";
 
@@ -18,20 +23,14 @@ const validationSchema = yup.object({
   numeroTel: yup.string().required("El numero de telefono es requerido"),
   direccion: yup.string().required("La direccion es requerida"),
   tipoSocio: yup.string().required("El tipo de usuario es requerido"),
-  estadoSocio: yup.string().required("El estado del socio es requerido"),});
-const formatDate = (dateString: string): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  return new Date(dateString).toLocaleDateString("es-ES", options);
-};
+  estadoSocio: yup.string().required("El estado del socio es requerido"),
+});
 
 const FormSocios = () => {
   const location = useLocation();
   const socioCargado = location.state as Socio;
-
+  const dispatch = useDispatch();
+  const [loadingCrearSocio, setLoadingCrearSocio] = useState(false);
   const formik = useFormik<NuevoSocioDto>({
     initialValues: {
       nombre: socioCargado?.nombreSocio.split(" ")[0] ?? "",
@@ -42,20 +41,24 @@ const FormSocios = () => {
       numeroTel: socioCargado?.numeroTelefono ?? "",
       direccion: socioCargado?.direccion ?? "",
       tipoSocio: socioCargado?.idTipoSocio ?? 1,
-      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,},
+      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,
+    },
     validationSchema: validationSchema,
-    onSubmit: async (nuevoSocio: NuevoSocioDto) => {
-      await crearNuevoSocio({
-        ...nuevoSocio,
-        fechaNacimiento: formatDate(nuevoSocio.fechaNacimiento),
-      });
+    onSubmit: async (nuevoSocio: NuevoSocioDto, { resetForm }) => {
+      try {
+        setLoadingCrearSocio(true);
+        const nuevoSocioResp = await crearNuevoSocio({
+          ...nuevoSocio,
+          fechaNacimiento: formatDateEs(nuevoSocio.fechaNacimiento),
+        });
 
-      // if (socioCargado !== null) {
-      //     //TODO: actualizar nuevo socio
-      //     await actualizarSocio(socioCargado.idSocio, { ...nuevoSocio, fechaNacimiento: formatDate(nuevoSocio.fechaNacimiento) });
-
-      // } else {
-      // }
+        if (nuevoSocioResp) {
+          dispatch(setSuccess(nuevoSocioResp.msg ?? "Socio Creado"));
+          resetForm();
+        }
+      } finally {
+        setLoadingCrearSocio(false);
+      }
     },
   });
 
@@ -183,9 +186,11 @@ const FormSocios = () => {
             />
           </Grid2>
           <Grid2 xs={12}>
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Crear
-            </Button>
+            <CustomButton
+              text="Crear"
+              type="submit"
+              loading={loadingCrearSocio}
+            />
           </Grid2>
         </Grid2>
       </form>

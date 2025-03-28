@@ -33,10 +33,10 @@ class ErrorBoundary extends Component<Props, State> {
             marginTop: "50px",
           }}
         >
-          <h1>Something went wrong.</h1>
+          <h1>Algo salio mal :( </h1>
           <p>
-            Please try refreshing the page or contact support if the problem
-            persists.
+            Por favor recarge la pagina o contacte con el Administrador si el
+            problema persiste.
           </p>
           <button
             onClick={() => window.location.reload()}
@@ -46,7 +46,7 @@ class ErrorBoundary extends Component<Props, State> {
               cursor: "pointer",
             }}
           >
-            Refresh Page
+            Recargar Pagina
           </button>
         </div>
       );

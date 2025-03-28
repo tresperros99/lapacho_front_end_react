@@ -20,6 +20,9 @@ import {
   InsertInvitationOutlinedIcon,
   EqualizerOutlinedIcon,
   PersonOutlineOutlinedIcon,
+  LocalAtmOutlinedIcon,
+  LockOpenOutlinedIcon,
+  LockOutlinedIcon,
 } from "../../components/icons";
 
 import {
@@ -188,6 +191,22 @@ export const MainListItems = () => {
             path: "/panelEgresos",
             title: "Panel de Egresos",
             icon: <PriceCheckOutlinedIcon />,
+          },
+        ],
+      },
+      {
+        title: "Caja",
+        icon: <LocalAtmOutlinedIcon />,
+        subItems: [
+          {
+            path: "/abrirCaja",
+            title: "Abrir Caja",
+            icon: <LockOpenOutlinedIcon />,
+          },
+          {
+            path: "/cerrarCaja",
+            title: "Cerrar Caja",
+            icon: <LockOutlinedIcon />,
           },
         ],
       },

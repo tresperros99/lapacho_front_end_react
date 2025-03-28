@@ -24,9 +24,13 @@ import { Cuota } from "../../../models/responses/cuotas/ListadoCuotasPendientesS
 
 interface Props {
   numeroCedula: string;
+  setReloadData?: React.Dispatch<React.SetStateAction<boolean>>;
+  setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
+
 }
 
-const PagoDeCuotas = ({ numeroCedula }: Props) => {
+
+const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const [cuotasSocio, setCuotasSocio] = useState<Cuota[]>([]);
@@ -34,7 +38,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-
+  
   const getCuotasSocio = async (numeroCedula: string, annio: string) => {
     const cuotasSocio = await getCuotasPendientesSocio(numeroCedula, annio);
     if (cuotasSocio) {
@@ -46,7 +50,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
           return 1;
         }
         return Number(a.numeroMEs) - Number(b.numeroMEs);
-      });
+      });      
       setCuotasSocio(sortedCuotas);
     }
   };
@@ -77,7 +81,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
         ...selectedCuotas,
         {
           idInscripcion: null,
-          idSocioCuota: socio.idsocio,
+          idSocioCuota: socio.idCuotaSocio,
           estado: false,
           idReserva: null,
           monto: socio.montoCuota,
@@ -91,15 +95,22 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
       cliente: numeroCedula,
       cuotas: selectedCuotas,
     };
-    const pagoCuotaResp = await postGenerarVentaCuotasVarias(payload);
-    if (pagoCuotaResp) {
-      setSuccessAlertOpen(true);
+    try {
+      const pagoCuotaResp = await postGenerarVentaCuotasVarias(payload);
+      if (pagoCuotaResp) {
+        setSuccessAlertOpen(true);
+  
+        setSelectedCuotas([]);
+        await getCuotasSocio(numeroCedula, currentYear.toString());
+      }
+      setExpanded && setExpanded(false);
 
-      setSelectedCuotas([]);
-      await getCuotasSocio(numeroCedula, currentYear.toString());
+     
+    } finally  {
+      setModalOpen(false);
+      setReloadData && setReloadData(true);
     }
 
-    setModalOpen(false);
   };
 
   useEffect(() => {
@@ -165,7 +176,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
             </Table>
             <Grid container item xs={12} justifyContent={"flex-end"} mt={2}>
               <Button variant="contained" onClick={() => setModalOpen(true)}>
-                Pagar
+                Generar movimiento de pago
               </Button>
             </Grid>
           </Grid>
@@ -192,7 +203,7 @@ const PagoDeCuotas = ({ numeroCedula }: Props) => {
         onClose={() => setSuccessAlertOpen(false)}
       >
         <Alert onClose={() => setSuccessAlertOpen(false)} severity="success">
-          Cuota pagada correctamente.
+          Cuota Agregada Correctamente.
         </Alert>
       </Snackbar>
       <ModalConfirmacion

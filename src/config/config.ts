@@ -10,6 +10,7 @@ const appConfig = {
   },
   socios: {
     crearSocios: "/socio/crear_socio",
+    crearSocioDependiente: "/socio/crear_socio_dependientes",
     buscadorSocio: "/socio/obtener_socios",
     tipoSocios: "/socio/obtener_tipo_socios",
     obtenerSocios: "/socio/obtener_socios",
@@ -61,6 +62,7 @@ const appConfig = {
   },
   caja: {
     crearCaja: "/caja/crear_caja",
+    cerrarCaja: "/caja/cerrar_caja",
     generarMovimientoCajaVenta: "/caja/generar_movimientos_de_caja/ventas",
     obtenerTipoPago: "/caja/obtener_tipos_pago",
   },

@@ -1,18 +1,21 @@
-import { Button, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { useFormik } from "formik";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import * as yup from "yup";
-import { crearNuevoSocio } from "../../api/ApiSocios";
+import { crearNuevoSocioDependiente } from "../../api/ApiSocios";
+import BuscadorSocios from "../../components/genericos/BuscadorSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { SelectTipoSocio } from "../../components/genericos/SelectTipoSocio";
-import NuevoSocioDto from "../../models/dtos/socios/NuevoSocioDto.model";
-import { Socio } from "../../models/responses/socios/NominaSocios.response";
-import { NuevoSocioDependienteDto } from "../../models/dtos/socios/NuevoSocioDependienteDto.model";
-import BuscadorSocios from "../../components/genericos/BuscadorSocios";
+import { CustomButton } from "../../components/genericos/Shared/CustomButton";
+import { setSuccess } from "../../features/ui/ui.slice";
+import { formatDateEs } from "../../helpers/fechas";
+import { Dependiente } from "../../models/dtos/socios/NuevoSocioDependienteDto.model";
+import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
 
 const validationSchema = yup.object({
-  idSocio: yup.number().required("El id del socio es requerido"),
   nombre: yup.string().required("El nombre es requerido"),
   apellido: yup.string().required("El apellido es requerido"),
   cedula: yup.string().required("La cedula es requerida"),
@@ -21,24 +24,21 @@ const validationSchema = yup.object({
   numeroTel: yup.string().required("El numero de telefono es requerido"),
   direccion: yup.string().required("La direccion es requerida"),
   tipoSocio: yup.string().required("El tipo de usuario es requerido"),
-  estadoSocio: yup.string().required("El estado del socio es requerido"),
 });
-const formatDate = (dateString: string): string => {
-  const options: Intl.DateTimeFormatOptions = {
-    day: "2-digit",
-    month: "2-digit",
-    year: "numeric",
-  };
-  return new Date(dateString).toLocaleDateString("es-ES", options);
-};
 
 const FormSocioDependiente = () => {
   const location = useLocation();
   const socioCargado = location.state as Socio;
+  const [selectedSocio, setSelectedSocio] = useState<Socio | null>(null);
+  const dispatch = useDispatch();
+  const [loadingCrearSocioDependiente, setLoadingCrearSocioDependiente] =
+    useState(false);
 
-  const formik = useFormik<NuevoSocioDependienteDto>({
+  const handleSelectSocio = (socio: Socio | null) => {
+    setSelectedSocio(socio);
+  };
+  const formik = useFormik<Dependiente>({
     initialValues: {
-      idSocio: 0,
       nombre: socioCargado?.nombreSocio.split(" ")[0] ?? "",
       apellido: socioCargado?.nombreSocio.split(" ").slice(1).join(" ") ?? "",
       cedula: socioCargado?.cedula ?? "",
@@ -47,21 +47,35 @@ const FormSocioDependiente = () => {
       numeroTel: socioCargado?.numeroTelefono ?? "",
       direccion: socioCargado?.direccion ?? "",
       tipoSocio: socioCargado?.idTipoSocio ?? 1,
-      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,
     },
     validationSchema: validationSchema,
-    onSubmit: async (nuevoSocio: NuevoSocioDto) => {
-      await crearNuevoSocio({
-        ...nuevoSocio,
-        fechaNacimiento: formatDate(nuevoSocio.fechaNacimiento),
-      });
+    onSubmit: async (nuevoSocio: Dependiente, { resetForm }) => {
+      if (selectedSocio) {
+        try {
+          setLoadingCrearSocioDependiente(true);
+          const crearSocioDependiente = await crearNuevoSocioDependiente({
+            idSocio: selectedSocio.idCliente,
+            dependientes: [
+              {
+                ...nuevoSocio,
+                fechaNacimiento: formatDateEs(nuevoSocio.fechaNacimiento),
+              },
+            ],
+          });
+          if (crearSocioDependiente) {
+            dispatch(
+              setSuccess(
+                crearSocioDependiente.msg ??
+                  "Socio Dependiente Creado Correctamente",
+              ),
+            );
 
-      // if (socioCargado !== null) {
-      //     //TODO: actualizar nuevo socio
-      //     await actualizarSocio(socioCargado.idSocio, { ...nuevoSocio, fechaNacimiento: formatDate(nuevoSocio.fechaNacimiento) });
-
-      // } else {
-      // }
+            resetForm();
+          }
+        } finally {
+          setLoadingCrearSocioDependiente(false);
+        }
+      }
     },
   });
 
@@ -73,7 +87,7 @@ const FormSocioDependiente = () => {
         </Typography>
         <Grid2 container spacing={2} xs={12}>
           <Grid2 xs={6}>
-            <BuscadorSocios onSelect={()=>{}} />
+            <BuscadorSocios onSelect={handleSelectSocio} />
           </Grid2>
           <Grid2 xs={6}>
             <TextField
@@ -192,9 +206,11 @@ const FormSocioDependiente = () => {
             />
           </Grid2>
           <Grid2 xs={12}>
-            <Button color="primary" variant="contained" fullWidth type="submit">
-              Crear
-            </Button>
+            <CustomButton
+              text="Crear"
+              type="submit"
+              loading={loadingCrearSocioDependiente}
+            />
           </Grid2>
         </Grid2>
       </form>

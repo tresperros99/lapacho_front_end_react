@@ -4,6 +4,7 @@ import {
   FacturaFactura,
   Timbrado,
 } from "../../../models/responses/caja/MovimientoDeVenta.response";
+import { formatearFechaTipoDate } from "../../../helpers/fechas";
 
 export type FacturaPDFProps = {
   timbrado: Timbrado;
@@ -47,7 +48,8 @@ const FacturaTemplate = ({
         <Text style={styles.title}>Factura Electrónica</Text>
         <Text>Timbrado N°: {timbrado.nroTimbrado}</Text>
         <Text>
-          Fecha de Vencimiento: {timbrado.fechaVencimiento.toLocaleDateString()}
+          Fecha de Vencimiento:{" "}
+          {formatearFechaTipoDate(timbrado.fechaVencimiento)}
         </Text>
       </View>
 
