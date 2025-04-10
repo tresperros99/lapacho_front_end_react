@@ -13,7 +13,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   eliminarReservaDelClub,
@@ -25,7 +25,13 @@ import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { ReservasClub } from "../../models/responses/reservas/ReservasDelClub.response";
 import { useDispatch } from "react-redux";
 import { setSuccess } from "../../features/ui/ui.slice";
-import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon, SellOutlinedIcon } from "../../components/icons";
+import {
+  ArrowDropUpIcon,
+  ArrowDropDownIcon,
+  EditOutlinedIcon,
+  DeleteOutlineOutlinedIcon,
+  SellOutlinedIcon,
+} from "../../components/icons";
 
 const PanelReservas = () => {
   const navigate = useNavigate();
@@ -37,27 +43,33 @@ const PanelReservas = () => {
   const [reservas, setReservas] = useState<ReservasClub[]>([]);
   const [loadingReservas, setLoadingReservas] = useState(false);
   const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc");
-  useEffect(() => {
-    const fetchReservasClub = async () => {
-      try {
-        setLoadingReservas(true);
-        if (fechaDesde && fechaHasta) {
-          const responseData = await getReservasDelClub(
-            fechaDesde,
-            fechaHasta,
-            page,
-          );
-          if (responseData) {
-            setReservas(responseData.reservasClub);
-          }
+
+  
+  const fetchReservasClub = useCallback(async () => {
+    try {
+      setLoadingReservas(true);
+      if (fechaDesde && fechaHasta) {
+        const responseData = await getReservasDelClub(
+          fechaDesde,
+          fechaHasta,
+          page,
+        );
+        if (responseData) {
+          console.log(responseData);
+          
+          setReservas(responseData.reservasClub);
         }
-      } finally {
-        setLoadingReservas(false);
       }
-    };
+    } finally {
+      setLoadingReservas(false);
+    }
+  },[fechaDesde, fechaHasta, page]);
+
+  useEffect(() => {
+
 
     fetchReservasClub();
-  }, [fechaDesde, fechaHasta, page]);
+  }, [fetchReservasClub]);
 
   const handleChangePage = (_event: unknown, newPage: number) => {
     setPage(newPage);
@@ -86,7 +98,7 @@ const PanelReservas = () => {
     const reservaGenerada = await postAgregarReservaAVenta(reserva);
     if (reservaGenerada) {
       dispatch(setSuccess(reservaGenerada.descripcion));
-    }
+      fetchReservasClub();    }
   };
 
   return (

@@ -110,7 +110,8 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                 variant="h6"
                 color="inherit"
                 noWrap
-                sx={{ flexGrow: 1 }}
+                sx={{ flexGrow: 1,cursor:'pointer' }}
+                onClick={() => navigate("/")}
               >
                 Club Lapacho Tenis de Mesa
               </Typography>

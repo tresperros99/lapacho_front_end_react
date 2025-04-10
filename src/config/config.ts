@@ -8,6 +8,9 @@ const appConfig = {
     obtenerProfesores: "/profesores",
     eliminarProfesor: "/profesores",
   },
+  clientes:{
+    crearClientes:"/cliente/crear_cliente"
+  },
   socios: {
     crearSocios: "/socio/crear_socio",
     crearSocioDependiente: "/socio/crear_socio_dependientes",

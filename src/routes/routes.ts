@@ -3,8 +3,9 @@
 import AbrirCaja from "../pages/caja/AbrirCaja";
 import CajaCarrito from "../pages/caja/CajaCarrito";
 import CerrarCaja from "../pages/caja/CerrarCaja";
+import FormClientes from "../pages/clientes/FormClientes";
 import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
-import DashboardSocios from "../pages/dashboards/DashboardSocios";
+import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
 import FormEgresos from "../pages/egresos/FormEgresos";
 import PanelEgresos from "../pages/egresos/PanelEgresos";
 import CargarEventos from "../pages/eventos/CargarEventos";
@@ -41,6 +42,8 @@ export const adminRoutes = [
   // { path: "formClases", Component: ClasesForm },
   { path: "panelClases", Component: PanelProfesores },
   { path: "formSocios", Component: FormSocios },
+  { path: "formClientes", Component: FormClientes },
+
   { path: "formSocioDependiente", Component: FormSocioDependiente },
 
   { path: "panelSocios", Component: PanelSocios },
@@ -52,7 +55,7 @@ export const adminRoutes = [
   { path: "panelReservas", Component: PanelReservas },
   { path: "cargarTalonario", Component: CargarTalonario },
   { path: "cargarEventos", Component: CargarEventos },
-  { path: "dashboardSocios", Component: DashboardSocios },
+  { path: "dashboardSociosClientes", Component: DashboardSociosClientes },
   { path: "dashboardProfesores", Component: DashboardProfesores },
   { path: "abrirCaja", Component: AbrirCaja },
   { path: "cerrarCaja", Component: CerrarCaja },

@@ -47,3 +47,4 @@ export { default as SportsTennisOutlinedIcon } from "@mui/icons-material/SportsT
 export { default as StickyNote2OutlinedIcon } from "@mui/icons-material/StickyNote2Outlined";
 export { default as LocalAtmOutlinedIcon } from "@mui/icons-material/LocalAtmOutlined";
 export { default as LockOpenOutlinedIcon } from "@mui/icons-material/LockOpenOutlined";
+export { default as AccessibilityIcon } from "@mui/icons-material/Accessibility";
