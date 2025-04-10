@@ -1,10 +1,10 @@
-import { Document, Page, Text, View, StyleSheet } from "@react-pdf/renderer";
+import { Document, Page, StyleSheet, Text, View } from "@react-pdf/renderer";
+import { formatearFechaTipoDate } from "../../../helpers/fechas";
 import {
   DetalleFactura,
   FacturaFactura,
   Timbrado,
 } from "../../../models/responses/caja/MovimientoDeVenta.response";
-import { formatearFechaTipoDate } from "../../../helpers/fechas";
 
 export type FacturaPDFProps = {
   timbrado: Timbrado;
@@ -60,14 +60,14 @@ const FacturaTemplate = ({
         {timbrado.direccion && <Text>Dirección: {timbrado.direccion}</Text>}
         <Text>Teléfono: 0981810046</Text>{" "}
         {/* Ajusta con el dato correspondiente */}
-        <Text>Correo: asismed@asismed.com.py</Text>{" "}
+        <Text>Correo: cunadecampeones@lapacho.com.py</Text>{" "}
         {/* Ajusta con el dato correspondiente */}
       </View>
 
       {/* Client Information */}
       <View style={styles.clientInfo}>
         <Text style={styles.textBold}>Datos del Cliente:</Text>
-        <Text>Nombre o Razón Social: Lucas Torres Inc</Text>{" "}
+        <Text>Nombre o Razón Social: {timbrado.razonSocial}</Text>{" "}
         {/* Ajusta con el dato correspondiente */}
         <Text>RUC/CI: {factura.nroFactura}</Text>
       </View>
@@ -77,7 +77,7 @@ const FacturaTemplate = ({
         <Text style={styles.textBold}>
           Número de Factura: {factura.nroFactura}
         </Text>
-        <Text>Fecha y hora de emisión: 16/10/2024 16:01:26</Text>{" "}
+        <Text>Fecha y hora de emisión: {factura.fechaEmision}</Text>{" "}
         {/* Ajusta con el dato correspondiente */}
         <Text>Condiciones de venta: Contado</Text>
       </View>

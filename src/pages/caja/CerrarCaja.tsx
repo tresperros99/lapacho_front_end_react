@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { postCrearCaja } from "../../api/ApiCaja";
+import { putCerrarCaja } from "../../api/ApiCaja";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { CustomButton } from "../../components/genericos/Shared/CustomButton";
 import { setSuccess } from "../../features/ui/ui.slice";
@@ -20,12 +20,12 @@ export const CerrarCaja = () => {
       montoInicial: 0,
     },
     validationSchema: validationSchema,
-    onSubmit: async ({ montoInicial }) => {
+    onSubmit: async () => {
       setLoadingCerrarCaja(true);
       try {
-        const crearCaja = await postCrearCaja(montoInicial);
-        if (crearCaja) {
-          dispatch(setSuccess(crearCaja.msg));
+        const cerrarCaja = await putCerrarCaja();
+        if (cerrarCaja) {
+          dispatch(setSuccess(cerrarCaja.msg));
         }
       } finally {
         setLoadingCerrarCaja(false);
@@ -43,30 +43,6 @@ export const CerrarCaja = () => {
         ) : (
           <form onSubmit={formik.handleSubmit}>
             <Grid container item xs={12} spacing={2}>
-              {/* <Grid item xs={6}>
-                <NumericFormat
-                  fullWidth
-                  customInput={TextField}
-                  thousandSeparator={"."}
-                  decimalSeparator=","
-                  suffix=" Gs."
-                  id="montoInicial"
-                  name="montoInicial"
-                  label="Monto Inicial"
-                  value={formik.values.montoInicial}
-                  onValueChange={(values) =>
-                    formik.setFieldValue("montoInicial", Number(values.value))
-                  }
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.montoInicial &&
-                    Boolean(formik.errors.montoInicial)
-                  }
-                  helperText={
-                    formik.touched.montoInicial && formik.errors.montoInicial
-                  }
-                />
-              </Grid> */}
               <Grid container item xs={12} mb={2}>
                 <Grid item>
                   <CustomButton text="Cerrar Caja Activa" type="submit" />

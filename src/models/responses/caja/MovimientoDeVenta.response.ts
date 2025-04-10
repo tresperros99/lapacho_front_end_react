@@ -22,6 +22,7 @@ export interface FacturaFactura {
   nroFactura: string;
   totalIva: number;
   montoTotal: number;
+  fechaEmision: string;
 }
 
 export interface Timbrado {

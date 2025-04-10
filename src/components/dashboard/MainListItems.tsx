@@ -23,6 +23,7 @@ import {
   LocalAtmOutlinedIcon,
   LockOpenOutlinedIcon,
   LockOutlinedIcon,
+  AccessibilityIcon,
 } from "../../components/icons";
 
 import {
@@ -57,6 +58,11 @@ export const MainListItems = () => {
         title: "Mi socio",
         icon: <SportsTennisOutlinedIcon />,
         subItems: [
+          {
+            path: "/formClientes",
+            title: "Registrar Clientes",
+            icon: <AccessibilityIcon />,
+          },
           {
             path: "/formSocios",
             title: "Registrar Socios",
@@ -215,8 +221,8 @@ export const MainListItems = () => {
         icon: <EqualizerOutlinedIcon />,
         subItems: [
           {
-            path: "/dashboardSocios",
-            title: "Socios",
+            path: "/dashboardSociosClientes",
+            title: "Socios Y Clientes",
             icon: <PersonOutlineOutlinedIcon />,
           },
           {
