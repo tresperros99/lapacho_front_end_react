@@ -165,6 +165,7 @@ export const CajaCarrito = () => {
       <Typography textAlign={"center"} variant="h4" marginBottom={2}>
         Ventas de los Clientes
       </Typography>
+  
       {loadingGenerarVenta ? (
         <Grid container justifyContent={"center"} alignItems={"center"}>
           <CircularProgress size={50} />
@@ -178,83 +179,66 @@ export const CajaCarrito = () => {
               </Grid>
             </Grid>
           </Grid>
+  
           {ventasClientes.length > 0 ? (
-            <Grid item xs={12}>
-              <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow>
-                    <TableCell>Operacion</TableCell>
-                    <TableCell align="right">Fecha</TableCell>
-                    <TableCell align="right">Monto</TableCell>
-                    <TableCell align="right">Estado</TableCell>
-                    <TableCell align="right">Pagar</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {ventasClientes.map((venta) => (
-                    <TableRow
-                      key={venta.idVenta}
-                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    >
-                      <TableCell component="th" scope="row">
-                        {venta.descripcionVenta}
-                      </TableCell>
-                      <TableCell align="right">
-                        {formatearFechaTipoDate(venta.fechaOperacion)}
-                      </TableCell>
-                      <TableCell align="right">
-                        {separadorMiles(venta.monto, true)}
-                      </TableCell>
-                      <TableCell align="right">{venta.estado}</TableCell>
-                      <TableCell align="right">
-                        <Checkbox
-                          checked={movimientoCajaVenta.ventas.some(
-                            (v) => v.idVenta === venta.idVenta,
-                          )}
-                          onChange={() => handleCheckboxChange(venta)}
-                        />
-                      </TableCell>
+            <>
+              <Grid item xs={12}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead>
+                    <TableRow>
+                      <TableCell>Operacion</TableCell>
+                      <TableCell align="right">Fecha</TableCell>
+                      <TableCell align="right">Monto</TableCell>
+                      <TableCell align="right">Estado</TableCell>
+                      <TableCell align="right">Pagar</TableCell>
                     </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-              <Grid
-                container
-                item
-                xs={12}
-                justifyContent="flex-start"
-                mt={2}
-                mb={2}
-              >
-                <Pagination
-                  count={totalPaginas}
-                  page={page}
-                  onChange={(_event, value) => setPage(value)}
-                  color="primary"
-                />
-              </Grid>
-              <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)} >
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
+                  </TableHead>
+                  <TableBody>
+                    {ventasClientes.map((venta) => (
+                      <TableRow
+                        key={venta.idVenta}
+                        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      >
+                        <TableCell component="th" scope="row">
+                          {venta.descripcionVenta}
+                        </TableCell>
+                        <TableCell align="right">
+                          {formatearFechaTipoDate(venta.fechaOperacion)}
+                        </TableCell>
+                        <TableCell align="right">
+                          {separadorMiles(venta.monto, true)}
+                        </TableCell>
+                        <TableCell align="right">{venta.estado}</TableCell>
+                        <TableCell align="right">
+                          <Checkbox
+                            checked={movimientoCajaVenta.ventas.some(
+                              (v) => v.idVenta === venta.idVenta
+                            )}
+                            onChange={() => handleCheckboxChange(venta)}
+                          />
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+  
+                <Grid
+                  container
+                  item
+                  xs={12}
+                  justifyContent="flex-start"
+                  mt={2}
+                  mb={2}
                 >
-                  <Typography>Seleccionar Cuotas Extras a Pagar</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                  <PagoDeCuotas numeroCedula={selectdSocio?.cedula ?? ""} setReloadData={setReloadData} setExpanded={setExpanded}  />
-                </AccordionDetails>
-              </Accordion>
-
-              <Grid container item xs={12} justifyContent={"flex-end"} mt={2}>
-                <Button
-                  variant="contained"
-                  onClick={() => setModalFactura(true)}
-                >
-                  Generar Movimiento
-                </Button>
+                  <Pagination
+                    count={totalPaginas}
+                    page={page}
+                    onChange={(_event, value) => setPage(value)}
+                    color="primary"
+                  />
+                </Grid>
               </Grid>
-            </Grid>
+            </>
           ) : (
             <Grid item xs={12} justifyContent={"center"} mt={8}>
               <Typography textAlign={"center"} color={"gray"}>
@@ -262,9 +246,38 @@ export const CajaCarrito = () => {
               </Typography>
             </Grid>
           )}
+  
+          {/* Sección Accordion siempre visible */}
+          <Grid item xs={12} mt={4}>
+            <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
+              <AccordionSummary
+                expandIcon={<ExpandMoreIcon />}
+                aria-controls="panel1a-content"
+                id="panel1a-header"
+              >
+                <Typography>Seleccionar Cuotas Extras a Pagar</Typography>
+              </AccordionSummary>
+              <AccordionDetails>
+                <PagoDeCuotas
+                  numeroCedula={selectdSocio?.cedula ?? ""}
+                  setReloadData={setReloadData}
+                  setExpanded={setExpanded}
+                />
+              </AccordionDetails>
+            </Accordion>
+          </Grid>
+  
+          {/* Botón de generar movimiento */}
+          {ventasClientes.length > 0 && (
+            <Grid container item xs={12} justifyContent={"flex-end"} mt={2}>
+              <Button variant="contained" onClick={() => setModalFactura(true)}>
+                Generar Movimiento
+              </Button>
+            </Grid>
+          )}
         </>
       )}
-
+  
       <ModalFacturaVenta
         open={modalFactura}
         handleClose={() => setModalFactura(false)}
@@ -273,6 +286,7 @@ export const CajaCarrito = () => {
       />
     </ContainerComponent>
   );
+  
 };
 
 export default CajaCarrito;

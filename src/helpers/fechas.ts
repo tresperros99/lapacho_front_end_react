@@ -32,3 +32,8 @@ export const formatDateEs = (dateString: string): string => {
   };
   return new Date(dateString).toLocaleDateString("es-ES", options);
 };
+
+export const formatearRangoFechas = (fechaDesde: Date, fechaHasta: Date) => ({
+  fechaDesde: formatearFechaTipoDate(fechaDesde),
+  fechaHasta: formatearFechaTipoDate(fechaHasta),
+});

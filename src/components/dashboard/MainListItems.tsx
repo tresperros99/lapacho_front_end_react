@@ -24,6 +24,7 @@ import {
   LockOpenOutlinedIcon,
   LockOutlinedIcon,
   AccessibilityIcon,
+  FeedOutlinedIcon,
 } from "../../components/icons";
 
 import {
@@ -213,6 +214,11 @@ export const MainListItems = () => {
             path: "/cerrarCaja",
             title: "Cerrar Caja",
             icon: <LockOutlinedIcon />,
+          },
+          {
+            path: "/resumenXFecha",
+            title: "Resumen por Fecha ",
+            icon: <FeedOutlinedIcon />,
           },
         ],
       },

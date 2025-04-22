@@ -3,6 +3,7 @@
 import AbrirCaja from "../pages/caja/AbrirCaja";
 import CajaCarrito from "../pages/caja/CajaCarrito";
 import CerrarCaja from "../pages/caja/CerrarCaja";
+import ResumenXFecha from "../pages/caja/ResumenXFecha";
 import FormClientes from "../pages/clientes/FormClientes";
 import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
 import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
@@ -59,6 +60,8 @@ export const adminRoutes = [
   { path: "dashboardProfesores", Component: DashboardProfesores },
   { path: "abrirCaja", Component: AbrirCaja },
   { path: "cerrarCaja", Component: CerrarCaja },
+  { path: "resumenXFecha", Component: ResumenXFecha },
+
 ];
 
 export const socioRoutes = [

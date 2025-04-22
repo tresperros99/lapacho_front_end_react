@@ -3,6 +3,7 @@ import appConfig from "../config/config";
 import GenerarMovimientoDeCajaVentaDto from "../models/dtos/caja/generarMovimientoDeCajaVentaDto.model";
 import MovimientoDeVentaResponse from "../models/responses/caja/MovimientoDeVenta.response";
 import ObtenerTipoPagoResponse from "../models/responses/caja/ObtenerTipoPago.response";
+import ResumenCajaXFecharesponse from "../models/responses/caja/ResumenCajaXFecha";
 import SuccessResponse from "../models/responses/shared/Success.response";
 
 const { caja } = appConfig;
@@ -69,3 +70,27 @@ export const getTiposPago = async () => {
     return null;
   }
 };
+
+
+export const obtenerResumenXFecha = async  (desde:Date,Hasta:Date,pagina=1,cantidad=10) => {
+  const url = caja.obtenerResumenXFecha;
+
+  // const { fechaDesde, fechaHasta } = formatearRangoFechas(desde, Hasta);
+
+  const params = {
+    fecha_desde:'2025-01-01',
+    fecha_hasta:'2025-10-29',
+    pagina,
+    cantidad,
+  };
+  const obtenerResumenXFechaResp = await axiosInstance.get<ResumenCajaXFecharesponse>(url,{params});
+  if (obtenerResumenXFechaResp) {
+    if (obtenerResumenXFechaResp.status === 200) {
+      return obtenerResumenXFechaResp.data;
+    } else {
+      return obtenerResumenXFechaResp.data;
+    }
+  } else {
+    return null;
+  }
+}
