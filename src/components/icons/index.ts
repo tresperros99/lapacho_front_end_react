@@ -48,3 +48,5 @@ export { default as StickyNote2OutlinedIcon } from "@mui/icons-material/StickyNo
 export { default as LocalAtmOutlinedIcon } from "@mui/icons-material/LocalAtmOutlined";
 export { default as LockOpenOutlinedIcon } from "@mui/icons-material/LockOpenOutlined";
 export { default as AccessibilityIcon } from "@mui/icons-material/Accessibility";
+export { default as FeedOutlinedIcon } from "@mui/icons-material/FeedOutlined";
+export { default as VisibilityOutlinedIcon } from "@mui/icons-material/VisibilityOutlined";

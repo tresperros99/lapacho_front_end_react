@@ -7,6 +7,7 @@ export interface UiState {
   loadingTipoSocios: boolean;
   loadingMesasDisponibles: boolean;
   loadingTipoPago: boolean;
+  loadingTipoEvento: boolean,
   error: string;
   successMessage: string;
 }
@@ -18,6 +19,7 @@ const initialState: UiState = {
   loadingTipoSocios: false,
   loadingMesasDisponibles: false,
   loadingTipoPago: false,
+  loadingTipoEvento: false,
   error: "",
   successMessage: "",
 };
@@ -49,6 +51,9 @@ export const uiSlice = createSlice({
     setLoadingTipoPago: (state, action: PayloadAction<boolean>) => {
       state.loadingTipoPago = action.payload;
     },
+    setLoadingTipoEvento: (state, action: PayloadAction<boolean>) => {
+      state.loadingTipoEvento = action.payload;
+    },
     setError: (state, action: PayloadAction<string>) => {
       state.error = action.payload;
     },
@@ -72,6 +77,7 @@ export const {
   setLoadingTipoSocios,
   setLoadingMesasDisponibles,
   setLoadingTipoPago,
+  setLoadingTipoEvento,
   setError,
   clearError,
   setSuccess,

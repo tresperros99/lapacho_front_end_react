@@ -10,6 +10,7 @@ import profesoresSlice from "../features/profesores/profesoresSlice";
 import sociosSlice from "../features/socios/socios.slice";
 import uiSlice from "../features/ui/ui.slice";
 import cajaSlice from "../features/caja/caja.slice";
+import eventosSlice from "../features/eventos/eventos.slice";
 
 export const store = configureStore({
   reducer: {
@@ -22,6 +23,7 @@ export const store = configureStore({
     ui: uiSlice,
     club: clubSlice,
     caja: cajaSlice,
+    eventos: eventosSlice,
   },
 });
 
