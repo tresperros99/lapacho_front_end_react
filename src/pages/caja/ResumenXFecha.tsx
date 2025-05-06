@@ -20,7 +20,7 @@ const ResumenXFecha = () => {
     [],
   );
   const handlePageChange = (
-    event: unknown,
+    _event: unknown,
     newPage: number
   ) => {
     setPage(newPage);

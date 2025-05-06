@@ -141,7 +141,7 @@ export const MainListItems = () => {
         icon: <EmojiEventsOutlinedIcon />,
         subItems: [
           {
-            path: "/cargarEventos",
+            path: "/formEventos",
             title: "Cargar Eventos",
             icon: <InsertInvitationOutlinedIcon />,
           },

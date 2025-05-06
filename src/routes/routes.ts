@@ -9,7 +9,7 @@ import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
 import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
 import FormEgresos from "../pages/egresos/FormEgresos";
 import PanelEgresos from "../pages/egresos/PanelEgresos";
-import CargarEventos from "../pages/eventos/CargarEventos";
+import FormEventos from "../pages/eventos/FormEventos";
 import CargarTalonario from "../pages/facturacion/CargarTalonario";
 import HomePage from "../pages/HomePage";
 import FormIngresos from "../pages/ingresos/FormIngresos";
@@ -55,7 +55,7 @@ export const adminRoutes = [
   { path: "cajaCarrito", Component: CajaCarrito },
   { path: "panelReservas", Component: PanelReservas },
   { path: "cargarTalonario", Component: CargarTalonario },
-  { path: "cargarEventos", Component: CargarEventos },
+  { path: "formEventos", Component: FormEventos },
   { path: "dashboardSociosClientes", Component: DashboardSociosClientes },
   { path: "dashboardProfesores", Component: DashboardProfesores },
   { path: "abrirCaja", Component: AbrirCaja },

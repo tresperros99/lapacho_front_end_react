@@ -1,5 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
+import { formatearRangoFechas } from "../helpers/fechas";
 import GenerarMovimientoDeCajaVentaDto from "../models/dtos/caja/generarMovimientoDeCajaVentaDto.model";
 import MovimientoDeVentaResponse from "../models/responses/caja/MovimientoDeVenta.response";
 import ObtenerTipoPagoResponse from "../models/responses/caja/ObtenerTipoPago.response";
@@ -75,11 +76,11 @@ export const getTiposPago = async () => {
 export const obtenerResumenXFecha = async  (desde:Date,Hasta:Date,pagina=1,cantidad=10) => {
   const url = caja.obtenerResumenXFecha;
 
-  // const { fechaDesde, fechaHasta } = formatearRangoFechas(desde, Hasta);
+  const { fechaDesde, fechaHasta } = formatearRangoFechas(desde, Hasta);
 
   const params = {
-    fecha_desde:'2025-01-01',
-    fecha_hasta:'2025-10-29',
+    fecha_desde:fechaDesde,
+    fecha_hasta:fechaHasta,
     pagina,
     cantidad,
   };

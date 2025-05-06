@@ -1,6 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
-import CrearEventoDto from "../models/dtos/eventos/CrearEventoDto.model";
+import { NuevoEventoDto } from "../models/dtos/eventos/NuevoEventoDto.model";
 import TodosEventosClubDto from "../models/dtos/eventos/TodosEventosClubDto.model";
 import CrearEventoResponse from "../models/responses/eventos/CrearEventoClub.response";
 import EventosDeAnioResponse from "../models/responses/eventos/EventosDelAnio.response";
@@ -80,7 +80,7 @@ export const getTipoEventos = async () => {
   }
 };
 
-export const postCrearEventoClub = async (crearEventoDto: CrearEventoDto) => {
+export const postCrearEventoClub = async (crearEventoDto: NuevoEventoDto) => {
   const url = eventos.crearEvento;
 
   const crearEventoResp = await axiosInstance.post<CrearEventoResponse>(
