@@ -145,6 +145,11 @@ export const MainListItems = () => {
             title: "Cargar Eventos",
             icon: <InsertInvitationOutlinedIcon />,
           },
+          {
+            path: "/panelEventos",
+            title: "Panel de Eventos",
+            icon: <EmojiEventsOutlinedIcon />,
+          },
           // {
           //   path: "/panelReservas",
           //   title: "Panel de reservas",

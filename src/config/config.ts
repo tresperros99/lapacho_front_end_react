@@ -51,6 +51,10 @@ const appConfig = {
     obtenerTodosEventosClub: "/calendario_eventos/eventos_mes_todos",
     obtenerTipoEventos: "/calendario_eventos/obtener_tipos_evento",
     crearEvento: "/calendario_eventos/crear_nuevo_evento",
+    obtenerEventosPorFecha: "/calendario_eventos/obtener_torneos_x_fecha",
+    obtenerEventosConCategoria:"/calendario_eventos/eventos_con_categoria",
+    inscripcionEvento:"/inscripciones/inscribirse_a_evento",
+    categoriasEvento:"/calendario_eventos/obtener_categorias_evento",
   },
   reservas: {
     getReservasDelClub:
