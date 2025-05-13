@@ -10,6 +10,8 @@ import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes
 import FormEgresos from "../pages/egresos/FormEgresos";
 import PanelEgresos from "../pages/egresos/PanelEgresos";
 import FormEventos from "../pages/eventos/FormEventos";
+import FormInscripciones from "../pages/eventos/inscripciones/FormInscripciones";
+import PanelEventos from "../pages/eventos/PanelEventos";
 import CargarTalonario from "../pages/facturacion/CargarTalonario";
 import HomePage from "../pages/HomePage";
 import FormIngresos from "../pages/ingresos/FormIngresos";
@@ -61,6 +63,8 @@ export const adminRoutes = [
   { path: "abrirCaja", Component: AbrirCaja },
   { path: "cerrarCaja", Component: CerrarCaja },
   { path: "resumenXFecha", Component: ResumenXFecha },
+  { path: "panelEventos", Component: PanelEventos },
+  { path: "inscripcionEvento", Component: FormInscripciones },
 
 ];
 

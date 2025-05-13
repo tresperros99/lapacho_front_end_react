@@ -1,10 +1,15 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
+import InscribirseAEventoDto from "../models/dtos/eventos/InscribirseAEventoDto.model";
 import { NuevoEventoDto } from "../models/dtos/eventos/NuevoEventoDto.model";
+import ObtenerEventosPorFechaDto from "../models/dtos/eventos/ObtenerEventosPorFechaDto.model";
 import TodosEventosClubDto from "../models/dtos/eventos/TodosEventosClubDto.model";
 import CrearEventoResponse from "../models/responses/eventos/CrearEventoClub.response";
 import EventosDeAnioResponse from "../models/responses/eventos/EventosDelAnio.response";
 import EventosDelMesResponse from "../models/responses/eventos/EventosDelMes.response";
+import ObtenerCategoriasEventosResponse from "../models/responses/eventos/ObtenerCategoriasEventos.response";
+import ObtenerEventosConCategoriasResponse from "../models/responses/eventos/ObtenerEventosConCategorias.response";
+import ObternerEventosPorFechaResponse from "../models/responses/eventos/ObtenerEventosPorFecha";
 import ObtenerTodosEventosClub from "../models/responses/eventos/ObtenerTodosEventosClub";
 import TipoEventoResponse from "../models/responses/eventos/TipoEvento.response";
 
@@ -92,6 +97,99 @@ export const postCrearEventoClub = async (crearEventoDto: NuevoEventoDto) => {
       return crearEventoResp.data;
     } else {
       return crearEventoResp.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const getEventosPorFecha = async (
+  getEventosPorFecha: ObtenerEventosPorFechaDto,
+) => {
+  const url = eventos.obtenerEventosPorFecha;
+
+  const eventosPorFechaResp = await axiosInstance.post<ObternerEventosPorFechaResponse>(
+    url,
+    getEventosPorFecha,
+  );
+  if (eventosPorFechaResp) {
+    if (eventosPorFechaResp.status === 200) {
+      return eventosPorFechaResp.data;
+    } else {
+      return eventosPorFechaResp.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const getEventosConCategoria = async (
+  mes: number,
+  annio: number,
+) => {
+
+  const params = {
+    mes,
+    annio
+  };
+  const url = eventos.obtenerEventosConCategoria;
+
+  const eventosConCategoria = await axiosInstance.get<ObtenerEventosConCategoriasResponse>(
+    url,
+    { params},
+  );
+  if (eventosConCategoria) {
+    if (eventosConCategoria.status === 200) {
+      return eventosConCategoria.data;
+    } else {
+      return eventosConCategoria.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const postInscribirseAEvento = async (inscribirseAEventoDto: InscribirseAEventoDto) => {
+
+  const url = eventos.inscripcionEvento;
+
+  const inscripcionAEvento = await axiosInstance.post<ObtenerEventosConCategoriasResponse>(
+    url,
+    inscribirseAEventoDto
+  );
+  if (inscripcionAEvento) {
+    if (inscripcionAEvento.status === 200) {
+      return inscripcionAEvento.data;
+    } else {
+      return inscripcionAEvento.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const getCategoriaEventos = async (
+  idEvento: number,
+) => {
+
+  const params = {
+    id_evento:idEvento,
+  };
+  const url = eventos.categoriasEvento;
+
+  const categoriaEvento = await axiosInstance.get<ObtenerCategoriasEventosResponse>(
+    url,
+    { params},
+  );
+  if (categoriaEvento) {
+    if (categoriaEvento.status === 200) {
+      return categoriaEvento.data;
+    } else {
+      return categoriaEvento.data;
     }
   } else {
     return null;

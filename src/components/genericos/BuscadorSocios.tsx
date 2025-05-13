@@ -12,9 +12,10 @@ import { SearchIcon } from "../icons";
 
 interface BuscadorSociosProps {
   onSelect: (socio: Socio | null) => void;
+  margin?: 'dense' | 'normal' | 'none';
 }
 
-const BuscadorSocios: React.FC<BuscadorSociosProps> = ({ onSelect }) => {
+const BuscadorSocios: React.FC<BuscadorSociosProps> = ({ onSelect,margin='none' }) => {
   const [searchValue, setSearchValue] = useState<string>("");
   const [socios, setSocios] = useState<Socio[]>([]);
 
@@ -56,6 +57,7 @@ const BuscadorSocios: React.FC<BuscadorSociosProps> = ({ onSelect }) => {
           {...params}
           label="Buscar Socio"
           variant="outlined"
+          margin={margin}
           onChange={(e) => setSearchValue(e.target.value)}
           InputProps={{
             ...params.InputProps,
