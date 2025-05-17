@@ -25,6 +25,7 @@ import {
   LockOutlinedIcon,
   AccessibilityIcon,
   FeedOutlinedIcon,
+  KeyOutlinedIcon,
 } from "../../components/icons";
 
 import {
@@ -70,9 +71,14 @@ export const MainListItems = () => {
             icon: <PersonAddOutlinedIcon />,
           },
           {
-            path: "/FormSocioDependiente",
-            title: "Registrar Socio Dependiente",
+            path: "/formSocioDependiente",
+            title: "Registrar Dependientes",
             icon: <AttachMoneyIcon />,
+          },
+          {
+            path: "/formUsuarios",
+            title: "Registrar Usuarios",
+            icon: <KeyOutlinedIcon />,
           },
           {
             path: "/panelSocios",

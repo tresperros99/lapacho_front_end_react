@@ -4,6 +4,7 @@ import AbrirCaja from "../pages/caja/AbrirCaja";
 import CajaCarrito from "../pages/caja/CajaCarrito";
 import CerrarCaja from "../pages/caja/CerrarCaja";
 import ResumenXFecha from "../pages/caja/ResumenXFecha";
+import FormClases from "../pages/clases/FormClases";
 import FormClientes from "../pages/clientes/FormClientes";
 import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
 import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
@@ -22,6 +23,7 @@ import FormReservas from "../pages/reservas/FormReservas";
 import PanelReservas from "../pages/reservas/PanelReservas";
 import { FormSocioDependiente } from "../pages/socios";
 import FormSocios from "../pages/socios/FormSocios";
+import FormUsuarios from "../pages/socios/FormUsuarios";
 import CuotasPagadas from "../pages/socios/miSocio/CuotasPagadas";
 import CuotasPagadasDelMes from "../pages/socios/miSocio/CuotasPagadasDelMes";
 import CuotasPendientes from "../pages/socios/miSocio/CuotasPendientes";
@@ -42,7 +44,7 @@ export const commonRoutes = [
 export const adminRoutes = [
   { path: "formProfesor", Component: FormProfesores },
   { path: "panelProfesor", Component: PanelProfesores },
-  // { path: "formClases", Component: ClasesForm },
+  { path: "formClases", Component: FormClases },
   { path: "panelClases", Component: PanelProfesores },
   { path: "formSocios", Component: FormSocios },
   { path: "formClientes", Component: FormClientes },
@@ -65,6 +67,7 @@ export const adminRoutes = [
   { path: "resumenXFecha", Component: ResumenXFecha },
   { path: "panelEventos", Component: PanelEventos },
   { path: "inscripcionEvento", Component: FormInscripciones },
+  { path: "formUsuarios", Component: FormUsuarios },
 
 ];
 

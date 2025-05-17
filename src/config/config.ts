@@ -2,6 +2,7 @@ const appConfig = {
   auth: {
     login: "auth/login",
     obtenerAccesos: "/accesos/obtener_accesos",
+    crearUsuario: "/usuarios/crear_socio_usuario",
   },
   profesores: {
     crearProfesor: "profesores",
