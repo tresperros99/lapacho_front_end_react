@@ -1,6 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
-import { dataUser, encryptPassword } from "../helpers/auth";
+import { DataUser, encryptPassword } from "../helpers/auth";
 import CrearUsuarioDto from "../models/dtos/usuarios/CrearUsuarioDto.models";
 import LoginResponse from "../models/responses/Auth/Login.response";
 import ObtenerAccesosResponse from "../models/responses/Auth/ObtenerAccesos.response";
@@ -10,7 +10,7 @@ export const login = async (user: string, password: string) => {
   const url = appConfig.auth.login;
   let respuesta: LoginResponse | null = {} as LoginResponse;
 
-  const data:dataUser = {
+  const data:DataUser = {
     usuario: user,
     contraseña: password,
   };
