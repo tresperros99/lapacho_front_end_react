@@ -13,7 +13,6 @@ import React from "react";
 import AgendarClaseDto from "../../models/dtos/clases/AgendarClaseDto.model";
 import CrearEventoDto from "../../models/dtos/eventos/CrearEventoDto.model";
 import AgendarReservaClubDto from "../../models/dtos/reservas/AgendarReserva.dto.model";
-import ClasesForm from "./subComponents/ClasesForm";
 import EventForm from "./subComponents/EventForm";
 import ReservasForm from "./subComponents/ReservasForm";
 
@@ -93,13 +92,6 @@ const EventTypeModal: React.FC<EventTypeModalProps> = ({
           />
         )}
 
-        {eventType === "CLASE" && (
-          <ClasesForm
-            initialValues={initialValues as AgendarClaseDto}
-            onSubmit={handleEventSubmit}
-            onClose={onClose}
-          />
-        )}
 
         {eventType === "RESERVA" && (
           <ReservasForm
