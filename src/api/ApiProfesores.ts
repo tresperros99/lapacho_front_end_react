@@ -60,3 +60,22 @@ export const eliminarProfesorClub = async (idProfesor: number) => {
     return null;
   }
 };
+
+export const getBuscadorProfesores = async (nombreCedula: string) => {
+  const url = appConfig.profesores.buscadorProfesores;
+  const params = {
+    busqueda: nombreCedula,
+  };
+  const getProfesoresResp = await axiosInstance.get<NominaProfesoresResponse>(url, {
+    params,
+  });
+  if (getProfesoresResp) {
+    if (getProfesoresResp.status === 200) {
+      return getProfesoresResp.data;
+    } else {
+      return getProfesoresResp.data;
+    }
+  } else {
+    return null;
+  }
+};
