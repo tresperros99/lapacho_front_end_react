@@ -1,4 +1,5 @@
 import {
+  Box,
   CircularProgress,
   Pagination,
   TextField,
@@ -44,11 +45,12 @@ const PanelReservas = () => {
   const [loadingReservas, setLoadingReservas] = useState(false);
   const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc");
 
-  
   const fetchReservasClub = useCallback(async () => {
     try {
       setLoadingReservas(true);
       if (fechaDesde && fechaHasta) {
+        console.log(fechaDesde, fechaHasta, page);
+
         const responseData = await getReservasDelClub(
           fechaDesde,
           fechaHasta,
@@ -56,18 +58,16 @@ const PanelReservas = () => {
         );
         if (responseData) {
           console.log(responseData);
-          
+
           setReservas(responseData.reservasClub);
         }
       }
     } finally {
       setLoadingReservas(false);
     }
-  },[fechaDesde, fechaHasta, page]);
+  }, [fechaDesde, fechaHasta, page]);
 
   useEffect(() => {
-
-
     fetchReservasClub();
   }, [fetchReservasClub]);
 
@@ -98,42 +98,42 @@ const PanelReservas = () => {
     const reservaGenerada = await postAgregarReservaAVenta(reserva);
     if (reservaGenerada) {
       dispatch(setSuccess(reservaGenerada.descripcion));
-      fetchReservasClub();    }
+      fetchReservasClub();
+    }
   };
 
   return (
     <ContainerComponent>
-      <Typography textAlign={"center"} variant="h4" marginBottom={2}>
+      <Typography variant="h4" align="center" mb={3} fontWeight={600}>
         Panel de Reservas
       </Typography>
 
-      <Grid container justifyContent="flex-end" sx={{ mb: 2 }}>
-        <Button variant="contained" color="primary" onClick={nuevoSocio}>
-          Nueva Reserva
-        </Button>
-      </Grid>
-      <Grid container justifyContent={"center"} spacing={2} mb={2}>
-        <Grid item xs={6}>
+      <Grid container justifyContent="space-between" alignItems="center" mb={2}>
+        <Grid item>
+          <Button variant="contained" onClick={nuevoSocio}>
+            Nueva Reserva
+          </Button>
+        </Grid>
+
+        <Grid item display="flex" gap={2}>
           <TextField
-            fullWidth
-            id="fechaDesde"
-            name="fechaDesde"
-            label="Fecha Desde"
+            size="small"
             type="date"
+            name="fechaDesde"
+            id="fechaDesde"
+            label="Fecha Desde"
             value={fechaDesde ? fechaDesde.toISOString().split("T")[0] : ""}
             onChange={(e) => setFechaDesde(new Date(e.target.value))}
             InputLabelProps={{
               shrink: true,
             }}
           />
-        </Grid>
-        <Grid item xs={6}>
           <TextField
-            fullWidth
-            id="fechaHasta"
-            name="fechaHasta"
-            label="Fecha Hasta"
+            size="small"
             type="date"
+            name="fechaHasta"
+            id="fechaHasta"
+            label="Fecha Hasta"
             value={fechaHasta ? fechaHasta.toISOString().split("T")[0] : ""}
             onChange={(e) => setFechaHasta(new Date(e.target.value))}
             InputLabelProps={{
@@ -145,89 +145,102 @@ const PanelReservas = () => {
 
       {loadingReservas ? (
         <Grid container justifyContent={"center"}>
-          <CircularProgress disableShrink />
+          <CircularProgress />
         </Grid>
       ) : (
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell onClick={handleSort} style={{ cursor: "pointer" }}>
-                  Nombre{" "}
-                  {orderBy === "asc" ? (
-                    <ArrowDropUpIcon />
-                  ) : (
-                    <ArrowDropDownIcon />
-                  )}
-                </TableCell>
-                <TableCell align="right">Fecha de Agendamiento</TableCell>
-                <TableCell align="right">Hora Inicio</TableCell>
-                <TableCell align="right">Hora Fin</TableCell>
-                <TableCell align="right">Mesa</TableCell>
+        <Paper elevation={3} sx={{ borderRadius: 3 }}>
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell
+                    onClick={handleSort}
+                    style={{ cursor: "pointer", fontWeight: 600 }}
+                  >
+                    Nombre{" "}
+                    {orderBy === "asc" ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Fecha de Agendamiento
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Hora Inicio
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Hora Fin
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Mesa
+                  </TableCell>
 
-                <TableCell align="right">Editar</TableCell>
-                <TableCell align="right">Eliminar</TableCell>
-                <TableCell align="right">Agrega a venta</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {reservas.map((reserva) => (
-                <TableRow
-                  key={reserva.idMesa}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {reserva.nombreCmp}
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Editar
                   </TableCell>
-                  <TableCell component="th" scope="row">
-                    {formatearFechaTipoDate(reserva.fechaAgendamiento)}
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Eliminar
                   </TableCell>
-                  <TableCell align="right">
-                    {formatearFechaTipoDate(reserva.horaDesde)}
-                  </TableCell>
-                  <TableCell align="right">
-                    {formatearFechaTipoDate(reserva.horaHasta)}
-                  </TableCell>
-                  <TableCell align="right">{reserva.idMesa}</TableCell>
-
-                  <TableCell
-                    onClick={() => editarReserva(reserva)}
-                    align="right"
-                  >
-                    <EditOutlinedIcon sx={{ cursor: "pointer" }} />
-                  </TableCell>
-                  <TableCell
-                    onClick={() => eliminarReserva(reserva.idClienteReserva)}
-                    align="right"
-                  >
-                    <DeleteOutlineOutlinedIcon sx={{ cursor: "pointer" }} />
-                  </TableCell>
-                  <TableCell
-                    onClick={() => agregarReservaAVenta(reserva)}
-                    align="right"
-                  >
-                    <SellOutlinedIcon sx={{ cursor: "pointer" }} />
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Agrega a venta
                   </TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-            <Grid container>
-              <Pagination
-                sx={{
-                  "& .MuiPagination-ul": {
-                    flexWrap: "nowrap", // Evita que las páginas se ajusten en múltiples filas
-                  },
-                }}
-                count={totalPaginas}
-                page={page}
-                onChange={handleChangePage}
-                color="primary"
-                siblingCount={1} // Controla cuántas páginas muestra al lado de la página actual
-                boundaryCount={1}
-              />
-            </Grid>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {reservas.map((reserva) => (
+                  <TableRow
+                    key={reserva.idMesa}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                    hover
+                  >
+                    <TableCell>{reserva.nombreCmp}</TableCell>
+                    <TableCell align="right">
+                      {formatearFechaTipoDate(reserva.fechaAgendamiento)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {formatearFechaTipoDate(reserva.horaDesde)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {formatearFechaTipoDate(reserva.horaHasta)}
+                    </TableCell>
+                    <TableCell align="right">{reserva.idMesa}</TableCell>
+
+                    <TableCell
+                      onClick={() => editarReserva(reserva)}
+                      align="right"
+                    >
+                      <EditOutlinedIcon sx={{ cursor: "pointer" }} />
+                    </TableCell>
+                    <TableCell
+                      onClick={() => eliminarReserva(reserva.idClienteReserva)}
+                      align="right"
+                    >
+                      <DeleteOutlineOutlinedIcon sx={{ cursor: "pointer" }} />
+                    </TableCell>
+                    <TableCell
+                      onClick={() => agregarReservaAVenta(reserva)}
+                      align="right"
+                    >
+                      <SellOutlinedIcon sx={{ cursor: "pointer" }} />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+          <Box display="flex" justifyContent="center" my={2}>
+            <Pagination
+              count={totalPaginas}
+              page={page}
+              onChange={handleChangePage}
+              color="primary"
+              siblingCount={1}
+              boundaryCount={1}
+            />
+          </Box>
+        </Paper>
       )}
     </ContainerComponent>
   );

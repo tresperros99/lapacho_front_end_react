@@ -8,3 +8,5 @@ export interface MesasDisponible {
   idMesa: number;
   descMesa: string;
 }
+
+export default MesasDisponiblesResponse;

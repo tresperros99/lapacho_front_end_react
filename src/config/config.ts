@@ -8,6 +8,7 @@ const appConfig = {
     crearProfesor: "profesores",
     obtenerProfesores: "/profesores",
     eliminarProfesor: "/profesores",
+    buscadorProfesores: "/profesores/cedula/nombre",
   },
   clientes:{
     crearClientes:"/cliente/crear_cliente"
@@ -67,6 +68,7 @@ const appConfig = {
   clases: {
     agendarClae: "/agendamiento_clases/agendar_clase",
     getMesasDisponibles: "/reserva_en_club/obtener_mesas_disponibles",
+    obtenerClasesPorFecha:'/agendamiento_clases/obtener_clases_x_fecha'
   },
   caja: {
     crearCaja: "/caja/crear_caja",

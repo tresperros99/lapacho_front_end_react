@@ -5,6 +5,7 @@ import CajaCarrito from "../pages/caja/CajaCarrito";
 import CerrarCaja from "../pages/caja/CerrarCaja";
 import ResumenXFecha from "../pages/caja/ResumenXFecha";
 import FormClases from "../pages/clases/FormClases";
+import PanelClases from "../pages/clases/PanelClases";
 import FormClientes from "../pages/clientes/FormClientes";
 import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
 import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
@@ -45,7 +46,7 @@ export const adminRoutes = [
   { path: "formProfesor", Component: FormProfesores },
   { path: "panelProfesor", Component: PanelProfesores },
   { path: "formClases", Component: FormClases },
-  { path: "panelClases", Component: PanelProfesores },
+  { path: "panelClases", Component: PanelClases },
   { path: "formSocios", Component: FormSocios },
   { path: "formClientes", Component: FormClientes },
 

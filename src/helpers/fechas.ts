@@ -12,6 +12,12 @@ export const formatearFechaTipoDate = (fechaISO: Date) => {
   return `${dia}/${mes}/${año}`;
 };
 
+export const formatearFechaISO = (fechaISO: string): string => {
+  const [año, mes, dia] = fechaISO.split("-");
+  return `${dia}/${mes}/${año}`;
+};
+
+
 export const getFormattedDate = () => {
   const date = new Date();
   const day = date.getDate();
