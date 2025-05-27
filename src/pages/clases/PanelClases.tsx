@@ -1,39 +1,37 @@
 import {
-  CircularProgress,
-  Pagination,
-  TextField,
-  Typography,
-  Box,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  Paper,
-  IconButton,
-  Grid,
-  Button
-} from "@mui/material";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import { getClasesPorFecha } from "../../api/ApiClases";
-import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import {
   ArrowDropDown as ArrowDropDownIcon,
   ArrowDropUp as ArrowDropUpIcon,
   DeleteOutlineOutlined as DeleteOutlineOutlinedIcon,
   EditOutlined as EditOutlinedIcon,
   SellOutlined as SellOutlinedIcon,
 } from "@mui/icons-material";
+import {
+  Box,
+  Button,
+  CircularProgress,
+  Grid,
+  IconButton,
+  Pagination,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography
+} from "@mui/material";
+import { useCallback, useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { getClasesPorFecha } from "../../api/ApiClases";
+import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { separadorMiles } from "../../helpers/Numbers";
 import { ClasesDelDia } from "../../models/responses/clases/ClasesPorFecha.response";
 
 const PanelClases = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const [page, setPage] = useState(0);
   const totalPaginas = 10;
   const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
@@ -72,7 +70,10 @@ const PanelClases = () => {
     navigate("/formClases", { state: clase });
   };
 
-  const eliminareClase = async (idClase: number) => {};
+  const eliminareClase = async (idClase: number) => {
+    console.log(idClase);
+    
+  };
 
   const nuevoSocio = () => {
     navigate("/formReservas");
@@ -82,7 +83,10 @@ const PanelClases = () => {
     setOrderBy(orderBy === "asc" ? "desc" : "asc");
   };
 
-  const agregarClaseAVenta = async (clase: ClasesDelDia) => {};
+  const agregarClaseAVenta = async (clase: ClasesDelDia) => {
+    console.log(clase);
+    
+  };
 
   return (
     <ContainerComponent>
