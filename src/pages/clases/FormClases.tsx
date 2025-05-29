@@ -52,6 +52,8 @@ const FormClases = () => {
           console.error("Faltan datos");
           return;
         }
+        setLoadingAgendarClase(true);
+
         const nuevoAgendamiento: AgendarClaseDto = {
           idProfesor: profesor.idProfesor,
           inicio: values.inicio,
@@ -59,7 +61,7 @@ const FormClases = () => {
           idCliente: socio.idCliente,
           idMesa: mesaSeleccionada.idMesa,
         };
-
+        
         const nuevaClaseResp = await postAgendarClase(nuevoAgendamiento);
 
         if (nuevaClaseResp) {

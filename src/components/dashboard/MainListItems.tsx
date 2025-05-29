@@ -26,6 +26,8 @@ import {
   AccessibilityIcon,
   FeedOutlinedIcon,
   KeyOutlinedIcon,
+  ShoppingCartCheckoutOutlinedIcon,
+  AddCardOutlinedIcon,
 } from "../../components/icons";
 
 import {
@@ -230,6 +232,22 @@ export const MainListItems = () => {
             path: "/resumenXFecha",
             title: "Resumen por Fecha ",
             icon: <FeedOutlinedIcon />,
+          },
+        ],
+      },
+      {
+        title: "Compras Club",
+        icon: <ShoppingCartCheckoutOutlinedIcon />,
+        subItems: [
+          {
+            path: "/formCompras",
+            title: "Cargar Compras",
+            icon: <AddCardOutlinedIcon />,
+          },
+          {
+            path: "/dashboardProfesores",
+            title: "Profesores",
+            icon: <SchoolOutlinedIcon />,
           },
         ],
       },

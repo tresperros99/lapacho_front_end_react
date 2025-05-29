@@ -7,6 +7,7 @@ import ResumenXFecha from "../pages/caja/ResumenXFecha";
 import FormClases from "../pages/clases/FormClases";
 import PanelClases from "../pages/clases/PanelClases";
 import FormClientes from "../pages/clientes/FormClientes";
+import FormCompras from "../pages/compras/FormCompras";
 import DashboardProfesores from "../pages/dashboards/DashboardProfesores";
 import DashboardSociosClientes from "../pages/dashboards/DashboardSociosClientes";
 import FormEgresos from "../pages/egresos/FormEgresos";
@@ -69,6 +70,7 @@ export const adminRoutes = [
   { path: "panelEventos", Component: PanelEventos },
   { path: "inscripcionEvento", Component: FormInscripciones },
   { path: "formUsuarios", Component: FormUsuarios },
+  { path: "formCompras", Component: FormCompras },
 
 ];
 

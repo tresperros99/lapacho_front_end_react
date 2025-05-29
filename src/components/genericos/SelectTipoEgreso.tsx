@@ -14,7 +14,7 @@ interface SelectTipoEgresoComponentProps {
   >;
 }
 
-const SelectTipoEgresoComponent: React.FC<SelectTipoEgresoComponentProps> = ({
+const SelectTipoEgreso: React.FC<SelectTipoEgresoComponentProps> = ({
   fullWidth,
   setTipoEgresoSeleccionado,
 }) => {
@@ -66,4 +66,4 @@ const SelectTipoEgresoComponent: React.FC<SelectTipoEgresoComponentProps> = ({
   );
 };
 
-export default SelectTipoEgresoComponent;
+export default SelectTipoEgreso;
