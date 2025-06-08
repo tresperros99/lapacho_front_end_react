@@ -16,9 +16,6 @@ import TableRow from "@mui/material/TableRow";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getComprasDelClub } from "../../api/ApiCompras";
-import {
-  eliminarReservaDelClub
-} from "../../api/ApiReservas";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import {
   ArrowDropDownIcon,
@@ -47,12 +44,12 @@ const PanelCompras = () => {
     navigate("/formCompra", { state: compra });
   };
 
-  const eliminarCompra = async (idReserva: number) => {
-    const eliminado = await eliminarReservaDelClub(idReserva);
-    // if (eliminado && fechaDesde && fechaHasta) {
-    //   await getReservasDelClub(fechaDesde, fechaHasta, page);
-    // }
-  };
+  // const eliminarCompra = async (idReserva: number) => {
+  //   const eliminado = await eliminarReservaDelClub(idReserva);
+  //   // if (eliminado && fechaDesde && fechaHasta) {
+  //   //   await getReservasDelClub(fechaDesde, fechaHasta, page);
+  //   // }
+  // };
 
   const nuevaCompra = () => {
     navigate("/formCompras");

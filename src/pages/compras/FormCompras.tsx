@@ -12,18 +12,18 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { NumericFormat } from "react-number-format";
+import { useDispatch, useSelector } from "react-redux";
+import { postGenerarComprasDelClub } from "../../api/ApiCompras";
+import { RootState } from "../../app/store";
+import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import SelectTipoEgreso from "../../components/genericos/SelectTipoEgreso";
+import { setError, setSuccess } from "../../features/ui/ui.slice";
+import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { separadorMiles } from "../../helpers/Numbers";
 import { Compra } from "../../models/dtos/compras/GenerarComprasClub.model";
 import { TiposEgreso } from "../../models/responses/egresos/TipoEgreso.response";
-import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../app/store";
-import { formatearFechaTipoDate } from "../../helpers/fechas";
-import { setError, setSuccess } from "../../features/ui/ui.slice";
-import { postGenerarComprasDelClub } from "../../api/ApiCompras";
 
 const compraInitalState: Compra = {
   descripcion: "",
