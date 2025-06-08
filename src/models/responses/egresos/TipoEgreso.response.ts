@@ -6,7 +6,7 @@ export interface TipoEgresoResponse {
 
 export interface TiposEgreso {
   descripcion: string;
-  idTipo: number;
+  idTipoEgreso: number;
 }
 
 export default TipoEgresoResponse;

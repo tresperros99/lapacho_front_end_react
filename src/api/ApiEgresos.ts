@@ -9,7 +9,7 @@ const { egresos } = appConfig;
 
 export const getListarTipoDeEgreso = async () => {
   const url = egresos.listarTipoEgresos;
-  const tipoEgresoResp = await axiosInstance.get<TipoEgresoResponse[]>(url);
+  const tipoEgresoResp = await axiosInstance.get<TipoEgresoResponse>(url);
   if (tipoEgresoResp) {
     if (tipoEgresoResp.status === 200) {
       return tipoEgresoResp.data;

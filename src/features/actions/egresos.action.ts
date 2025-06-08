@@ -11,8 +11,8 @@ export const fetchTiposEgresos = (): AppThunk => async (dispatch, getState) => {
     dispatch(setLoadingTipoEgreso(true));
     try {
       const tipoEgresoResp = await getListarTipoDeEgreso();
-      if (tipoEgresoResp && tipoEgresoResp.length > 0) {
-        dispatch(setTiposEgresos(tipoEgresoResp[0].tiposEgreso));
+      if (tipoEgresoResp && tipoEgresoResp) {
+        dispatch(setTiposEgresos(tipoEgresoResp.tiposEgreso));
       }
     } catch (error) {
       dispatch(setError("Error al cargar los tipos de egresos."));

@@ -245,9 +245,9 @@ export const MainListItems = () => {
             icon: <AddCardOutlinedIcon />,
           },
           {
-            path: "/dashboardProfesores",
-            title: "Profesores",
-            icon: <SchoolOutlinedIcon />,
+            path: "/panelCompras",
+            title: "Panel de Compras",
+            icon: <FormatListBulletedOutlinedIcon />,
           },
         ],
       },

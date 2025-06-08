@@ -1,173 +1,228 @@
-import DeleteIcon from "@mui/icons-material/Delete";
 import {
-    Box,
-    Checkbox,
-    FormControlLabel,
-    IconButton,
-    Table,
-    TableBody,
-    TableCell,
-    TableContainer,
-    TableHead,
-    TableRow,
-    TextField,
-    Typography,
+  Button,
+  FormControl,
+  FormControlLabel,
+  Grid,
+  Switch,
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
 } from "@mui/material";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { NumericFormat } from "react-number-format";
+import SelectTipoEgreso from "../../components/genericos/SelectTipoEgreso";
+import { separadorMiles } from "../../helpers/Numbers";
+import { Compra } from "../../models/dtos/compras/GenerarComprasClub.model";
+import { TiposEgreso } from "../../models/responses/egresos/TipoEgreso.response";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import { CustomButton } from "../../components/genericos/Shared/CustomButton";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../app/store";
+import { formatearFechaTipoDate } from "../../helpers/fechas";
+import { setError, setSuccess } from "../../features/ui/ui.slice";
+import { postGenerarComprasDelClub } from "../../api/ApiCompras";
 
-interface Compra {
-  descripcion: string;
-  cantidad: number;
-  gastoFijo: boolean;
-  tipoEgreso: number;
-  fechaVencimiento: string | null;
-}
+const compraInitalState: Compra = {
+  descripcion: "",
+  cantidad: 0,
+  fechaVencimiento: null,
+  gastoFijo: false,
+  tipoEgreso: 0,
+};
 
-const FormularioComprasArray = () => {
+const FormCompras = () => {
+  const { tiposEgresos } = useSelector((state: RootState) => state.egresos);
+  const dispatch = useDispatch();
+
   const [compras, setCompras] = useState<Compra[]>([]);
-
-  const [nuevaCompra, setNuevaCompra] = useState<Compra>({
-    descripcion: "",
-    cantidad: 1,
-    gastoFijo: false,
-    tipoEgreso: 7,
-    fechaVencimiento: null,
-  });
-
-  const handleNuevaCompraChange = (
-    field: keyof Compra,
-    value: string | number | boolean | null
-  ) => {
-    setNuevaCompra((prev) => ({ ...prev, [field]: value }));
+  const [nuevaCompra, setNuevaCompra] = useState<Compra>(compraInitalState);
+  const [tipoEgreso, setTipoEgreso] = useState<TiposEgreso | null>(null);
+  const agregarRequerimiento = () => {
+    if (nuevaCompra.gastoFijo && !nuevaCompra.fechaVencimiento || nuevaCompra.fechaVencimiento && !nuevaCompra.gastoFijo) {
+      dispatch(setError("Si es un gasto fijo, debe tener una fecha de vencimiento y viceversa"));
+      return;
+    }
+    if (nuevaCompra.descripcion.trim() && nuevaCompra.cantidad) {
+      setCompras([...compras, nuevaCompra]);
+      setNuevaCompra(compraInitalState);
+      return;
+    }
+    dispatch(setError("Faltan campos por completar"));
+  };
+  const eliminarCompra = (index: number) => {
+    setCompras(compras.filter((_, i) => i !== index));
   };
 
-  const handleAddCompra = () => {
-    if (nuevaCompra.descripcion.trim() === "" || nuevaCompra.cantidad <= 0) return;
+  const handleEnviarCompras = async () => {
+    if (compras.length === 0) {
+      dispatch(setError("No hay compras para enviar"));
+      return;
+    }
+    const generarComprasResp= await postGenerarComprasDelClub({
+      compras: compras})
+    
+    if (generarComprasResp) {
+      dispatch(setSuccess(generarComprasResp.msg));
+      setCompras([]);
+      setNuevaCompra(compraInitalState);
+    }
+    }
 
-    setCompras([...compras, nuevaCompra]);
-    setNuevaCompra({
-      descripcion: "",
-      cantidad: 1,
-      gastoFijo: false,
-      tipoEgreso: 7,
-      fechaVencimiento: null,
-    });
-  };
 
-  const handleRemoveCompra = (index: number) => {
-    const updatedCompras = compras.filter((_, i) => i !== index);
-    setCompras(updatedCompras);
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    const body = { compras };
-    console.log("Compras enviadas:", JSON.stringify(body, null, 2));
-  };
+  useEffect(() => {
+    if (tipoEgreso) {
+      setNuevaCompra({
+        ...nuevaCompra,
+        tipoEgreso: tipoEgreso.idTipoEgreso,
+      });
+    }
+    
+  }, [setTipoEgreso, nuevaCompra, tipoEgreso]);
 
   return (
     <ContainerComponent>
-      <form onSubmit={handleSubmit}>
-        <Typography variant="h5" gutterBottom textAlign="center">
-          Compras
-        </Typography>
-
-        {/* Inputs para una nueva compra */}
-        <Box display="flex" gap={2} flexWrap="wrap" alignItems="center" mb={3}>
+      <Grid container item spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h6">Compras del Club</Typography>
+        </Grid>
+        <Grid item xs={3}>
           <TextField
             label="Descripción"
-            variant="outlined"
-            size="small"
             fullWidth
             value={nuevaCompra.descripcion}
             onChange={(e) =>
-              handleNuevaCompraChange("descripcion", e.target.value)
+              setNuevaCompra({
+                ...nuevaCompra,
+                descripcion: e.target.value,
+              })
             }
           />
-          <TextField
+        </Grid>
+        <Grid item xs={3}>
+          <NumericFormat
+            fullWidth
+            customInput={TextField}
             label="Cantidad"
-            variant="outlined"
-            size="small"
-            type="number"
+            thousandSeparator="."
+            decimalSeparator=","
             value={nuevaCompra.cantidad}
+            onValueChange={(values) =>
+              setNuevaCompra({
+                ...nuevaCompra,
+                cantidad: parseInt(values.value),
+              })
+            }
+          />
+        </Grid>
+        <Grid item xs={3}>
+          <SelectTipoEgreso
+            fullWidth
+            setTipoEgresoSeleccionado={setTipoEgreso}
+          />
+        </Grid>
+                  <Grid item xs={3}>
+                    <FormControl fullWidth>
+                      <FormControlLabel
+                        control={
+                          <Switch
+                            checked={nuevaCompra.gastoFijo}
+                            onChange={(e) =>
+                              setNuevaCompra({
+                                ...nuevaCompra,
+                                gastoFijo: e.target.checked,
+                              })
+                            }
+                            name="gastoFijo"
+                            inputProps={{ "aria-label": "controlled" }}
+                          />
+                        }
+                        label="Gasto Fijo"
+                      />
+                    </FormControl>
+                  </Grid>
+        
+        <Grid item xs={4}>
+          <TextField
+            size="small"
+            type="date"
+            name="fechaVencimiento"
+            id="fechaVencimiento"
+            label="Fecha De Vencimiento"
+            value={nuevaCompra.fechaVencimiento?.toISOString().split("T")[0]}
             onChange={(e) =>
-              handleNuevaCompraChange("cantidad", Number(e.target.value))
+              setNuevaCompra({
+                ...nuevaCompra,
+                fechaVencimiento: e.target.value
+                  ? new Date(e.target.value)
+                  : null,
+              })
             }
-            sx={{ width: 120 }}
+            InputLabelProps={{ shrink: true }}
           />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={nuevaCompra.gastoFijo}
-                onChange={(e) =>
-                  handleNuevaCompraChange("gastoFijo", e.target.checked)
-                }
-              />
-            }
-            label="Gasto Fijo"
-          />
-          <CustomButton
-            text="Agregar Compra"
-            type="button"
-            onClick={handleAddCompra}
-          />
-        </Box>
+        </Grid>
 
-        {/* Tabla de compras agregadas */}
-        <TableContainer>
+        <Grid item xs={12}>
+          <Button variant="contained" onClick={agregarRequerimiento}>
+            Agregar compra
+          </Button>
+        </Grid>
+
+        <Grid item xs={12}>
           <Table>
             <TableHead>
               <TableRow>
-                <TableCell>
-                  <strong>Descripción</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Cantidad</strong>
-                </TableCell>
-                <TableCell>
-                  <strong>Gasto Fijo</strong>
-                </TableCell>
-                <TableCell align="center">
-                  <strong>Acciones</strong>
-                </TableCell>
+                <TableCell>Descripción</TableCell>
+                <TableCell>Cantidad</TableCell>
+                <TableCell>Gasto Fijo</TableCell>
+                <TableCell>Fecha de Vencimiento</TableCell>
+                <TableCell>Tipo Egreso</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
               {compras.map((compra, index) => (
                 <TableRow key={index}>
                   <TableCell>{compra.descripcion}</TableCell>
-                  <TableCell>{compra.cantidad}</TableCell>
-                  <TableCell>{compra.gastoFijo ? "Sí" : "No"}</TableCell>
-                  <TableCell align="center">
-                    <IconButton
-                      onClick={() => handleRemoveCompra(index)}
-                      color="error"
-                    >
-                      <DeleteIcon />
-                    </IconButton>
+                  <TableCell>{separadorMiles(compra.cantidad, true)}</TableCell>
+                  <TableCell>{compra.gastoFijo ? "SI" : "NO"}</TableCell>
+                  <TableCell>
+                    {compra.fechaVencimiento ? formatearFechaTipoDate(compra.fechaVencimiento): "Sin fecha"}
+                  </TableCell>
+                  <TableCell>{tiposEgresos.find(tipo => tipo.idTipoEgreso === compra.tipoEgreso)?.descripcion ?? "no encontrado"}</TableCell>
+
+                  <TableCell>
+                    <Button color="error" onClick={() => eliminarCompra(index)}>
+                      Eliminar
+                    </Button>
                   </TableCell>
                 </TableRow>
               ))}
-              {compras.length === 0 && (
-                <TableRow>
-                  <TableCell colSpan={4} align="center">
-                    No hay compras agregadas.
-                  </TableCell>
-                </TableRow>
-              )}
             </TableBody>
           </Table>
-        </TableContainer>
-
-        {/* Botón de guardar */}
-        <Box display="flex" justifyContent="center" mt={3}>
-          <CustomButton text="Guardar Compras" type="submit" />
-        </Box>
-      </form>
+        </Grid>
+        <Grid item xs={12}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleEnviarCompras}
+          >
+            Generar Compras
+          </Button>
+      </Grid>
+        <Grid item xs={12}>
+          <Typography variant="caption">
+            Total de Compras:{" "}
+            {separadorMiles(
+              compras.reduce((total, compra) => total + compra.cantidad, 0),
+              true
+            )}
+          </Typography>
+        </Grid>
+      </Grid>
     </ContainerComponent>
   );
 };
 
-export default FormularioComprasArray;
+export default FormCompras;
