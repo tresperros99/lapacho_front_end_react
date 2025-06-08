@@ -51,3 +51,5 @@ export { default as AccessibilityIcon } from "@mui/icons-material/Accessibility"
 export { default as FeedOutlinedIcon } from "@mui/icons-material/FeedOutlined";
 export { default as VisibilityOutlinedIcon } from "@mui/icons-material/VisibilityOutlined";
 export { default as KeyOutlinedIcon } from "@mui/icons-material/KeyOutlined";
+export { default as ShoppingCartCheckoutOutlinedIcon } from "@mui/icons-material/ShoppingCartCheckoutOutlined";
+export { default as AddCardOutlinedIcon } from "@mui/icons-material/AddCardOutlined";

@@ -9,3 +9,9 @@ export enum role {
   Admin = "ADMINISTRADOR",
   Socio = "SOCIO",
 }
+
+export const FETCH_CONSTANS = {
+  CANTIDAD: 10,
+  PAGINA: 1,
+  ORDEN: "ASC",
+}

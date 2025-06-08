@@ -81,6 +81,10 @@ const appConfig = {
     crearTalonario: "/facturacion/generar_documentos_factura",
     obtenerUltimoNumeroFactura: "/facturacion/obtener_ultimo_nro_factura",
   },
+  compras: {
+   generarComprasClub: "/compras/generar_compras_club", 
+   obtenerComprasClub: "/compras/obtener_compras_club",
+  }
 };
 
 export default appConfig;

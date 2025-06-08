@@ -5,10 +5,10 @@ import { setError, setLoadingTipoEvento } from "../ui/ui.slice";
 
 
 export const fetchTipoEvento = (): AppThunk => async (dispatch, getState) => {
-  const { egresos } = getState();
-  const { tiposEgresos } = egresos;
+  const { eventos } = getState();
+  const { tipoEvento } = eventos;
 
-  if (!tiposEgresos.length) {
+  if (!tipoEvento.length) {
     dispatch(setLoadingTipoEvento(true));
     try {
       const tipoEventoResp = await getTipoEventos();
