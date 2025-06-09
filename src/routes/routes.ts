@@ -15,6 +15,7 @@ import FormEgresos from "../pages/egresos/FormEgresos";
 import PanelEgresos from "../pages/egresos/PanelEgresos";
 import FormEventos from "../pages/eventos/FormEventos";
 import FormInscripciones from "../pages/eventos/inscripciones/FormInscripciones";
+import PanelInscripciones from "../pages/eventos/inscripciones/PanelInscipciones";
 import PanelEventos from "../pages/eventos/PanelEventos";
 import CargarTalonario from "../pages/facturacion/CargarTalonario";
 import HomePage from "../pages/HomePage";
@@ -73,6 +74,7 @@ export const adminRoutes = [
   { path: "formUsuarios", Component: FormUsuarios },
   { path: "formCompras", Component: FormCompras },
   { path: "panelCompras", Component: PanelCompras },
+  { path: "panelInscripciones", Component: PanelInscripciones },
 
 
 ];

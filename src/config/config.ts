@@ -57,6 +57,9 @@ const appConfig = {
     obtenerEventosConCategoria:"/calendario_eventos/eventos_con_categoria",
     inscripcionEvento:"/inscripciones/inscribirse_a_evento",
     categoriasEvento:"/calendario_eventos/obtener_categorias_evento",
+    obtenerInscripcionesEvento:"/inscripciones/ver_inscripciones_x_evento",
+    agregarInscripcionAVenta: "/inscripciones/agregar_inscripciones_a_venta",
+
   },
   reservas: {
     getReservasDelClub:

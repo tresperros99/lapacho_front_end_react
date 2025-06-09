@@ -1,5 +1,6 @@
 import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
+import AgregarInscipcionAVentaDto from "../models/dtos/eventos/AgregarIncripcionAVentaDto.model";
 import InscribirseAEventoDto from "../models/dtos/eventos/InscribirseAEventoDto.model";
 import { NuevoEventoDto } from "../models/dtos/eventos/NuevoEventoDto.model";
 import ObtenerEventosPorFechaDto from "../models/dtos/eventos/ObtenerEventosPorFechaDto.model";
@@ -7,11 +8,13 @@ import TodosEventosClubDto from "../models/dtos/eventos/TodosEventosClubDto.mode
 import CrearEventoResponse from "../models/responses/eventos/CrearEventoClub.response";
 import EventosDeAnioResponse from "../models/responses/eventos/EventosDelAnio.response";
 import EventosDelMesResponse from "../models/responses/eventos/EventosDelMes.response";
+import InscripcionesEventosResponse from "../models/responses/eventos/InscripcionesEventos.response";
 import ObtenerCategoriasEventosResponse from "../models/responses/eventos/ObtenerCategoriasEventos.response";
 import ObtenerEventosConCategoriasResponse from "../models/responses/eventos/ObtenerEventosConCategorias.response";
 import ObternerEventosPorFechaResponse from "../models/responses/eventos/ObtenerEventosPorFecha";
 import ObtenerTodosEventosClub from "../models/responses/eventos/ObtenerTodosEventosClub";
 import TipoEventoResponse from "../models/responses/eventos/TipoEvento.response";
+import SuccessResponse from "../models/responses/shared/Success.response";
 
 const { eventos } = appConfig;
 
@@ -190,6 +193,53 @@ export const getCategoriaEventos = async (
       return categoriaEvento.data;
     } else {
       return categoriaEvento.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+export const obtenerInscripcionesEvento = async (
+  idEvento: number,
+  idCategoria: number,
+) => {
+
+  const params = {
+    id_evento:idEvento,
+    id_categoria:idCategoria,
+  };
+  const url = eventos.obtenerInscripcionesEvento;
+
+  const inscripcionesAEventos = await axiosInstance.get<InscripcionesEventosResponse>(
+    url,
+    { params},
+  );
+  if (inscripcionesAEventos) {
+    if (inscripcionesAEventos.status === 200) {
+      return inscripcionesAEventos.data;
+    } else {
+      return inscripcionesAEventos.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+
+export const postAgregarInscripcionAVenta = async (AgregarInscipcionAVentaDto: AgregarInscipcionAVentaDto) => {
+
+  const url = eventos.agregarInscripcionAVenta;
+
+  const inscripcionAEvento = await axiosInstance.post<SuccessResponse>(
+    url,
+    AgregarInscipcionAVentaDto,
+  );
+  if (inscripcionAEvento) {
+    if (inscripcionAEvento.status === 200) {
+      return inscripcionAEvento.data;
+    } else {
+      return inscripcionAEvento.data;
     }
   } else {
     return null;

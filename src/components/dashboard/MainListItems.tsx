@@ -92,11 +92,11 @@ export const MainListItems = () => {
             title: "Cuotas Pendientes",
             icon: <MoneyOffIcon />,
           },
-          {
-            path: "/cuotasPagadas",
-            title: "Cuotas Pagadas",
-            icon: <AttachMoneyIcon />,
-          },
+          // {
+          //   path: "/cuotasPagadas",
+          //   title: "Cuotas Pagadas",
+          //   icon: <AttachMoneyIcon />,
+          // },
         ],
       },
     ],
