@@ -1,8 +1,4 @@
-import {
-  CircularProgress,
-  Pagination,
-  Typography
-} from "@mui/material";
+import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid"; // Importar el componente Grid
 import Paper from "@mui/material/Paper";
@@ -26,7 +22,7 @@ const PanelEventos = () => {
   // const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const totalPaginas = 10;
-  const fechaActual = new Date(); 
+  const fechaActual = new Date();
   const anioActual = fechaActual.getFullYear();
   const mesActual = fechaActual.getMonth() + 1;
   const [mes, setMes] = useState<number>(mesActual);
@@ -35,26 +31,23 @@ const PanelEventos = () => {
   const [loadingEventos, setLoadingEventos] = useState(false);
   // const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc");
 
-  
   const fetchEventosPorFecha = useCallback(async () => {
     try {
       setLoadingEventos(true);
       if (mes && annio) {
-        const responseData = await getEventosConCategoria(mes,annio);
+        const responseData = await getEventosConCategoria(mes, annio);
         if (responseData) {
           console.log(responseData);
-          
+
           setEventos(responseData.eventosMes);
         }
       }
     } finally {
       setLoadingEventos(false);
     }
-  },[mes, annio]);
+  }, [mes, annio]);
 
   useEffect(() => {
-
-
     fetchEventosPorFecha();
   }, [fetchEventosPorFecha]);
 
@@ -64,7 +57,11 @@ const PanelEventos = () => {
 
   const handleInscripcionEvento = (torneo: EventosMes) => {
     navigate("/inscripcionEvento", { state: torneo });
-  }
+  };
+
+  const handleVerInscriptosAEvento = (torneo: EventosMes) => {
+    navigate("/panelInscripciones", { state: torneo });
+  };
 
   // const editarReserva = (reserva: ReservasClub) => {
   //   navigate("/formReserva", { state: reserva });
@@ -105,13 +102,13 @@ const PanelEventos = () => {
       </Grid>
       <Grid container justifyContent={"center"} spacing={2} mb={2}>
         <Grid container spacing={2} mt={1}>
-            <Grid item xs={6}>
+          <Grid item xs={6}>
             <YearSelector selectedYear={annio} onChange={setAnio} />
-            </Grid>
-            <Grid item xs={6}>
+          </Grid>
+          <Grid item xs={6}>
             <MonthSelector selectedMonth={mes} onChange={setMes} />
-            </Grid>
-      </Grid>
+          </Grid>
+        </Grid>
       </Grid>
 
       {loadingEventos ? (
@@ -137,22 +134,24 @@ const PanelEventos = () => {
                 <TableCell align="left">Hora Desde</TableCell>
                 <TableCell align="left">Hora Hasta</TableCell>
                 <TableCell align="left">Todo El dia</TableCell>
-                <TableCell align="left">Inscripciones</TableCell>
+                <TableCell align="left">Inscribir</TableCell>
+                <TableCell align="left">Ver Inscriptos</TableCell>
+
                 {/* <TableCell align="right">Editar</TableCell>
                 <TableCell align="right">Eliminar</TableCell>
                 <TableCell align="right">Incripciones</TableCell> */}
               </TableRow>
             </TableHead>
             <TableBody>
-              {eventos.map((torneo,index) => (
+              {eventos.map((torneo, index) => (
                 <TableRow
-                  key={torneo.idEventoCalendario + torneo.descripcion+ index}
+                  key={torneo.idEventoCalendario + torneo.descripcion + index}
                   sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell component="th" scope="row">
                     {torneo.nombreCmp}
                   </TableCell>
-                    <TableCell component="th" scope="row">
+                  <TableCell component="th" scope="row">
                     {torneo.descripcion}
                   </TableCell>
                   <TableCell component="th" scope="row">
@@ -164,14 +163,27 @@ const PanelEventos = () => {
                   <TableCell align="left">
                     {formatearFechaTipoDate(torneo.horaHasta)}
                   </TableCell>
-                  <TableCell align="left">{torneo.todoEldia ? 'SI':'NO'}</TableCell>
-                    <TableCell
-                    align="left"
+                  <TableCell align="left">
+                    {torneo.todoEldia ? "SI" : "NO"}
+                  </TableCell>
+                  <TableCell align="left">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleInscripcionEvento(torneo)}
                     >
-                    <Button variant="contained" color="primary" onClick={() => handleInscripcionEvento(torneo)}>
-                        Inscribir
+                      Inscribir
                     </Button>
-                  </TableCell> 
+                  </TableCell>
+                  <TableCell align="left">
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      onClick={() => handleVerInscriptosAEvento(torneo)}
+                    >
+                      Ver
+                    </Button>
+                  </TableCell>
 
                   {/* <TableCell
                     onClick={() => editarReserva(reserva)}
