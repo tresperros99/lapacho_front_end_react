@@ -1,9 +1,7 @@
 import {
   ArrowDropDown as ArrowDropDownIcon,
   ArrowDropUp as ArrowDropUpIcon,
-  DeleteOutlineOutlined as DeleteOutlineOutlinedIcon,
   EditOutlined as EditOutlinedIcon,
-  SellOutlined as SellOutlinedIcon,
 } from "@mui/icons-material";
 import {
   Box,
@@ -20,18 +18,28 @@ import {
   TableHead,
   TableRow,
   TextField,
-  Typography
+  Typography,
 } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getClasesPorFecha } from "../../api/ApiClases";
+import { getClasesPorFecha, putCancelarClase } from "../../api/ApiClases";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
+import { CancelOutlinedIcon } from "../../components/icons";
+import { setSuccess } from "../../features/ui/ui.slice";
 import { formatearFechaTipoDate } from "../../helpers/fechas";
 import { separadorMiles } from "../../helpers/Numbers";
+import CancelarClaseDto from "../../models/dtos/clases/CancelarClaseDto.model";
 import { ClasesDelDia } from "../../models/responses/clases/ClasesPorFecha.response";
+import DialogConfirmacion from "../../components/genericos/Shared/DialogConfirmacion";
 
 const PanelClases = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [claseAEliminar, setClaseAEliminar] = useState<ClasesDelDia | null>(
+    null,
+  );
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [page, setPage] = useState(0);
   const totalPaginas = 10;
   const [fechaDesde, setFechaDesde] = useState<Date | null>(null);
@@ -47,7 +55,7 @@ const PanelClases = () => {
         const responseData = await getClasesPorFecha(
           fechaDesde,
           fechaHasta,
-          page
+          page,
         );
         if (responseData) {
           setClases(responseData.clasesDelDia);
@@ -70,9 +78,41 @@ const PanelClases = () => {
     navigate("/formClases", { state: clase });
   };
 
-  const eliminareClase = async (idClase: number) => {
-    console.log(idClase);
-    
+  const abrirDialogoConfirmacion = (clase: ClasesDelDia) => {
+    setClaseAEliminar(clase);
+    setConfirmDialogOpen(true);
+  };
+
+  const cerrarDialogoConfirmacion = () => {
+    setClaseAEliminar(null);
+    setConfirmDialogOpen(false);
+  };
+  const confirmarCancelacion = async () => {
+    if (!claseAEliminar) return;
+    try {
+      setLoadingClases(true);
+      const cancelarClaseDto: CancelarClaseDto = {
+        idProfesor: claseAEliminar.idProfesor,
+        fechaAgendamiento: formatearFechaTipoDate(claseAEliminar.fechaCreacion),
+        inicio: claseAEliminar.horaDesde,
+        fin: claseAEliminar.horaHasta,
+        idMesa: claseAEliminar.idMesa,
+        idAgendamiento: claseAEliminar.idAgendamiento,
+        monto: claseAEliminar.montoAbonado,
+      };
+      const cancelarClaseResponse = await putCancelarClase(cancelarClaseDto);
+      if (cancelarClaseResponse) {
+        dispatch(
+          setSuccess(
+            cancelarClaseResponse.msg ?? "Clase cancelada exitosamente",
+          ),
+        );
+        fetchReservasClub();
+      }
+    } finally {
+      cerrarDialogoConfirmacion();
+      setLoadingClases(false);
+    }
   };
 
   const nuevoSocio = () => {
@@ -81,11 +121,6 @@ const PanelClases = () => {
 
   const handleSort = () => {
     setOrderBy(orderBy === "asc" ? "desc" : "asc");
-  };
-
-  const agregarClaseAVenta = async (clase: ClasesDelDia) => {
-    console.log(clase);
-    
   };
 
   return (
@@ -134,41 +169,72 @@ const PanelClases = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell onClick={handleSort} sx={{ cursor: "pointer", fontWeight: 600 }}>
-                    Profesor {orderBy === "asc" ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />}
+                  <TableCell
+                    onClick={handleSort}
+                    sx={{ cursor: "pointer", fontWeight: 600 }}
+                  >
+                    Profesor{" "}
+                    {orderBy === "asc" ? (
+                      <ArrowDropUpIcon />
+                    ) : (
+                      <ArrowDropDownIcon />
+                    )}
                   </TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Hora Inicio</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Hora Fin</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Mesa</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Monto a Abonar</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Alumno Actual</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Editar</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Eliminar</TableCell>
-                  <TableCell align="right" sx={{ fontWeight: 600 }}>Venta</TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Hora Inicio
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Hora Fin
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Mesa
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Monto a Abonar
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Alumno Actual
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Estado
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Editar
+                  </TableCell>
+                  <TableCell align="right" sx={{ fontWeight: 600 }}>
+                    Cancelar Clase
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {clases.map((clase) => (
                   <TableRow key={clase.idAgendamiento} hover>
                     <TableCell>{clase.nombreProfesor}</TableCell>
-                    <TableCell align="right">{formatearFechaTipoDate(clase.horaDesde)}</TableCell>
-                    <TableCell align="right">{formatearFechaTipoDate(clase.horaHasta)}</TableCell>
+                    <TableCell align="right">
+                      {formatearFechaTipoDate(clase.horaDesde)}
+                    </TableCell>
+                    <TableCell align="right">
+                      {formatearFechaTipoDate(clase.horaHasta)}
+                    </TableCell>
                     <TableCell align="right">{clase.descMesa}</TableCell>
-                    <TableCell align="right">{separadorMiles(clase.montoAbonado, true)} Gs.</TableCell>
+                    <TableCell align="right">
+                      {separadorMiles(clase.montoAbonado, true)} Gs.
+                    </TableCell>
                     <TableCell align="right">{clase.nombreCmp}</TableCell>
+                    <TableCell align="right">
+                      {clase.claseAgendada ? "Activa" : "Cancelada"}
+                    </TableCell>
+
                     <TableCell align="right">
                       <IconButton onClick={() => editarClase(clase)}>
                         <EditOutlinedIcon />
                       </IconButton>
                     </TableCell>
                     <TableCell align="right">
-                      <IconButton onClick={() => eliminareClase(clase.idAgendamiento)}>
-                        <DeleteOutlineOutlinedIcon />
-                      </IconButton>
-                    </TableCell>
-                    <TableCell align="right">
-                      <IconButton onClick={() => agregarClaseAVenta(clase)}>
-                        <SellOutlinedIcon />
+                      <IconButton
+                        onClick={() => abrirDialogoConfirmacion(clase)}
+                      >
+                        <CancelOutlinedIcon />
                       </IconButton>
                     </TableCell>
                   </TableRow>
@@ -188,6 +254,15 @@ const PanelClases = () => {
           </Box>
         </Paper>
       )}
+      <DialogConfirmacion
+        open={confirmDialogOpen}
+        onClose={cerrarDialogoConfirmacion}
+        onConfirm={confirmarCancelacion}
+        titulo="¿Cancelar clase?"
+        descripcion="Esta acción es irreversible. ¿Estás seguro de cancelar esta clase?"
+        textoCancelar="No, volver"
+        textoConfirmar="Sí, cancelar"
+      />
     </ContainerComponent>
   );
 };
