@@ -53,3 +53,4 @@ export { default as VisibilityOutlinedIcon } from "@mui/icons-material/Visibilit
 export { default as KeyOutlinedIcon } from "@mui/icons-material/KeyOutlined";
 export { default as ShoppingCartCheckoutOutlinedIcon } from "@mui/icons-material/ShoppingCartCheckoutOutlined";
 export { default as AddCardOutlinedIcon } from "@mui/icons-material/AddCardOutlined";
+export { default as CancelOutlinedIcon } from "@mui/icons-material/CancelOutlined";

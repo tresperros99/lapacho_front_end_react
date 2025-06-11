@@ -2,9 +2,11 @@ import axiosInstance from "../axiosInstance";
 import appConfig from "../config/config";
 import { formatearFechaTipoDate } from "../helpers/fechas";
 import AgendarClaseDto from "../models/dtos/clases/AgendarClaseDto.model";
+import CancelarClaseDto from "../models/dtos/clases/CancelarClaseDto.model";
 import AgendarClaseResponse from "../models/responses/clases/AgendarClases.response";
 import ClasesPorFechaResponse from "../models/responses/clases/ClasesPorFecha.response";
 import { MesasDisponiblesResponse } from "../models/responses/clases/MesasDisponibles.response";
+import SuccessResponse from "../models/responses/shared/Success.response";
 
 const { clases } = appConfig;
 
@@ -57,6 +59,23 @@ export const getClasesPorFecha = async (  fechaDesde: Date,
       return clasesPorFechaResp.data;
     } else {
       return clasesPorFechaResp.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+export const putCancelarClase = async (cancelarClaseDto:CancelarClaseDto) => {
+  const url = clases.cancelarClase;
+
+  const deleteCancelarClaseResp =
+    await axiosInstance.put<SuccessResponse>(url,cancelarClaseDto);
+  if (deleteCancelarClaseResp) {
+    if (deleteCancelarClaseResp.status === 200) {
+      return deleteCancelarClaseResp.data;
+    } else {
+      return deleteCancelarClaseResp.data;
     }
   } else {
     return null;
