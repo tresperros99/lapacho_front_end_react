@@ -5,7 +5,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import * as yup from "yup";
-import { crearNuevoSocio } from "../../api/ApiSocios";
+import { crearNuevoSocio, putEditarSocio } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { SelectTipoSocio } from "../../components/genericos/SelectTipoSocio";
 import { CustomButton } from "../../components/genericos/Shared/CustomButton";
@@ -26,34 +26,40 @@ const validationSchema = yup.object({
   estadoSocio: yup.string().required("El estado del socio es requerido"),
 });
 
+const getInitialValues = (socio?: Socio): NuevoSocioDto => ({
+  nombre: socio?.nombreSocio.split(" ")[0] ?? "",
+  apellido: socio?.nombreSocio.split(" ").slice(1).join(" ") ?? "",
+  cedula: socio?.cedula ?? "",
+  fechaNacimiento: socio?.fechaNacimiento.toString() ?? "",
+  correo: socio?.correoElectronico ?? "",
+  numeroTel: socio?.numeroTelefono ?? "",
+  direccion: socio?.direccion ?? "",
+  tipoSocio: socio?.idTipoSocio ?? 1,
+  estadoSocio: Number(socio?.estadoSocio) ?? 1,
+});
+
 const FormSocios = () => {
   const location = useLocation();
   const socioCargado = location.state as Socio;
+  const isEdicion = !!socioCargado;
   const dispatch = useDispatch();
   const [loadingCrearSocio, setLoadingCrearSocio] = useState(false);
   const formik = useFormik<NuevoSocioDto>({
-    initialValues: {
-      nombre: socioCargado?.nombreSocio.split(" ")[0] ?? "",
-      apellido: socioCargado?.nombreSocio.split(" ").slice(1).join(" ") ?? "",
-      cedula: socioCargado?.cedula ?? "",
-      fechaNacimiento: socioCargado?.fechaNacimiento.toString() ?? "",
-      correo: socioCargado?.correoElectronico ?? "",
-      numeroTel: socioCargado?.numeroTelefono ?? "",
-      direccion: socioCargado?.direccion ?? "",
-      tipoSocio: socioCargado?.idTipoSocio ?? 1,
-      estadoSocio: Number(socioCargado?.estadoSocio) ?? 1,
-    },
+    initialValues: getInitialValues(socioCargado),
     validationSchema: validationSchema,
     onSubmit: async (nuevoSocio: NuevoSocioDto, { resetForm }) => {
       try {
         setLoadingCrearSocio(true);
-        const nuevoSocioResp = await crearNuevoSocio({
+        const dtoFormateado = {
           ...nuevoSocio,
           fechaNacimiento: formatDateEs(nuevoSocio.fechaNacimiento),
-        });
-
-        if (nuevoSocioResp) {
-          dispatch(setSuccess(nuevoSocioResp.msg ?? "Socio Creado"));
+        };
+        if (isEdicion) {
+          const resp = await putEditarSocio(dtoFormateado);
+          dispatch(setSuccess(resp?.msg ?? "Socio actualizado"));
+        } else {
+          const resp = await crearNuevoSocio(dtoFormateado);
+          dispatch(setSuccess(resp?.msg ?? "Socio creado"));
           resetForm();
         }
       } finally {
@@ -66,7 +72,7 @@ const FormSocios = () => {
     <ContainerComponent>
       <form onSubmit={formik.handleSubmit}>
         <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-          Creacion de Socios
+          {isEdicion ? "Edición de Socios" : "Creación de Socios"}
         </Typography>
         <Grid2 container spacing={2} xs={12}>
           <Grid2 xs={6}>
@@ -187,7 +193,7 @@ const FormSocios = () => {
           </Grid2>
           <Grid2 xs={12}>
             <CustomButton
-              text="Crear"
+              text={isEdicion ? "Guardar cambios" : "Crear"}
               type="submit"
               loading={loadingCrearSocio}
             />

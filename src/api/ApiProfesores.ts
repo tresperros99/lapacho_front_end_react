@@ -61,6 +61,26 @@ export const eliminarProfesorClub = async (idProfesor: number) => {
   }
 };
 
+export const putActualizarPorfesor = async (idProfesor:number,profesorFormateado: NuevoProfesorDto) => {
+  const url = profesores.editarProfesor;
+  const editarProfesorDto = {
+    idProfesor,
+    ...profesorFormateado
+  }
+
+  const actualizarProfesorResp = await axiosInstance.put(url, editarProfesorDto);
+  if (actualizarProfesorResp) {
+    if (actualizarProfesorResp.status === 200) {
+      return actualizarProfesorResp.data;
+    } else {
+      return actualizarProfesorResp.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
 export const getBuscadorProfesores = async (nombreCedula: string) => {
   const url = appConfig.profesores.buscadorProfesores;
   const params = {

@@ -7,6 +7,7 @@ const appConfig = {
   profesores: {
     crearProfesor: "profesores",
     obtenerProfesores: "/profesores",
+    editarProfesor:"/profesores",
     eliminarProfesor: "/profesores",
     buscadorProfesores: "/profesores/cedula/nombre",
   },
@@ -19,6 +20,8 @@ const appConfig = {
     buscadorSocio: "/socio/obtener_socios",
     tipoSocios: "/socio/obtener_tipo_socios",
     obtenerSocios: "/socio/obtener_socios",
+    editarSocio: "/socio/editar_socio",
+    eliminarSocio: "/socio/borrar_socio"
   },
   ventas: {
     generVentaCuotas: "/ventas/socio/generar_venta_cuota_varias",
@@ -73,6 +76,7 @@ const appConfig = {
     getMesasDisponibles: "/reserva_en_club/obtener_mesas_disponibles",
     obtenerClasesPorFecha:'/agendamiento_clases/obtener_clases_x_fecha',
     cancelarClase: "/agendamiento_clases/cancelar_clase",
+    edicarClase: "/agendamiento_clases/editar_clase"
   },
   caja: {
     crearCaja: "/caja/crear_caja",

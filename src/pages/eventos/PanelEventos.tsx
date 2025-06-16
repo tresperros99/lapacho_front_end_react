@@ -19,7 +19,6 @@ import { EventosMes } from "../../models/responses/eventos/ObtenerEventosConCate
 
 const PanelEventos = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
   const [page, setPage] = useState(1);
   const totalPaginas = 10;
   const fechaActual = new Date();
@@ -63,9 +62,9 @@ const PanelEventos = () => {
     navigate("/panelInscripciones", { state: torneo });
   };
 
-  // const editarReserva = (reserva: ReservasClub) => {
-  //   navigate("/formReserva", { state: reserva });
-  // };
+  const editarEvento = (reserva: EventosMes) => {
+    navigate("/formEventos", { state: reserva });
+  };
 
   // const eliminarReserva = async (idReserva: number) => {
   //   const eliminado = await eliminarReservaDelClub(idReserva);
