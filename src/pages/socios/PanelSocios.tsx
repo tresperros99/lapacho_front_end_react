@@ -15,17 +15,21 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { eliminarSocio, getNominaSocios } from "../../api/ApiSocios";
+import { getNominaSocios, putEliminarSocio } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
+import { ArrowDropDownIcon, ArrowDropUpIcon, DeleteOutlineOutlinedIcon, EditOutlinedIcon } from "../../components/icons";
+import { setSuccess } from "../../features/ui/ui.slice";
 import { separadorMiles } from "../../helpers/Numbers";
-import { Socio } from "../../models/responses/socios/NominaSocios.response";
 import es from "../../locales/es";
-import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon } from "../../components/icons";
+import { Socio } from "../../models/responses/socios/NominaSocios.response";
 
 const PanelSocios = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
+  const dispatch = useDispatch();
+  
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [nominaSocios, setNominaSocios] = useState<Socio[]>([]);
   const [loadingSocios, setLoadingSocios] = useState(false);
@@ -67,7 +71,15 @@ const PanelSocios = () => {
   };
 
   const eliminarSocioById = async (idSocio: number) => {
-    await eliminarSocio(idSocio);
+    try {
+    setLoadingSocios(true);
+     const eliminarSocioResp = await putEliminarSocio(idSocio);
+     if (eliminarSocioResp) {
+      dispatch(setSuccess(eliminarSocioResp.msg))
+     }   
+    } finally {
+      setLoadingSocios(false);
+    }
   };
 
   const nuevoSocio = () => {

@@ -2,7 +2,10 @@ import { Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
 import { useLocation } from "react-router-dom";
 import * as yup from "yup";
-import { crearNuevoProfesor } from "../../api/ApiProfesores";
+import {
+  crearNuevoProfesor,
+  putActualizarPorfesor,
+} from "../../api/ApiProfesores";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { CustomButton } from "../../components/genericos/Shared/CustomButton";
 import { NuevoProfesorDto } from "../../models/dtos/profesores/NuevoProfesorDto.models";
@@ -37,34 +40,39 @@ const validationSchema = yup.object({
     .required(es.pages.profesores.form.validation.passwordRequired),
 });
 
+const getInitialValues = (profesorCargado?: ProfesoresFormateado) => ({
+  nombreProfe: profesorCargado?.nombreProfesor ?? "",
+  contactoProfesor: profesorCargado?.contactoProfesor ?? "",
+  numeroCedula: profesorCargado?.cedula ?? "",
+  precioXHora: profesorCargado?.costoXHora ?? 0,
+  crearUsuario: true,
+  nombreUsuario: "",
+  password: "",
+});
+
 const FormProfesores = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const profesorCargado = location.state as ProfesoresFormateado;
+  const isEdicion = !!profesorCargado;
+
   const [loadingCrearProfesor, setLoadingCrearProfesor] = useState(false);
   const formik = useFormik({
-    initialValues: {
-      nombreProfe: profesorCargado?.nombreProfesor ?? "",
-      contactoProfesor: profesorCargado?.contactoProfesor ?? "",
-      numeroCedula: profesorCargado?.cedula ?? "",
-      precioXHora: profesorCargado?.costoXHora ?? 0,
-      crearUsuario: true,
-      nombreUsuario: "",
-      password: "",
-    },
+    initialValues: getInitialValues(profesorCargado),
     validationSchema: validationSchema,
     onSubmit: async (nuevoProfesor: NuevoProfesorDto, { resetForm }) => {
       setLoadingCrearProfesor(true);
-      if (profesorCargado !== null) {
-        // await crearActualizarEliminarProfesor(
-        //   "actualizar",
-        //   nuevoProfesor,
-        //   profesorCargado.idProfesor
-        // );
+      if (isEdicion) {
+        const editarProfesorResp = await putActualizarPorfesor(
+          profesorCargado.idProfesor,
+          {...nuevoProfesor, precioXHora: Number(nuevoProfesor.precioXHora)},
+        );
+
+        if (editarProfesorResp) {
+          dispatch(setSuccess(editarProfesorResp.msg));
+        }
       } else {
         try {
-          console.log(nuevoProfesor);
-
           const crearProfesor = await crearNuevoProfesor({
             ...nuevoProfesor,
             precioXHora: Number(nuevoProfesor.precioXHora),

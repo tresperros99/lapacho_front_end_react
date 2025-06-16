@@ -1,5 +1,6 @@
 import axios from "axios";
 import { store } from "./app/store";
+import { clearAuth } from "./features/auth/authSlice";
 import { setError } from "./features/ui/ui.slice";
 import ErrorResponse from "./models/responses/shared/Error.response";
 
@@ -28,9 +29,18 @@ axiosInstance.interceptors.response.use(
   },
   (error) => {
     const errorTipado = error.response.data as ErrorResponse;
-    console.log(error);
 
-    store.dispatch(setError(errorTipado?.msg || "Error desconocido"));
+    const status = error.response?.status;
+    if (status === 401) {
+      store.dispatch(clearAuth());
+    }
+
+    const msg =
+      errorTipado?.msg ||
+      error.message ||
+      "Error desconocido. Verificá tu conexión.";
+
+    store.dispatch(setError(msg));
     return Promise.reject(error);
   },
 );

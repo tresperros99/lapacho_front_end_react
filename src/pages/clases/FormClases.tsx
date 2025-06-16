@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import * as yup from "yup";
-import { postAgendarClase } from "../../api/ApiClases";
+import { postAgendarClase, putEditarClase } from "../../api/ApiClases";
 import BuscadorProfesores from "../../components/genericos/BuscadorProfesores";
 import BuscadorSocios from "../../components/genericos/BuscadorSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
@@ -14,22 +14,35 @@ import AgendarClaseDto from "../../models/dtos/clases/AgendarClaseDto.model";
 import { MesasDisponible } from "../../models/responses/clases/MesasDisponibles.response";
 import { ProfesoresFormateado } from "../../models/responses/profesores/NominaProfesores.response";
 import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
+import { ClasesDelDia } from "../../models/responses/clases/ClasesPorFecha.response";
+import { useLocation } from "react-router-dom";
+import EditarClaseDto from "../../models/dtos/clases/EditarCpaseDto.model";
+import { formatearFechaTipoDate } from "../../helpers/fechas";
 
 const validationSchema = yup.object({
   inicio: yup.string().required("La hora de inicio es requerida"),
   fin: yup.string().required("La hora de fin es requerida"),
 });
 
+const getInitialValues = (clase?: ClasesDelDia) => {
+  const now = new Date();
+  return {
+    inicio: clase?.horaDesde ?? now,
+    fin: clase?.horaHasta ?? now,
+  };
+};
+
 const FormClases = () => {
   const dispatch = useDispatch();
+  const location = useLocation();
+  const claseCargada = location.state as ClasesDelDia;
+  const isEdicion = !!claseCargada;
   const [loadingAgendarClase, setLoadingAgendarClase] = useState(false);
   const [profesor, setProfesor] = useState<ProfesoresFormateado | null>(null);
   const [mesaSeleccionada, setMesaSeleccionada] =
     useState<MesasDisponible | null>(null);
 
   const [socio, setSocio] = useState<Socio | null>(null);
-
-  const now = new Date();
 
   const handleSelectProfesores = useCallback(
     (profesor: ProfesoresFormateado | null) => {
@@ -41,10 +54,7 @@ const FormClases = () => {
     setSocio(socio);
   }, []);
   const formik = useFormik({
-    initialValues: {
-      inicio: now,
-      fin: now,
-    },
+    initialValues: getInitialValues(claseCargada),
     validationSchema: validationSchema,
     onSubmit: async (values, { resetForm }) => {
       try {
@@ -61,15 +71,41 @@ const FormClases = () => {
           idCliente: socio.idCliente,
           idMesa: mesaSeleccionada.idMesa,
         };
-        
-        const nuevaClaseResp = await postAgendarClase(nuevoAgendamiento);
 
-        if (nuevaClaseResp) {
-          dispatch(
-            setSuccess(nuevaClaseResp.msg ?? "Classe agendada con éxito"),
+        if (isEdicion) {
+          const editarAgendamientoClase: EditarClaseDto = {
+            fechaAgendamiento: formatearFechaTipoDate(
+              claseCargada.fechaCreacion,
+            ),
+            inicio: nuevoAgendamiento.inicio,
+            fin: nuevoAgendamiento.fin,
+            idAgendamiento: claseCargada.idAgendamiento,
+            idMesa: nuevoAgendamiento.idMesa,
+            idProfesor: nuevoAgendamiento.idProfesor,
+          };
+          const editarAgentamientoResp = await putEditarClase(
+            editarAgendamientoClase,
           );
-          resetForm();
+
+          if (editarAgentamientoResp) {
+            dispatch(
+              setSuccess(
+                editarAgentamientoResp.msg ?? "Classe editada con éxito",
+              ),
+            );
+          }
+        }else{
+          const nuevaClaseResp = await postAgendarClase(nuevoAgendamiento);
+
+          if (nuevaClaseResp) {
+            dispatch(
+              setSuccess(nuevaClaseResp.msg ?? "Classe agendada con éxito"),
+            );
+            resetForm();
+          }
         }
+
+
       } finally {
         setLoadingAgendarClase(false);
       }
@@ -83,7 +119,7 @@ const FormClases = () => {
     <ContainerComponent>
       <form onSubmit={formik.handleSubmit}>
         <Typography textAlign={"center"} variant="h4" marginBottom={2}>
-          Agendamiento de Clases
+          {isEdicion ? "Edición de clase" : "Agendamiento de Clase"}
         </Typography>
         <Grid container spacing={2} xs={12}>
           <Grid item xs={6}>
@@ -136,7 +172,7 @@ const FormClases = () => {
 
           <Grid item xs={12} mt={2}>
             <CustomButton
-              text="Crear"
+              text={isEdicion ? "Guardas" : "Crear"}
               type="submit"
               loading={loadingAgendarClase}
             />

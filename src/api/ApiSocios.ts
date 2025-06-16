@@ -33,43 +33,36 @@ export const crearNuevoSocioDependiente = async (
     return null;
   }
 };
-export const actualizarSocio = async (
-  idSocio: number,
-  socio: NuevoSocioDto,
-) => {
-  const url = appConfig.socios.crearSocios;
-  const actualizareNuevoSocioRes = await axiosInstance.put<SuccessResponse>(
-    `${url}/${idSocio}`,
+export const putEditarSocio = async (socio: NuevoSocioDto) => {
+  const url = appConfig.socios.editarSocio;
+  const actualizarSocioResp = await axiosInstance.put<SuccessResponse>(
+    url,
     socio,
   );
-  let respuesta: any = {};
-  if (actualizareNuevoSocioRes) {
-    if (actualizareNuevoSocioRes.status === 200) {
-      respuesta = actualizareNuevoSocioRes.data;
+  if (actualizarSocioResp) {
+    if (actualizarSocioResp.status === 200) {
+      return actualizarSocioResp.data;
     } else {
-      respuesta = null;
+      return actualizarSocioResp.data;
     }
   } else {
-    respuesta = null;
+    return null;
   }
-  return respuesta;
 };
-export const eliminarSocio = async (idSocio: number) => {
-  const url = appConfig.socios.crearSocios;
-  const eliminarSocioResponse = await axiosInstance.delete<SuccessResponse>(
-    `${url}/${idSocio}`,
-  );
-  let respuesta: any = {};
-  if (eliminarSocioResponse) {
-    if (eliminarSocioResponse.status === 200) {
-      respuesta = eliminarSocioResponse.data;
+export const putEliminarSocio = async (idSocio: number) => {
+  const url = socios.eliminarSocio;
+  const eliminarSocioResp = await axiosInstance.put<SuccessResponse>(url, {
+    idCliente: idSocio,
+  });
+  if (eliminarSocioResp) {
+    if (eliminarSocioResp.status === 200) {
+      return eliminarSocioResp.data;
     } else {
-      respuesta = null;
+      return eliminarSocioResp.data;
     }
   } else {
-    respuesta = null;
+    return null;
   }
-  return respuesta;
 };
 
 export const getNominaSocios = async () => {

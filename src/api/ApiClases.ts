@@ -3,6 +3,7 @@ import appConfig from "../config/config";
 import { formatearFechaTipoDate } from "../helpers/fechas";
 import AgendarClaseDto from "../models/dtos/clases/AgendarClaseDto.model";
 import CancelarClaseDto from "../models/dtos/clases/CancelarClaseDto.model";
+import EditarClaseDto from "../models/dtos/clases/EditarCpaseDto.model";
 import AgendarClaseResponse from "../models/responses/clases/AgendarClases.response";
 import ClasesPorFechaResponse from "../models/responses/clases/ClasesPorFecha.response";
 import { MesasDisponiblesResponse } from "../models/responses/clases/MesasDisponibles.response";
@@ -81,3 +82,22 @@ export const putCancelarClase = async (cancelarClaseDto:CancelarClaseDto) => {
     return null;
   }
 };
+
+export const putEditarClase = async (editarClaseDto:EditarClaseDto) => {
+  const url = clases.edicarClase;
+
+  const editarClaseResp =
+    await axiosInstance.put<SuccessResponse>(url,editarClaseDto );
+  if (editarClaseResp) {
+    if (editarClaseResp.status === 200) {
+      return editarClaseResp.data;
+    } else {
+      return editarClaseResp.data;
+    }
+  } else {
+    return null;
+  }
+};
+
+
+
