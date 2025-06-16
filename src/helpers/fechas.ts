@@ -43,3 +43,10 @@ export const formatearRangoFechas = (fechaDesde: Date, fechaHasta: Date) => ({
   fechaDesde: formatearFechaTipoDate(fechaDesde),
   fechaHasta: formatearFechaTipoDate(fechaHasta),
 });
+
+
+export const toDatetimeLocalString = (isoDate: string | Date) => {
+  const date = typeof isoDate === "string" ? new Date(isoDate) : isoDate;
+  const offsetDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  return offsetDate.toISOString().slice(0, 16); // "YYYY-MM-DDTHH:mm"
+};

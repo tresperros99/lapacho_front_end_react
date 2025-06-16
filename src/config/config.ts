@@ -83,7 +83,8 @@ const appConfig = {
     cerrarCaja: "/caja/cerrar_caja",
     generarMovimientoCajaVenta: "/caja/generar_movimientos_de_caja/ventas",
     obtenerTipoPago: "/caja/obtener_tipos_pago",
-    obtenerResumenXFecha:'/caja/obtener_movimientos_caja'
+    obtenerResumenXFecha:'/caja/obtener_movimientos_caja',
+    adjuntarComprobanteVenta:'/caja/adjuntar_comprobante_venta'
   },
   facturacion: {
     crearTalonario: "/facturacion/generar_documentos_factura",

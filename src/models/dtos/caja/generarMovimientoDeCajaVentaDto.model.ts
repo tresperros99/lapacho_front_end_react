@@ -8,6 +8,7 @@ export interface GenerarMovimientoDeCajaVentaDto {
   tipoPago: number;
   nroComprobante: string;
   ventas: VentaServicio[];
+  comprobanteFile?: File,
 }
 
 export default GenerarMovimientoDeCajaVentaDto;
