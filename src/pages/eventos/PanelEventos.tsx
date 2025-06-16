@@ -62,9 +62,9 @@ const PanelEventos = () => {
     navigate("/panelInscripciones", { state: torneo });
   };
 
-  const editarEvento = (reserva: EventosMes) => {
-    navigate("/formEventos", { state: reserva });
-  };
+  // const editarEvento = (reserva: EventosMes) => {
+  //   navigate("/formEventos", { state: reserva });
+  // };
 
   // const eliminarReserva = async (idReserva: number) => {
   //   const eliminado = await eliminarReservaDelClub(idReserva);
