@@ -15,7 +15,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useEffect, useState } from "react";
-import { postGenerarMovimientoDeVenta } from "../../api/ApiCaja";
+import { postGenerarMovimientoDeVenta, putAdjuntarComprobanteVenta } from "../../api/ApiCaja";
 import { getVentasClientes } from "../../api/ApiVentas";
 import BuscadorSocios from "../../components/genericos/BuscadorSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
@@ -31,6 +31,8 @@ import FacturaTemplate, {
 } from "../../components/genericos/Shared/FacturaTemplate";
 import { pdf } from "@react-pdf/renderer";
 import { ExpandMoreIcon } from "../../components/icons";
+import { useDispatch } from "react-redux";
+import { setSuccess } from "../../features/ui/ui.slice";
 
 const movimientoCajaVentaInititialState: GenerarMovimientoDeCajaVentaDto =
 { 
@@ -44,6 +46,7 @@ const movimientoCajaVentaInititialState: GenerarMovimientoDeCajaVentaDto =
 }
 export const CajaCarrito = () => {
   const [page, setPage] = useState(1);
+  const dispatch = useDispatch();
   const totalPaginas = 10;
   const cantidad = 10;
   const [selectdSocio, setSelectedSocio] = useState<Socio | null>(null);
@@ -110,16 +113,23 @@ export const CajaCarrito = () => {
       setLoadingGenerarVenta(true);
       const generarMovimiento =
         await postGenerarMovimientoDeVenta(movimientoCajaVenta);
+      
       if (generarMovimiento && selectdSocio) {
+        if (movimientoCajaVenta.comprobanteFile) {
+          const subirComprobante = await putAdjuntarComprobanteVenta(movimientoCajaVenta.nroFactura,movimientoCajaVenta.nroTimbrado,movimientoCajaVenta.comprobanteFile)
+          
+          if (subirComprobante) {
+            dispatch(setSuccess("Venta y Comprobante generado correctamente"))
+          }
+        }
+        
         setFacturaData({
           timbrado: generarMovimiento.factura.timbrado,
           factura: generarMovimiento.factura.factura,
           detalleFactura: generarMovimiento.detalleFactura,
         });
       }
-    } catch (error) {
-      console.log("error al generar el movimiento de venta");
-    } finally {
+    }  finally {
       setLoadingGenerarVenta(false);
       setMovimientoCajaVenta(movimientoCajaVentaInititialState);
     }

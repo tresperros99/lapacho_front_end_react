@@ -72,19 +72,24 @@ export const getTiposPago = async () => {
   }
 };
 
-
-export const obtenerResumenXFecha = async  (desde:Date,Hasta:Date,pagina=1,cantidad=10) => {
+export const obtenerResumenXFecha = async (
+  desde: Date,
+  Hasta: Date,
+  pagina = 1,
+  cantidad = 10,
+) => {
   const url = caja.obtenerResumenXFecha;
 
   const { fechaDesde, fechaHasta } = formatearRangoFechas(desde, Hasta);
 
   const params = {
-    fecha_desde:fechaDesde,
-    fecha_hasta:fechaHasta,
+    fecha_desde: fechaDesde,
+    fecha_hasta: fechaHasta,
     pagina,
     cantidad,
   };
-  const obtenerResumenXFechaResp = await axiosInstance.get<ResumenCajaXFecharesponse>(url,{params});
+  const obtenerResumenXFechaResp =
+    await axiosInstance.get<ResumenCajaXFecharesponse>(url, { params });
   if (obtenerResumenXFechaResp) {
     if (obtenerResumenXFechaResp.status === 200) {
       return obtenerResumenXFechaResp.data;
@@ -94,4 +99,33 @@ export const obtenerResumenXFecha = async  (desde:Date,Hasta:Date,pagina=1,canti
   } else {
     return null;
   }
-}
+};
+
+export const putAdjuntarComprobanteVenta = async (
+  nroFactura: string,
+  timbrado: number,
+  file: File,
+) => {
+  const url = caja.adjuntarComprobanteVenta;
+  const params = {
+    nro_factura: nroFactura,
+    timbrado,
+  };
+  const formData = new FormData();
+  formData.append("archivo", file);
+
+  const adjuntarComprobanteResp = await axiosInstance.put<SuccessResponse>(
+    url,
+    formData,
+    { params, headers: { "Content-Type": "multipart/form-data" } },
+  );
+  if (adjuntarComprobanteResp) {
+    if (adjuntarComprobanteResp.status === 200) {
+      return adjuntarComprobanteResp.data;
+    } else {
+      return adjuntarComprobanteResp.data;
+    }
+  } else {
+    return null;
+  }
+};

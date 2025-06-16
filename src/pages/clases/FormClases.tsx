@@ -1,7 +1,8 @@
 import { Grid, TextField, Typography } from "@mui/material";
 import { useFormik } from "formik";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDispatch } from "react-redux";
+import { useLocation } from "react-router-dom";
 import * as yup from "yup";
 import { postAgendarClase, putEditarClase } from "../../api/ApiClases";
 import BuscadorProfesores from "../../components/genericos/BuscadorProfesores";
@@ -10,14 +11,13 @@ import { ContainerComponent } from "../../components/genericos/ContainerComponen
 import SelectMesasDelClub from "../../components/genericos/SelectMesasDelClub";
 import { CustomButton } from "../../components/genericos/Shared/CustomButton";
 import { setSuccess } from "../../features/ui/ui.slice";
+import { formatearFechaTipoDate, toDatetimeLocalString } from "../../helpers/fechas";
 import AgendarClaseDto from "../../models/dtos/clases/AgendarClaseDto.model";
+import EditarClaseDto from "../../models/dtos/clases/EditarCpaseDto.model";
+import { ClasesDelDia } from "../../models/responses/clases/ClasesPorFecha.response";
 import { MesasDisponible } from "../../models/responses/clases/MesasDisponibles.response";
 import { ProfesoresFormateado } from "../../models/responses/profesores/NominaProfesores.response";
 import { Socio } from "../../models/responses/socios/SociosPorCedula.response";
-import { ClasesDelDia } from "../../models/responses/clases/ClasesPorFecha.response";
-import { useLocation } from "react-router-dom";
-import EditarClaseDto from "../../models/dtos/clases/EditarCpaseDto.model";
-import { formatearFechaTipoDate } from "../../helpers/fechas";
 
 const validationSchema = yup.object({
   inicio: yup.string().required("La hora de inicio es requerida"),
@@ -26,16 +26,18 @@ const validationSchema = yup.object({
 
 const getInitialValues = (clase?: ClasesDelDia) => {
   const now = new Date();
-  return {
-    inicio: clase?.horaDesde ?? now,
-    fin: clase?.horaHasta ?? now,
-  };
+
+    return {
+      inicio: clase?.horaDesde ?? now,
+      fin: clase?.horaHasta ?? now,
+    };
+  
 };
 
 const FormClases = () => {
   const dispatch = useDispatch();
   const location = useLocation();
-  const claseCargada = location.state as ClasesDelDia;
+  const claseCargada = location.state as ClasesDelDia;  
   const isEdicion = !!claseCargada;
   const [loadingAgendarClase, setLoadingAgendarClase] = useState(false);
   const [profesor, setProfesor] = useState<ProfesoresFormateado | null>(null);
@@ -111,10 +113,6 @@ const FormClases = () => {
       }
     },
   });
-  useEffect(() => {
-    console.log(formik.values);
-  }, [formik.values]);
-
   return (
     <ContainerComponent>
       <form onSubmit={formik.handleSubmit}>
@@ -135,7 +133,7 @@ const FormClases = () => {
               id="inicio"
               name="inicio"
               label="Hora de Inicio"
-              value={formik.values.inicio}
+              value={toDatetimeLocalString(formik.values.inicio)}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.inicio && Boolean(formik.errors.inicio)}
@@ -151,7 +149,7 @@ const FormClases = () => {
               id="fin"
               name="fin"
               label="Hora de Fin"
-              value={formik.values.fin}
+              value={toDatetimeLocalString(formik.values.fin)}
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}
               error={formik.touched.fin && Boolean(formik.errors.fin)}

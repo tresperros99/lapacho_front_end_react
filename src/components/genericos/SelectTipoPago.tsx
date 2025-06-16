@@ -26,16 +26,23 @@ const SelectTipoPago: React.FC<SelectMesasDelClubProps> = ({
   }, [dispatch, tipoPago]);
 
   const handleMesaDisponibleChange = (event: SelectChangeEvent<number>) => {
-    const tipoPagoId = event.target.value;
+    const tipoPagoId = event.target.value;    
     const tipoSeleccionado = tipoPago.find(
-      (tipo) => tipo.descTipoPago === tipoPagoId,
-    );
+      (tipo) => tipo.idTipoPago === tipoPagoId,
+    );    
     if (tipoSeleccionado) {
       setTipoPago(tipoSeleccionado);
     } else {
       setTipoPago(null);
     }
   };
+
+  useEffect(() => {
+    if (tipoPago) {
+      setSeleccionado(tipoPago[0].idTipoPago)
+    }
+  }, [tipoPago])
+  
 
   return (
     <Box>

@@ -14,6 +14,7 @@ import SelectTipoPago from "../../components/genericos/SelectTipoPago";
 import { useEffect, useState } from "react";
 import { TiposPago } from "../../models/responses/caja/ObtenerTipoPago.response";
 import { getUltimoNumeroDeFactura } from "../../api/ApiFacturas";
+import FileInput from "../../components/genericos/Shared/FileInput";
 
 interface Props {
   open: boolean;
@@ -30,6 +31,7 @@ interface CabeceraFacturaVenta {
   cedula: string;
   tipoPago: number;
   nroComprobante: string;
+  comprobanteFile?: File;
 }
 // TODO: hay que tratar de obtener el ultimo numero de factura para cargar los campos con la api de victor
 // si no esta cargado el talonario debera mandar a la pantalla de talonario
@@ -51,13 +53,15 @@ export const ModalFacturaVenta = ({
   const [tipoPago, setTipoPago] = useState<TiposPago | null>(null);
   const [loadingUltimoNumeroFactura, setLoadingUltimoNumeroFactura] =
     useState(false);
+  const [comprobanteFile, setComprobanteFile] = useState<File | null>(null);
+
   const formik = useFormik({
     initialValues: {
       nroFactura: "",
       nroTimbrado: 0,
       idCliente: 0,
       cedula: "",
-      tipoPago: 2,
+      tipoPago: 1,
       nroComprobante: "",
     },
     validationSchema: validationSchema,
@@ -69,6 +73,7 @@ export const ModalFacturaVenta = ({
         nroFactura: cabeceraFactura.nroFactura,
         nroTimbrado: cabeceraFactura.nroTimbrado,
         tipoPago: cabeceraFactura.tipoPago,
+        comprobanteFile: comprobanteFile ?? undefined
       });
       handleClose();
     },
@@ -87,15 +92,17 @@ export const ModalFacturaVenta = ({
     setLoadingUltimoNumeroFactura(false);
   };
 
+
   useEffect(() => {
     obtenerUltimoNumeroDeFactura();
   }, []);
 
-  useEffect(() => {
-    if (tipoPago) {
-      formik.setFieldValue("tipoPago", tipoPago.idTipoPago);
-    }
-  }, [formik, tipoPago]);
+useEffect(() => {
+  if (tipoPago && formik.values.tipoPago !== tipoPago.idTipoPago) {
+    formik.setFieldValue("tipoPago", tipoPago.idTipoPago);
+  }
+// eslint-disable-next-line react-hooks/exhaustive-deps
+}, [tipoPago]);
 
   return (
     <Dialog
@@ -171,6 +178,15 @@ export const ModalFacturaVenta = ({
               <Grid item xs={6}>
                 <SelectTipoPago fullWidth setTipoPago={setTipoPago} />
               </Grid>
+              {formik.values.tipoPago === 2 && (
+                <Grid item xs={12}>
+                <FileInput
+                  onFileSelect={setComprobanteFile}
+                  accept=".jpg,.png,.pdf"
+                  label="Adjuntar comprobante"
+                />
+                </Grid>
+              )}
               <Grid
                 justifyContent={"center"}
                 alignItems={"center"}
