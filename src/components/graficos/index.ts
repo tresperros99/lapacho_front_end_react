@@ -1,0 +1,13 @@
+export {default as GraficoAceptacionProfesores} from "./GraficoAceptacionProfesores";
+export {default as GraficoAlumnosPromedioPorProfesor} from "./GraficoAlumnosPromedioPorProfesor";
+export {default as GraficoCantidadSocioAlDia} from "./GraficoCantidadSocioAlDia";
+export {default as GraficoCantidadSociosAtrasadosXMes} from "./GraficoCantidadSociosAtrasadosXMes";
+export {default as GraficoClienteVsSocios} from "./GraficoClienteVsSocios";
+export {default as GraficoCostoClase} from "./GraficoCostoClase";
+export {default as GraficoCostoDeClasePorProfesor} from "./GraficoCostoDeClasePorProfesor";
+export {default as GraficoDistribucionSociosPorCategoria} from "./GraficoDistribucionSociosPorCategoria";
+export {default as GraficoEdadPromedioPorCategoria} from "./GraficoEdadPromedioPorCategoria";
+export {default as GraficoEvaluacionProfesores} from "./GraficoEvaluacionProfesores";
+export {default as GraficoEvolucionSocioUltimosMeses} from "./GraficoEvolucionSocioUltimosMeses";
+export {default as GraficoGeneroProfesores} from "./GraficoGeneroProfesores";
+export {default as GraficoProfesoresActivosEInactivos} from "./GraficoProfesoresActivosEInactivos"
