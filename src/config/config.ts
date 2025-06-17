@@ -92,6 +92,11 @@ const appConfig = {
   compras: {
    generarComprasClub: "/compras/generar_compras_club", 
    obtenerComprasClub: "/compras/obtener_compras_club",
+  },
+  graficos : {
+    obtenerCostosDeProfesores: "/graficos/obtener_data_costo_clase",
+    obtenerCantidadSociosAlDia: "/graficos/obtener_cant_socios_al_dia",
+    obtenerCantidadSociosAtrasadosXMes: "/graficos/obtener_socios_al_dia_detalle",
   }
 };
 
