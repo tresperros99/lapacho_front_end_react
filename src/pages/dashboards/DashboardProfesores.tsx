@@ -1,6 +1,6 @@
 import { Grid, Typography } from "@mui/material";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import { GraficoAceptacionProfesores, GraficoAlumnosPromedioPorProfesor, GraficoCostoClase, GraficoCostoDeClasePorProfesor, GraficoEvaluacionProfesores, GraficoGeneroProfesores, GraficoProfesoresActivosEInactivos } from "../../components/graficos";
+import { GraficoAceptacionProfesores, GraficoAlumnosPromedioPorProfesor, GraficoCostoClase, GraficoEvaluacionProfesores, GraficoGeneroProfesores, GraficoProfesoresActivosEInactivos } from "../../components/graficos";
 
 
 const DashboardProfesores = () => {
@@ -32,12 +32,7 @@ const DashboardProfesores = () => {
         <Grid item xs={12} sm={6}>
           <GraficoAlumnosPromedioPorProfesor/>
         </Grid>
-
-        {/* Fila 6: Costo de Clase por Profesor */}
-        <Grid item xs={12} sm={6}>
-        <GraficoCostoDeClasePorProfesor/>
-        </Grid>
-
+        
         {/* Fila 7: Aceptación del Profesor por los Alumnos */}
         <Grid item xs={12} sm={6}>
           <GraficoAceptacionProfesores/>
