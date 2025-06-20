@@ -120,7 +120,7 @@ src/
 
 
 - 📧 [lucastorres99@hotmail.com](mailto\:lucastorres99@hotmail.com)
-- 🤖 [GitHub](https://github.com/tresperros99))
+- 🤖 [GitHub](https://github.com/tresperros99)
 
 ---
 
