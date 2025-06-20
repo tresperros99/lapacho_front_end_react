@@ -66,15 +66,23 @@ http://localhost:5173
 
 ```bash
 .
-├── src/
-│   ├── api/                  # Llamadas a la API
-│   ├── components/           # Componentes reutilizables
-│   ├── features/             # Slices de Redux
-│   ├── models/               # DTOs y tipos de respuesta
-│   ├── pages/                # Vistas principales
-│   ├── helpers/              # Funciones utilitarias
-│   ├── App.tsx               # Componente raíz
-│   └── main.tsx              # Entrada principal
+src/
+├── api/               # Llamadas a APIs externas o internas
+├── app/               # Setup principal de la app (Redux store, providers, etc.)
+├── assets/            # Recursos estáticos (imágenes, íconos, etc.)
+├── components/        # Componentes reutilizables y UI
+├── config/            # Configuraciones generales (env, endpoints)
+├── features/          # Slices de Redux + lógica específica
+├── helpers/           # Funciones utilitarias y formateadores
+├── layouts/           # Diseños generales reutilizables (layouts por rol, etc.)
+├── locales/           # Archivos de traducción/localización
+├── models/            # Modelos de datos tipados
+│   ├── dtos/              # Data Transfer Objects (entrada de datos)
+│   ├── responses/         # Tipado de respuestas de API
+│   └── types/             # Tipos generales o compartidos
+├── pages/             # Vistas principales o rutas renderizables
+├── routes/            # Rutas de la app (React Router)
+
 ```
 
 ---
