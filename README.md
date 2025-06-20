@@ -117,7 +117,6 @@ src/
 ## 👨‍💻 Autor
 
 **Lucas Torres** – *Proyecto Final de Grado*
-**Victor Garcete** – *Proyecto Final de Grado*
 
 
 - 📧 [lucastorres99@hotmail.com](mailto\:lucastorres99@hotmail.com)
