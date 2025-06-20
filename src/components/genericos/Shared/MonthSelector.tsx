@@ -2,7 +2,7 @@ import React from "react";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 type MonthSelectorProps = {
-  selectedMonth: number; // de 1 a 12
+  selectedMonth: number;
   onChange: (month: number) => void;
   label?: string;
 };

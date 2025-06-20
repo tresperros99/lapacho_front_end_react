@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../app/store"; // Ajustar el path según tu estructura
+import { RootState, useAppDispatch } from "../../app/store";
 import { fetchAccesosUsuario } from "../../features/actions/auth.action";
 
 interface SelectAccesoUsuarioProps {

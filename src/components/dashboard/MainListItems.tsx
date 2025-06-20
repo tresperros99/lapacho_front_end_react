@@ -92,11 +92,6 @@ export const MainListItems = () => {
             title: "Cuotas Pendientes",
             icon: <MoneyOffIcon />,
           },
-          // {
-          //   path: "/cuotasPagadas",
-          //   title: "Cuotas Pagadas",
-          //   icon: <AttachMoneyIcon />,
-          // },
         ],
       },
     ],
@@ -158,11 +153,6 @@ export const MainListItems = () => {
             title: "Panel de Eventos",
             icon: <EmojiEventsOutlinedIcon />,
           },
-          // {
-          //   path: "/panelReservas",
-          //   title: "Panel de reservas",
-          //   icon: <FormatListBulletedOutlinedIcon />,
-          // },
         ],
       },
       {

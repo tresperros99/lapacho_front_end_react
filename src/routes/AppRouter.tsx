@@ -13,14 +13,11 @@ export const AppRouter = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {
-          // TODO: Validar con token creado en el redux
-          loginResponse?.token ? (
-            <Route path="/*" element={<PrivateRoutes />} />
-          ) : (
-            <Route path="/*" element={<PublicRoutes />} />
-          )
-        }
+        {loginResponse?.token ? (
+          <Route path="/*" element={<PrivateRoutes />} />
+        ) : (
+          <Route path="/*" element={<PublicRoutes />} />
+        )}
         <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
       <SuccesSnackbar />

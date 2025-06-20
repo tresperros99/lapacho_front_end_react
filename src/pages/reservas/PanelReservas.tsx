@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid"; // Importar el componente Grid
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";

@@ -9,7 +9,7 @@ import {
 } from "@mui/material";
 import React, { ReactNode, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { RootState, useAppDispatch } from "../../app/store"; // Ajustar el path según tu estructura
+import { RootState, useAppDispatch } from "../../app/store";
 import { fetchTipoSocio } from "../../features/actions/socios.action";
 
 interface SelectTipoSocioProps {
@@ -30,7 +30,7 @@ export const SelectTipoSocio: React.FC<SelectTipoSocioProps> = ({
   helperText,
 }) => {
   const dispatch = useAppDispatch();
-  const { tipoSocios } = useSelector((state: RootState) => state.socios); // Cambiar según el slice de estado correspondiente
+  const { tipoSocios } = useSelector((state: RootState) => state.socios);
   const { loadingTipoSocios } = useSelector((state: RootState) => state.ui);
 
   useEffect(() => {

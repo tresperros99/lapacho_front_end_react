@@ -1,4 +1,3 @@
-
 import {
   CircularProgress,
   TableFooter,
@@ -6,7 +5,7 @@ import {
   Typography,
 } from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid"; // Importar el componente Grid
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -19,7 +18,12 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getNominaSocios, putEliminarSocio } from "../../api/ApiSocios";
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
-import { ArrowDropDownIcon, ArrowDropUpIcon, DeleteOutlineOutlinedIcon, EditOutlinedIcon } from "../../components/icons";
+import {
+  ArrowDropDownIcon,
+  ArrowDropUpIcon,
+  DeleteOutlineOutlinedIcon,
+  EditOutlinedIcon,
+} from "../../components/icons";
 import { setSuccess } from "../../features/ui/ui.slice";
 import { separadorMiles } from "../../helpers/Numbers";
 import es from "../../locales/es";
@@ -29,7 +33,7 @@ const PanelSocios = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(0);
   const dispatch = useDispatch();
-  
+
   const [rowsPerPage, setRowsPerPage] = useState(6);
   const [nominaSocios, setNominaSocios] = useState<Socio[]>([]);
   const [loadingSocios, setLoadingSocios] = useState(false);
@@ -72,11 +76,11 @@ const PanelSocios = () => {
 
   const eliminarSocioById = async (idSocio: number) => {
     try {
-    setLoadingSocios(true);
-     const eliminarSocioResp = await putEliminarSocio(idSocio);
-     if (eliminarSocioResp) {
-      dispatch(setSuccess(eliminarSocioResp.msg))
-     }   
+      setLoadingSocios(true);
+      const eliminarSocioResp = await putEliminarSocio(idSocio);
+      if (eliminarSocioResp) {
+        dispatch(setSuccess(eliminarSocioResp.msg));
+      }
     } finally {
       setLoadingSocios(false);
     }

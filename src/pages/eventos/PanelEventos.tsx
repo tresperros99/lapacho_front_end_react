@@ -1,6 +1,6 @@
 import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid"; // Importar el componente Grid
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -28,7 +28,6 @@ const PanelEventos = () => {
   const [annio, setAnio] = useState<number>(anioActual);
   const [eventos, setEventos] = useState<EventosMes[]>([]);
   const [loadingEventos, setLoadingEventos] = useState(false);
-  // const [orderBy, setOrderBy] = useState<"asc" | "desc">("asc");
 
   const fetchEventosPorFecha = useCallback(async () => {
     try {
@@ -62,31 +61,9 @@ const PanelEventos = () => {
     navigate("/panelInscripciones", { state: torneo });
   };
 
-  // const editarEvento = (reserva: EventosMes) => {
-  //   navigate("/formEventos", { state: reserva });
-  // };
-
-  // const eliminarReserva = async (idReserva: number) => {
-  //   const eliminado = await eliminarReservaDelClub(idReserva);
-  //   if (eliminado && fechaDesde && fechaHasta) {
-  //     await getReservasDelClub(fechaDesde, fechaHasta, page);
-  //   }
-  // };
-
   const nuevoEvento = () => {
     navigate("/formEventos");
   };
-
-  // const handleSort = () => {
-  //   const isAsc = orderBy === "asc";
-  //   setOrderBy(isAsc ? "desc" : "asc");
-  // };
-  // const agregarReservaAVenta = async (reserva: ReservasClub) => {
-  //   const reservaGenerada = await postAgregarReservaAVenta(reserva);
-  //   if (reservaGenerada) {
-  //     dispatch(setSuccess(reservaGenerada.descripcion));
-  //     fetchEventosPorFecha();    }
-  // };
 
   return (
     <ContainerComponent>
@@ -209,14 +186,14 @@ const PanelEventos = () => {
               <Pagination
                 sx={{
                   "& .MuiPagination-ul": {
-                    flexWrap: "nowrap", // Evita que las páginas se ajusten en múltiples filas
+                    flexWrap: "nowrap",
                   },
                 }}
                 count={totalPaginas}
                 page={page}
                 onChange={handleChangePage}
                 color="primary"
-                siblingCount={1} // Controla cuántas páginas muestra al lado de la página actual
+                siblingCount={1}
                 boundaryCount={1}
               />
             </Grid>

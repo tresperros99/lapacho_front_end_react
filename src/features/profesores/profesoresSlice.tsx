@@ -32,7 +32,6 @@ export const profesoresSlice = createSlice({
   extraReducers: fetchNominaProfesoresBuilder,
 });
 
-// Action creators are generated for each case reducer function
 export const { setNominaProfesores, clearProfesores } = profesoresSlice.actions;
 
 export default profesoresSlice.reducer;

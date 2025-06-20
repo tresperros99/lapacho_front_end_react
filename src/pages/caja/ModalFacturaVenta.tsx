@@ -33,9 +33,6 @@ interface CabeceraFacturaVenta {
   nroComprobante: string;
   comprobanteFile?: File;
 }
-// TODO: hay que tratar de obtener el ultimo numero de factura para cargar los campos con la api de victor
-// si no esta cargado el talonario debera mandar a la pantalla de talonario
-// si hay un error debera permitir cargar manualmente
 const validationSchema = yup.object({
   nroFactura: yup.string().required("El numero de factura es requerido"),
   nroTimbrado: yup.number().required("El numero de timbrado es requerido"),
@@ -73,7 +70,7 @@ export const ModalFacturaVenta = ({
         nroFactura: cabeceraFactura.nroFactura,
         nroTimbrado: cabeceraFactura.nroTimbrado,
         tipoPago: cabeceraFactura.tipoPago,
-        comprobanteFile: comprobanteFile ?? undefined
+        comprobanteFile: comprobanteFile ?? undefined,
       });
       handleClose();
     },
@@ -92,17 +89,15 @@ export const ModalFacturaVenta = ({
     setLoadingUltimoNumeroFactura(false);
   };
 
-
   useEffect(() => {
     obtenerUltimoNumeroDeFactura();
   }, []);
 
-useEffect(() => {
-  if (tipoPago && formik.values.tipoPago !== tipoPago.idTipoPago) {
-    formik.setFieldValue("tipoPago", tipoPago.idTipoPago);
-  }
-// eslint-disable-next-line react-hooks/exhaustive-deps
-}, [tipoPago]);
+  useEffect(() => {
+    if (tipoPago && formik.values.tipoPago !== tipoPago.idTipoPago) {
+      formik.setFieldValue("tipoPago", tipoPago.idTipoPago);
+    }
+  }, [tipoPago]);
 
   return (
     <Dialog
@@ -180,11 +175,11 @@ useEffect(() => {
               </Grid>
               {formik.values.tipoPago === 2 && (
                 <Grid item xs={12}>
-                <FileInput
-                  onFileSelect={setComprobanteFile}
-                  accept=".jpg,.png,.pdf"
-                  label="Adjuntar comprobante"
-                />
+                  <FileInput
+                    onFileSelect={setComprobanteFile}
+                    accept=".jpg,.png,.pdf"
+                    label="Adjuntar comprobante"
+                  />
                 </Grid>
               )}
               <Grid

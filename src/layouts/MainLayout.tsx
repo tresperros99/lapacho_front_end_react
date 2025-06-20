@@ -1,4 +1,3 @@
-
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -12,12 +11,16 @@ import Grid2 from "@mui/material/Unstable_Grid2/Grid2";
 import { ThemeProvider, createTheme, styled } from "@mui/material/styles";
 import * as React from "react";
 import { ReactNode } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "../app/store.ts";
 import MainListItems from "../components/dashboard/MainListItems.tsx";
-import { secondaryListItems } from "../components/dashboard/listItems.tsx";
+import {
+  ChevronLeftIcon,
+  LocalGroceryStoreOutlinedIcon,
+  LogoutOutlinedIcon,
+  MenuIcon,
+} from "../components/icons/index.ts";
 import { clearAuth } from "../features/auth/authSlice.tsx";
-import { useNavigate } from "react-router-dom";
-import { MenuIcon, LogoutOutlinedIcon, ChevronLeftIcon, LocalGroceryStoreOutlinedIcon } from "../components/icons/index.ts";
 type MainLayoutProps = {
   children: ReactNode;
 };
@@ -72,7 +75,6 @@ const Drawer = styled(MuiDrawer, {
   },
 }));
 
-// TODO remove, this demo shouldn't need to reset the theme.
 const defaultTheme = createTheme();
 export const MainLayout = ({ children }: MainLayoutProps) => {
   const [open, setOpen] = React.useState(true);
@@ -90,7 +92,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
           <AppBar position="absolute" open={open}>
             <Toolbar
               sx={{
-                pr: "24px", // keep right padding when drawer closed
+                pr: "24px",
               }}
             >
               <IconButton
@@ -110,7 +112,7 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
                 variant="h6"
                 color="inherit"
                 noWrap
-                sx={{ flexGrow: 1,cursor:'pointer' }}
+                sx={{ flexGrow: 1, cursor: "pointer" }}
                 onClick={() => navigate("/")}
               >
                 Club Lapacho Tenis de Mesa
@@ -143,8 +145,6 @@ export const MainLayout = ({ children }: MainLayoutProps) => {
             <Divider />
             <List component="nav">
               <MainListItems />
-              <Divider sx={{ my: 1 }} />
-              {secondaryListItems}
             </List>
           </Drawer>
           {children}

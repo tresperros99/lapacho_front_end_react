@@ -26,11 +26,9 @@ interface Props {
   numeroCedula: string;
   setReloadData?: React.Dispatch<React.SetStateAction<boolean>>;
   setExpanded?: React.Dispatch<React.SetStateAction<boolean>>;
-
 }
 
-
-const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
+const PagoDeCuotas = ({ numeroCedula, setReloadData, setExpanded }: Props) => {
   const currentDate = new Date();
   const currentYear = currentDate.getFullYear();
   const [cuotasSocio, setCuotasSocio] = useState<Cuota[]>([]);
@@ -38,7 +36,7 @@ const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
   const [alertOpen, setAlertOpen] = useState<boolean>(false);
   const [successAlertOpen, setSuccessAlertOpen] = useState<boolean>(false);
   const [modalOpen, setModalOpen] = useState<boolean>(false);
-  
+
   const getCuotasSocio = async (numeroCedula: string, annio: string) => {
     const cuotasSocio = await getCuotasPendientesSocio(numeroCedula, annio);
     if (cuotasSocio) {
@@ -50,14 +48,14 @@ const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
           return 1;
         }
         return Number(a.numeroMEs) - Number(b.numeroMEs);
-      });      
+      });
       setCuotasSocio(sortedCuotas);
     }
   };
 
   const handleCheckboxChange = (socio: Cuota) => {
     if (socio.fechaPago) {
-      return; // Do not allow selection of paid cuotas
+      return;
     }
 
     const selected = selectedCuotas.some(
@@ -99,18 +97,15 @@ const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
       const pagoCuotaResp = await postGenerarVentaCuotasVarias(payload);
       if (pagoCuotaResp) {
         setSuccessAlertOpen(true);
-  
+
         setSelectedCuotas([]);
         await getCuotasSocio(numeroCedula, currentYear.toString());
       }
       setExpanded && setExpanded(false);
-
-     
-    } finally  {
+    } finally {
       setModalOpen(false);
       setReloadData && setReloadData(true);
     }
-
   };
 
   useEffect(() => {
@@ -167,7 +162,7 @@ const PagoDeCuotas = ({ numeroCedula,setReloadData,setExpanded }: Props) => {
                           (cuota) => cuota.idSocioCuota === socio.idCuotaSocio,
                         )}
                         onChange={() => handleCheckboxChange(socio)}
-                        disabled={!!socio.fechaPago} // Disable checkbox if cuota is already paid
+                        disabled={!!socio.fechaPago}
                       />
                     </TableCell>
                   </TableRow>

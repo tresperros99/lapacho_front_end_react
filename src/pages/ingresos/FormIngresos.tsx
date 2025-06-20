@@ -25,7 +25,6 @@ export const FormIngresos = () => {
   const [isErrorModal, setIsErrorModal] = useState(false);
 
   const handleCustomModalClose = () => {
-    // Cierra el modal de éxito
     formik.resetForm();
     setShowModal(false);
   };
@@ -155,7 +154,7 @@ export const FormIngresos = () => {
               type="submit"
               style={{ minWidth: "250px" }}
             >
-              {false ? "Actualizar" : "Crear"}
+              Crear
             </Button>
           </Grid>
         </Grid>
