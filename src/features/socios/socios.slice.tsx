@@ -32,7 +32,6 @@ export const sociosSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { setNominaSocios, clearSocios, setTipoSocios } =
   sociosSlice.actions;
 

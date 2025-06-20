@@ -47,7 +47,6 @@ const EventForm: React.FC<EventFormProps> = ({
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   useEffect(() => {
-    // Cargar los tipos de eventos al montar el componente
     const fetchTipoEventos = async () => {
       const data = await getTipoEventos();
       if (data && data.tiposEventos) {
@@ -69,15 +68,15 @@ const EventForm: React.FC<EventFormProps> = ({
         try {
           const eventToSubmit = {
             ...values,
-            fechaAgendamiento: new Date().toISOString().substring(0, 10), // Establecer la fecha actual
+            fechaAgendamiento: new Date().toISOString().substring(0, 10),
             costoEvento: Number(
               values.costoEvento.toString().replace(/[^0-9.-]+/g, ""),
-            ), // Convertir el costo a número
+            ),
           };
           await postCrearEventoClub(eventToSubmit);
           setSnackbarOpen(true);
-          onSubmit(eventToSubmit); // Recargar eventos
-          onClose(); // Cerrar modal
+          onSubmit(eventToSubmit);
+          onClose();
         } catch (error) {
           console.error("There was an error creating the event!", error);
         } finally {

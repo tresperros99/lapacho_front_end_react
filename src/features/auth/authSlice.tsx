@@ -35,7 +35,6 @@ export const authSlice = createSlice({
   extraReducers: fetchLoginBuilder,
 });
 
-// Action creators are generated for each case reducer function
 export const { setToken, setAccesoUsuarios, clearAuth } = authSlice.actions;
 
 export default authSlice.reducer;

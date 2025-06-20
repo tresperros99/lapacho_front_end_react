@@ -46,7 +46,6 @@ const CargarTalonario = () => {
         const crearTalonario = await postCargarTalonario(cargarTalonario);
         if (crearTalonario) {
           dispatch(setSuccess(crearTalonario.msg));
-          // resetForm();
           navigate("/");
         }
       } finally {

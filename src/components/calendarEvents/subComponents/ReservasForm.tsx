@@ -61,12 +61,12 @@ const ReservasForm: React.FC<ReservaFormProps> = ({
         try {
           const reservaToSubmit = {
             ...values,
-            fechaAgendamiento: formatearFechaTipoDate(new Date()), // Establecer la fecha actual
+            fechaAgendamiento: formatearFechaTipoDate(new Date()),
           };
-          await postAgendarReservaDelClub(reservaToSubmit); // Asegúrate de tener esta función definida
+          await postAgendarReservaDelClub(reservaToSubmit);
           setSnackbarOpen(true);
-          onSubmit(); // Recargar eventos
-          onClose(); // Cerrar modal
+          onSubmit();
+          onClose();
         } catch (error) {
           console.error("There was an error creating the reservation!", error);
         } finally {

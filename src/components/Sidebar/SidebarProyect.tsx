@@ -8,7 +8,12 @@ import {
   sidebarClasses,
 } from "react-pro-sidebar";
 import { useNavigate } from "react-router-dom";
-import { MenuOutlinedIcon, SchoolOutlinedIcon, PersonOutlinedIcon, StickyNote2OutlinedIcon } from "../icons";
+import {
+  MenuOutlinedIcon,
+  SchoolOutlinedIcon,
+  PersonOutlinedIcon,
+  StickyNote2OutlinedIcon,
+} from "../icons";
 export const SidebarProyect = () => {
   const navigate = useNavigate();
   const [isExpanded, setIsExpanded] = useState(true);
@@ -28,7 +33,6 @@ export const SidebarProyect = () => {
       <Menu
         menuItemStyles={{
           button: ({ level, active, disabled }) => {
-            // only apply styles on first level elements of the tree
             if (level === 0)
               return {
                 color: disabled ? "#f5d9ff" : "#33BEFF",

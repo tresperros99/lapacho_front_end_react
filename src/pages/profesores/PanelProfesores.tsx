@@ -1,7 +1,6 @@
-
 import { CircularProgress, Pagination, Typography } from "@mui/material";
 import Button from "@mui/material/Button";
-import Grid from "@mui/material/Grid"; // Importar el componente Grid
+import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -18,7 +17,12 @@ import {
 import { ContainerComponent } from "../../components/genericos/ContainerComponent";
 import { es } from "../../locales/es";
 import { ProfesoresFormateado } from "../../models/responses/profesores/NominaProfesores.response";
-import { ArrowDropUpIcon, ArrowDropDownIcon, EditOutlinedIcon, DeleteOutlineOutlinedIcon } from "../../components/icons";
+import {
+  ArrowDropUpIcon,
+  ArrowDropDownIcon,
+  EditOutlinedIcon,
+  DeleteOutlineOutlinedIcon,
+} from "../../components/icons";
 const PanelProfesores = () => {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
@@ -159,14 +163,14 @@ const PanelProfesores = () => {
               <Pagination
                 sx={{
                   "& .MuiPagination-ul": {
-                    flexWrap: "nowrap", // Evita que las páginas se ajusten en múltiples filas
+                    flexWrap: "nowrap",
                   },
                 }}
                 count={totalPaginas}
                 page={page}
                 onChange={handleChangePage}
                 color="primary"
-                siblingCount={1} // Controla cuántas páginas muestra al lado de la página actual
+                siblingCount={1}
                 boundaryCount={1}
               />
             </Grid>

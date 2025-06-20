@@ -1,9 +1,8 @@
-// PrivateRoutes.tsx
 import { useSelector } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import { RootState } from "../app/store";
-import { commonRoutes, adminRoutes, socioRoutes } from "./routes";
+import { commonRoutes, adminRoutes, profesoresRoutes } from "./routes";
 import { role } from "../helpers/constants";
 
 export const PrivateRoutes = () => {
@@ -14,7 +13,7 @@ export const PrivateRoutes = () => {
   const roleSpecificRoutes =
     loginResponse?.acceso.tipoUsuario === role.Admin
       ? adminRoutes
-      : socioRoutes;
+      : profesoresRoutes;
   const allPrivateRoutes = [...commonRoutes, ...roleSpecificRoutes];
 
   return (

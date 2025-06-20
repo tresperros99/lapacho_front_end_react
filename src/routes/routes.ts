@@ -1,5 +1,3 @@
-// routes.ts
-
 import AbrirCaja from "../pages/caja/AbrirCaja";
 import CajaCarrito from "../pages/caja/CajaCarrito";
 import CerrarCaja from "../pages/caja/CerrarCaja";
@@ -38,7 +36,6 @@ export const commonRoutes = [
   { path: "/", Component: HomePage },
   { path: "cuotasPendientes", Component: CuotasPendientes },
   { path: "cuotasPagadas", Component: CuotasPagadas },
-  // { path: "pagoDeCuotas", Component: PagoDeCuotas },
   { path: "cuotasAtrasadas", Component: PanelProfesores },
   { path: "cuotasPendientesMes", Component: CuotasPendientesMes },
   { path: "cuotasPagadasMes", Component: CuotasPagadasDelMes },
@@ -75,16 +72,6 @@ export const adminRoutes = [
   { path: "formCompras", Component: FormCompras },
   { path: "panelCompras", Component: PanelCompras },
   { path: "panelInscripciones", Component: PanelInscripciones },
-
-
 ];
 
-export const socioRoutes = [
-  // { path: 'cuotasPendientes', Component: CuotasPendientes },
-  // { path: 'cuotasPagadas', Component: CuotasPagadas },
-  // { path: 'pagoDeCuotas', Component: PagoDeCuotas },
-  // { path: 'cuotasAtrasadas', Component: PanelProfesores },
-  // { path: 'cuotasPendientesMes', Component: CuotasPendientesMes },
-  // { path: 'cuotasPagadasMes', Component: CuotasPagadasDelMes},
-  // Otras rutas exclusivas de SOCIO
-];
+export const profesoresRoutes = [];

@@ -1,4 +1,4 @@
-import { DateSelectArg, EventInput } from "@fullcalendar/core/index.js";
+import { EventInput } from "@fullcalendar/core/index.js";
 import esLocale from "@fullcalendar/core/locales/es";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
@@ -17,28 +17,22 @@ export const HomePage: React.FC = () => {
   const calendarRef = useRef<FullCalendar>(null);
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
-  // const [selectedInfo, setSelectedInfo] = useState<DateSelectArg | null>(null);
   const [currentDates, setCurrentDates] = useState<{
     start: Date;
     end: Date;
   } | null>(null);
-  const [eventType, setEventType] = useState<string>(""); // Estado para el tipo de evento seleccionado
+  const [eventType, setEventType] = useState<string>("");
   const [isEditing, setIsEditing] = useState(false);
-  const [initialEventValues, setInitialEventValues] = useState<any>({}); // Utiliza any para manejar múltiples tipos de valores iniciales
+  const [initialEventValues, setInitialEventValues] = useState<any>({});
 
-  const handleDateSelect = (selectInfo: DateSelectArg) => {
-    console.log(selectInfo);
-
-    // setSelectedInfo(selectInfo);
+  const handleDateSelect = () => {
     setIsEditing(false);
-    setInitialEventValues({}); // Restablece los valores iniciales al crear un nuevo evento
-    setModalIsOpen(true);
+    setInitialEventValues({});
   };
 
   const handleModalClose = () => {
     setModalIsOpen(false);
-    // setSelectedInfo(null);
-    setEventType(""); // Restablecer el tipo de evento al cerrar el modal
+    setEventType("");
   };
 
   const handleEventTypeChange = (event: SelectChangeEvent<string>) => {

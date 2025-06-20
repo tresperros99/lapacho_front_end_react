@@ -65,7 +65,7 @@ const FormProfesores = () => {
       if (isEdicion) {
         const editarProfesorResp = await putActualizarPorfesor(
           profesorCargado.idProfesor,
-          {...nuevoProfesor, precioXHora: Number(nuevoProfesor.precioXHora)},
+          { ...nuevoProfesor, precioXHora: Number(nuevoProfesor.precioXHora) },
         );
 
         if (editarProfesorResp) {
@@ -142,7 +142,7 @@ const FormProfesores = () => {
               label={es.pages.profesores.form.fields.hourlyRate}
               value={formik.values.precioXHora}
               onValueChange={(values) => {
-                const { floatValue } = values; // Aquí obtenemos el valor sin formato
+                const { floatValue } = values;
                 formik.setFieldValue("precioXHora", floatValue);
               }}
               onBlur={formik.handleBlur}

@@ -10,8 +10,6 @@ import { formatearFechaLocal } from "../../helpers/fechas";
 import NuevoEgresoDto from "../../models/dtos/egresos/NuevoEgresoDto.model";
 import { TiposIngreso } from "../../models/responses/ingresos/TipoIngreso.response";
 
-// Definición de las propiedades del formulario
-
 const validationSchema = yup.object({
   idTipoEgreso: yup.number().required("El tipo de Egreso es requerido"),
   descripcionEgreso: yup.string().required("La descripción es requerida"),
@@ -27,7 +25,6 @@ export const FormEgresos = () => {
   const [isErrorModal, setIsErrorModal] = useState(false);
 
   const handleCustomModalClose = () => {
-    // Cierra el modal de éxito
     formik.resetForm();
     setShowModal(false);
   };
@@ -44,11 +41,10 @@ export const FormEgresos = () => {
       descripcionEgreso: "",
       montoEngreso: 0,
       nroFactura: "",
-      fechaPago: "", // Fecha inicial
+      fechaPago: "",
     },
     validationSchema: validationSchema,
     onSubmit: async (nuevoEgreso: NuevoEgresoDto) => {
-      //TODO: llamar a la api para cargar egreso
       try {
         const formatearDto: NuevoEgresoDto = {
           ...nuevoEgreso,
@@ -167,7 +163,7 @@ export const FormEgresos = () => {
               type="submit"
               style={{ minWidth: "250px" }}
             >
-              {false ? "Actualizar" : "Crear"}
+              Crear
             </Button>
           </Grid>
         </Grid>
