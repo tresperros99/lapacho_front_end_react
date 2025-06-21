@@ -38,8 +38,8 @@ const SelectTipoPago: React.FC<SelectMesasDelClubProps> = ({
   };
 
   useEffect(() => {
-    if (tipoPago) {
-      setSeleccionado(tipoPago[0].idTipoPago)
+    if (tipoPago && tipoPago.length > 0) {
+      setSeleccionado(tipoPago[0].idTipoPago);
     }
   }, [tipoPago])
   
