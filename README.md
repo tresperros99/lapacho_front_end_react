@@ -1,6 +1,6 @@
 # 🏓 Frontend - Sistema de Gestión del Club Lapacho
 
-Este proyecto corresponde al sistema de gestión de socios del **Club Lapacho de Tenis de Mesa**, desarrollado como parte del proyecto final de grado.
+Este proyecto corresponde al sistema de gestión administrativa del **Club Lapacho de Tenis de Mesa**, desarrollado como parte del proyecto final de grado.
 
 El sistema permite administrar socios, reservas, clases, profesores, torneos, caja, facturación, reportes y más, brindando a los administradores una herramienta moderna y accesible para llevar el control general del club.
 
